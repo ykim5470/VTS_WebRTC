@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <title>EnjoyStreet</title>
+
+    <link rel="icon" href="http://www.enjoystreet.com/img/enjoystreet.ico" />
+    <link rel="shortcut icon" href="http://www.enjoystreet.com/img/enjoystreet.ico" />
+    <link rel="stylesheet" href="/css/pc/contents.css" />
+    <script src="/resource/pc/jquery.min.js"></script>
+    <script src="/js/pc/script.js"></script>
+  </head>
+  <body>
+    <div class="wrap sub step login">
+      {% include "common/pc/common/header.html" %}
+      <div class="sub_cont ferm">
+        <div class="sub_header">
+          <form action="#" class="ter_ver_box">
+            <select class="tem_select" name="ter_version">
+              <option value="ver_01">2021년 6월 25일 제정</option>
+              <option value="ver_02">2021년 6월 25일 제정</option>
+              <option value="ver_03">2021년 6월 25일 제정</option>
+            </select>
+            <button type="submit" class="tem_btn">확인</button>
+          </form>
+          <p class="tem_p">브이알에듀는 고객의 개인정보 및 권익을 보호하고 개인정보와 관련한 고객의 고충을 원활하게 처리할 수 있도록 다음과 같은 처리방침을 두고 있습니다.</p>
+        </div>
+        <div class="terms_cont">{% include "common/pc/common/terms/ter0002.html" %}</div>
+      </div>
+      {% include "common/pc/common/footer.html" %}
+    </div>
+  </body>
+</html>

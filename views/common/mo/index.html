@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <title>Enjoy Street</title>
+  <link rel="stylesheet" href="/resource/mo/ax5ui/css/ax5ui.all.css">
+  <link rel="stylesheet" href="/css/mo/login.css">
+
+  <script src="/resource/mo/jquery.min.js"></script>
+  <script src="/resource/mo/ax5ui/js/ax5ui.all.min.js"></script>
+  <script src="/js/mo/script.js"></script>
+  <script>
+    $(function(){
+      $('.sign_btn').on('click', function() {
+        var memberID = $('#email').val();
+        console.log(memberID);
+        sessionStorage.setItem('member', memberID);
+      });
+
+      // Password show/hide
+      $('.pass_box i').on('click',function(){
+        $('.pass_box input').toggleClass('active');
+        if($('.pass_box input').hasClass('active')){
+          $(this).attr('class',"fas fa-eye").css({"color":"#5567ff"})
+          .prev('input').attr('type',"text");
+        }else{
+          $(this).attr('class',"fas fa-eye-slash").css({"color":"#989db1"})
+          .prev('.pass_box input').attr('type','password');
+        }
+      });
+    });
+    // id cookie setting
+    $(document).ready(function(){
+      var userInputId = getCookie("userInputId");
+      $("input[name='id']").val(userInputId);        
+      if($("input[name='id']").val() != ""){
+          $("#chk1").attr("checked", true);
+      }       
+      $("#chk1").change(function(){
+          if($("#chk1").is(":checked")){
+              var userInputId = $("input[name='id']").val();
+              setCookie("userInputId", userInputId, 7); // one week to save
+          }else{
+              deleteCookie("userInputId");
+          }
+      }); 
+      $("input[name='id']").keyup(function(){
+          if($("#chk1").is(":checked")){
+              var userInputId = $("input[name='id']").val();
+              setCookie("userInputId", userInputId, 7); // one week to save
+          }
+      });
+    });    
+    function setCookie(cookieName, value, exdays){
+        var exdate = new Date();
+        exdate.setDate(exdate.getDate() + exdays);
+        var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
+        document.cookie = cookieName + "=" + cookieValue;
+    }    
+    function deleteCookie(cookieName){
+        var expireDate = new Date();
+        expireDate.setDate(expireDate.getDate() - 1);
+        document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+    }    
+    function getCookie(cookieName) {
+        cookieName = cookieName + '=';
+        var cookieData = document.cookie;
+        var start = cookieData.indexOf(cookieName);
+        var cookieValue = '';
+        if(start != -1){
+            start += cookieName.length;
+            var end = cookieData.indexOf(';', start);
+            if(end == -1)end = cookieData.length;
+            cookieValue = cookieData.substring(start, end);
+        }
+    return unescape(cookieValue);
+    }
+  </script>
+</head>
+<body>
+  <div class="wrap login">
+    <section class="contents">
+      <div class="title_box">
+        <h1>Enjoy Street</h1>
+      </div>
+      <div class="login_form">
+        <h2 class="txt_hidden">로그인 폼</h2>
+        <form action="/m/login" method="post" class="form" id="loginFrm">
+          <div class="login_input id_box">
+            <input type="text" id="email" name="email" class="id" placeholder="아이디(이메일주소)를 입력해주세요." title="아이디 혹은 이메일 입력">
+            <p class="err_msg"></p>
+          </div>
+          <div class="login_input pb_0">
+            <div class="pass_box">
+              <input type="password" id="pw" name="password" class="pass" placeholder="비밀번호를 입력해주세요." title="패스워드 입력">
+              <i class="fas fa-eye-slash"></i>
+              <p class="err_msg"></p>
+            </div>
+          </div>
+          <button class="btn_r sign_btn" type="submit"><span>로그인</span></button>
+          <div class="sub_box">
+            <div class="input_group">
+              <label for="chk1">
+                <input type="checkbox" id="chk1">
+                <span class="checkbox"></span>아이디 저장
+              </label>
+            </div>
+            <a href="/m/forget">아이디/비밀번호 찾기</a>
+          </div>
+        </form>
+      </div>
+      <div class="sub_login">
+        <div class="title_box">
+          <h3>간편 로그인</h3>
+        </div>
+        <div class="sns">
+          <ul>
+            <li>
+              <button type="button">
+                <a href="/auth/kakao"><img src="/img/mo/sns01.svg" alt=""></a>
+                <span class="txt_hidden">카카오</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="btn_group sign">
+        <a href="/m/signup" class="btn_r">회원가입</a>
+        <div id="checking" style="display:none;">{{ errorCode }}</div>
+      </div>
+    </section>
+  </div>
+  <script>
+    $(function(){      
+      var count = 0
+      var checked = "true"
+      var toast = new ax5.ui.toast();
+      $('#loginFrm').on('submit', function(){
+        // 이메일 유효성 검사
+        var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+        
+        // 테스트용 id/pw
+        var test_id = "vredu@vreducation.kr"
+        var test_id_two = "cchee@vreducation.kr"
+        var test_id_guide = "guide@vreducation.kr"
+        var test_pw = "1118!"
+
+        // 이메일(id)체크
+        if ($("#email").val() == '') {
+          $("#email").focus();
+          $(".id_box .err_msg").text("필수입력 항목입니다.").show();
+          return false;
+        }
+        else if (!getMail.test($("#email").val())) {
+          $("#email").focus();
+          $(".id_box .err_msg").text("이메일 형식을 확인하세요.").show();
+          return false;
+        }
+        // else if ($("#checking").val() != test_id && $("#email").val() != test_id_two && $("#email").val() != test_id_guide ) {
+        //   $("#email").focus();
+        //   $(".id_box .err_msg").text("일치하는 회원 정보가 없습니다.").show();
+        //   return false;
+        // }
+
+        // if ($("#cheking").text() == 1 ) {
+        //   $(".id_box .err_msg").text("").show().css({"display":"none"});
+        //     // toast
+        //     toast.setConfig({
+        //       width:'340',
+        //       containerPosition: "top-center",
+        //       lang: {"ok": "닫기"},
+        //     });
+        //     $(function() {
+        //       toast.confirm({
+        //         theme: 'primary',
+        //         icon: '<i class="far fa-bell"></i>',
+        //         closeIcon: '<i class="fa fa-times"></i>',
+        //         msg: "비밀번호가 일치하지 않습니다.",
+        //       }, function() {
+        //         console.log(this);
+        //       });
+        //     });            
+        //     $(".ax5-ui-toast-container").delay(3000).fadeOut(500, function(){
+        //       $(this).remove();
+        //     }) 
+        //   return false;
+        // }
+
+        // if ($("#email").val() == test_id) {
+        //   $(".id_box .err_msg").text("").show().css({"display":"none"});
+        // }
+
+        // 비밀번호 체크
+        var pwd = $('#pw').val()        
+        if (pwd == '') {
+          $('#pw').focus();
+          $(".pass_box .err_msg").text("비밀번호를 확인해주세요.").show();
+          return false;
+        }
+        // else if(pwd != test_pw){
+        //   checked = "false"
+        //   count++
+        //   $('#pw').focus();
+        //   //$(".pass_box .err_msg").text("입력하신 비밀번호와 일치하지 않습니다. ("+ count + "/5)").show();
+        //   $(".pass_box .err_msg").text("입력하신 비밀번호와 일치하지 않습니다.").show();
+        //   // 비밀번호 5회 오류
+        //   if(count > 5){
+        //     $(".pass_box .err_msg").text("").show().css({"display":"none"});
+        //     // toast
+        //     toast.setConfig({
+        //       width:'340',
+        //       containerPosition: "top-center",
+        //       lang: {"ok": "닫기"},
+        //     });
+        //     $(function() {
+        //       toast.confirm({
+        //         theme: 'danger',
+        //         icon: '<i class="far fa-bell"></i>',
+        //         closeIcon: '<i class="fa fa-times"></i>',
+        //         msg: "비밀번호 오류 초과, 재설정이 필요합니다.",
+        //       }, function() {
+        //         console.log(this);
+        //       });
+        //     });            
+        //     $(".ax5-ui-toast-container").delay(3000).fadeOut(500, function(){
+        //       $(this).remove();
+        //     }) 
+        //   }
+        //   return false;
+        // }
+        // else if(count > 5 && pwd == test_pw){
+        //   location.replace('#')          
+        //   return false;
+        // }
+        // $(".err_msg").hide();
+      });
+    });
+    
+        
+    $(window).load(function(){
+      var count = 0
+      var checked = "true"
+      var toast = new ax5.ui.toast();
+
+      var passAction = $("#checking").html();
+
+      if (passAction == 1 ) {
+        $(".id_box .err_msg").text("").show().css({"display":"none"});
+          // toast
+          toast.setConfig({
+            width:'340',
+            containerPosition: "top-center",
+            lang: {"ok": "닫기"},
+          });
+          $(function() {
+            toast.confirm({
+              theme: 'primary',
+              icon: '<i class="far fa-bell"></i>',
+              closeIcon: '<i class="fa fa-times"></i>',
+              msg: "비밀번호가 일치하지 않습니다.",
+            }, function() {
+              console.log(this);
+            });
+          });            
+          $(".ax5-ui-toast-container").delay(3000).fadeOut(500, function(){
+            $(this).remove();
+          }) 
+        return false;
+        } else if (passAction == 2 ) {
+        $(".id_box .err_msg").text("").show().css({"display":"none"});
+          // toast
+          toast.setConfig({
+            width:'340',
+            containerPosition: "top-center",
+            lang: {"ok": "닫기"},
+          });
+          $(function() {
+            toast.confirm({
+              theme: 'danger',
+              icon: '<i class="far fa-bell"></i>',
+              closeIcon: '<i class="fa fa-times"></i>',
+              msg: "가입된 이메일이 아닙니다.",
+            }, function() {
+              console.log(this);
+            });
+          });            
+          $(".ax5-ui-toast-container").delay(3000).fadeOut(500, function(){
+            $(this).remove();
+          }) 
+        return false;
+        }
+      })
+  </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+@import "main.css";
+
+  .section_wrap .section05 .inner ul{margin-bottom:30px;}
+  .main_cont .blue_box .b_tit{font-size:22px; padding:20px 0 25px;}
+
+@media (max-width: 1739px){
+  .section_wrap .section05 .inner ul{margin-bottom: 35px;}
+}
+
+@media (max-width: 1024px){
+  .main_cont .blue_box .b_tit {padding-bottom: 16px;font-size: 20px;}
+  .main_cont .blue_box .more_btn {padding-top: 30px;}
+  .owl01 .owl-item div h4{font-size:25px;}
+}
+
+@media (max-width: 768px){
+  .owl01 .owl-item div h4{font-size: 21px;}
+  .main_cont .blue_box{padding: 15px 10px 10px;}
+  .main_cont .blue_box .txt{}
+  .main_cont .blue_box .b_tit{padding-top: 10px;padding-bottom: 15px;font-size: 17px;}
+  .main_cont .blue_box .more_btn {padding-top: 16px;}
+  
+  .section_wrap .section01, .section_wrap .section02{padding-left:15px;}
+  .chang_content, .section_wrap .section02 .chang_content{padding: 0 10px;margin-left: 1px;}
+  .section_wrap [class*="section"] > img{right: 15px;bottom: 30px;width: 40px;}
+  .owl-theme .owl-nav.disabled+.owl-dots{margin-bottom:-25px;}
+  .guide_paging_wrap .guide_txt h3{font-size: 12px;word-break: normal;padding: 0 10px;}
+  .guide_paging_wrap .guide_txt p{font-size: 12px;padding: 0 10px;word-break: normal;}
+  .section_wrap .section05 .inner ul{margin-bottom:0;}
+  .section_wrap .section05 .inner ul li{margin-bottom: 17px;}
+  .section_wrap .section05 .inner ul li p{line-height: 18px;}
+  .section_wrap .section03 .inner .guide_paging_wrap{padding-top: 125px;}
+}

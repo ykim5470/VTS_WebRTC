@@ -1,0 +1,70 @@
+{% block content -%}
+<header class="header">
+    <div class="logo">
+      <h1>
+        ES-MMS
+      </h1>
+    </div>
+    <div class="navbar">
+      <div class="left_align">
+        <button type="button" class="open_menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+        <div class="search_box">
+          <form action="" method="">
+            <input type="text" id="search" name="search">
+            <label for="search">
+              <i class="fas fa-search"></i>
+              검색어를 입력하세요.
+            </label>
+            <input type="submit" value="Search">
+          </form>
+        </div>
+      </div>
+      <div class="right_align">
+        <div class="notification_box">
+          <button type="button" id="noti" class="act" data-navpopOpen="notification">
+            <i class="icon ion-ios-notifications-outline"></i>
+            <span class="indicator">3</span>
+          </button>
+          <div class="navpop_cont" data-navpopCont="notification">
+            <div class="pop_head">
+              <strong>3개</strong>의 새로운 메세지가 있습니다.
+              <button type="button" data-navpopClose="notification"><i class="icon nth-icon-close-mini"></i></button>
+            </div>
+            <div class="pop_body">
+              <ul>
+                <li><a href="#">공지사항 내용입니다.</a></li>
+                <li><a href="#">추가 공지</a></li>
+                <li><a href="#">참고하여 주시기 바랍니다.</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="profile_box">
+          <button type="button" id="profile" data-navpopOpen="profile">
+            <span class="profile_photo"></span>
+            <span class="profile_info">{{user.nick}} 님</span>
+            <i class="fas fa-angle-down"></i>
+          </button>
+          <div class="navpop_cont" data-navpopCont="profile">
+            <div class="pop_head">
+              <strong>{{user.nick}}</strong>님 (가이드)
+              <button type="button" data-navpopClose="profile"><i class="icon nth-icon-close-mini"></i></button>
+            </div>
+            <div class="pop_body">
+              <ul>
+                <li><a href="#"><i class="icon ion-md-person"></i>내정보</a></li>
+                <li><a href="#"><i class="icon ion-md-settings"></i>설정</a></li>
+                <li><a href="/auth/logout"><i class="icon ion-md-exit"></i>로그아웃</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock %}

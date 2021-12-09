@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <title>EnjoyStreet</title>
+
+    <link rel="icon" href="http://www.enjoystreet.com/img/enjoystreet.ico" />
+    <link rel="shortcut icon" href="http://www.enjoystreet.com/img/enjoystreet.ico" />
+
+    <link rel="stylesheet" href="/resource/mo/ax5ui/css/ax5ui.all.css" />
+    <link rel="stylesheet" href="/css/mo/login.css" />
+
+    <script src="/resource/mo/jquery.min.js"></script>
+    <script src="/resource/mo/ax5ui/js/ax5ui.all.min.js"></script>
+    <script src="/js/mo/script.js"></script>
+  </head>
+  <body>
+    <div class="wrap sub step login">
+      <header class="sub header">
+        <h1>회원가입</h1>
+      </header>
+      <div class="sub_cont find_com">
+        <form action="" method="post" class="form">
+          <div class="sign_end">
+            <p class="email">{{email}}</p>
+            <!-- test -->
+            {% if errorCode %} 
+            <p>
+              메일이 재발송 되었습니다.<br />
+              인증 이메일 확인 부탁드립니다.
+            </p>
+            {% else %}
+            <p>
+              인증 이메일을 보냈습니다. 이메일을 확인하시고,<br />
+              인증하기 버튼을 클릭하시면 인증이 완료됩니다.
+            </p>
+            <!-- <div>인증 이메일을 받지 못하셨나요? <a href="#">인증 이메일 다시 보내기</a></div> -->
+            <button type="submit">인증 이메일 다시 보내기</button>
+            {% endif %}
+
+            <a class="sign_btn" href="/m/login">메인으로</a>
+            <div id="checking" style="display: none">{{ errorCode }}</div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script>
+      $(window).load(function () {
+        var count = 0;
+        var checked = "true";
+        var toast = new ax5.ui.toast();
+
+        var passAction = $("#checking").html();
+
+        if (passAction == 1) {
+          $(".id_box .err_msg").text("").show().css({ display: "none" });
+          // toast
+          toast.setConfig({
+            width: "340",
+            containerPosition: "top-center",
+            lang: { ok: "닫기" },
+          });
+          $(function () {
+            toast.confirm(
+              {
+                theme: "primary",
+                icon: '<i class="far fa-bell"></i>',
+                closeIcon: '<i class="fa fa-times"></i>',
+                msg: "메일 전송 완료하였습니다.",
+              },
+              function () {
+                console.log(this);
+              }
+            );
+          });
+          $(".ax5-ui-toast-container")
+            .delay(3000)
+            .fadeOut(500, function () {
+              $(this).remove();
+            });
+          return false;
+        } else if (passAction == 2) {
+          $(".id_box .err_msg").text("").show().css({ display: "none" });
+          // toast
+          toast.setConfig({
+            width: "340",
+            containerPosition: "top-center",
+            lang: { ok: "닫기" },
+          });
+          $(function () {
+            toast.confirm(
+              {
+                theme: "danger",
+                icon: '<i class="far fa-bell"></i>',
+                closeIcon: '<i class="fa fa-times"></i>',
+                msg: "잘못된 이메일 입니다.",
+              },
+              function () {
+                console.log(this);
+              }
+            );
+          });
+          $(".ax5-ui-toast-container")
+            .delay(3000)
+            .fadeOut(500, function () {
+              $(this).remove();
+            });
+          return false;
+        }
+      });
+    </script>
+  </body>
+</html>

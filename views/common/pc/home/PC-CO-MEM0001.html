@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <title>EnjoyStreet</title>
+  
+  <link rel="icon" href="http://www.enjoystreet.com/img/enjoystreet.ico">
+  <link rel="shortcut icon" href="http://www.enjoystreet.com/img/enjoystreet.ico">
+  <link rel="stylesheet" href="/css/pc/login.css">
+  <script src="/resource/pc/jquery.min.js"></script>
+  <script src="/js/pc/script.js"></script>
+  <script>
+    $(window).on('load', function(){
+     $(".login_box li").last().addClass("hide")
+    })
+  </script>
+</head>
+<body>
+  <div class="sub login">
+    {% include "common/pc/common/header.html" %}
+    <div class="sub_cont sign">
+      <div class="sub_header">
+        <img src="/img/pc/enjoystreet_black.svg" alt="EnjoyStreet 로고">
+        <span>파트너 회원가입</span>
+      </div>
+      <div>
+        <div class="reco_step step_multi">
+          <ul class="chk_custom">
+            <li class="item">
+              <p class="i_tit">여행전문가이드</p>
+              <p class="i_txt">여행전문가이드와 함께하는<br>VTS 플랫폼입니다.</p>
+              <a href="/guide/signup">가입하기</a>
+            </li>
+            <li class="item">
+              <p class="i_tit">판매점</p>
+              <p class="i_txt">소상공인상인과의 상생을 위한<br>상품판매 플랫폼입니다.</p>
+              <a href="/store/signup">가입하기</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>    
+    {% include "common/pc/common/footer.html" %}
+  </div>
+</body>
+</html>

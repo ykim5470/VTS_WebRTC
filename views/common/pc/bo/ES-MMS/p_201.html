@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ES-MMS</title>
+
+  <link rel="stylesheet" href="/resource/pc/bo/windowContainer/css/jquery.scrollbar.min.css">
+  <link rel="stylesheet" href="/resource/pc/bo/windowContainer/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/resource/pc/bo/windowContainer/css/nth-icons.css">
+  <link rel="stylesheet" href="/resource/pc/bo/windowContainer/css/nth-tabs.css">
+  <link rel="stylesheet" href="/resource/pc/bo/ax5ui/css/ax5ui.all.css">
+  <link rel="stylesheet" href="/css/pc/bo/main.css">
+
+  <script src="/resource/pc/bo/jquery.min.js"></script>
+  <script src="/resource/pc/bo/windowContainer/js/jquery.scrollbar.min.js"></script>
+  <script src="/resource/pc/bo/windowContainer/js/bootstrap.min.js"></script>
+  <script src="/resource/pc/bo/windowContainer/js/nth-tabs.js"></script>
+  <script src="/resource/pc/bo/ax5ui/js/ax5ui.all.min.js"></script>
+  <script src="/js/pc/bo/script.js"></script>
+
+  <script>
+    // 모달
+    var mask = new ax5.ui.mask();
+    var modal = new ax5.ui.modal();
+    var modalCallBack = function () {
+      modal.close();
+    };
+    // main tab
+    var nthTabs;
+
+    $(function () {
+      $('.scrollbar-inner').scrollbar(); // menu scroll
+
+      // main tab - 대시보드
+      nthTabs = $("#main-tabs").nthTabs();
+      nthTabs.addTab({
+        id: 'p201',
+        title: '입점 대기 리스트',
+        active: true,
+        allowClose: false
+      });
+
+      /* 메뉴 페이지 연동 */
+      $('.documents a').off("click").on('click', function (e) {
+        e.preventDefault();
+        var val = $(this).text();
+        var href = $(this).attr('href').split('.');
+        var fileName = href[0].substring(2);
+
+        ////////// 탭 생성시 중복확인 안함(default 태그) //////////
+        //                nthTabs.addTab({
+        //                    id: "p"+anum,
+        //                    title:val,
+        //                    url: 'p_'+anum+'.html',
+        //                    active: true,
+        //                    allowClose: true
+        //                })
+
+        ////////// 탭 중복시 존재하는 지 확인후 생성 //////////
+        if (nthTabs.isExistsTab('#p' + fileName)) {
+          nthTabs.toggleTab('#p' + fileName);
+        } else {
+          nthTabs.addTab({
+            id: "p" + fileName,
+            title: val,
+            url: this.href,
+            active: true,
+            allowClose: true
+          });
+          /* 탭 추가 생성시 북마크아이콘 추가*/
+          if (!$("[href*=#p" + fileName + "]").find("i").hasClass("fa-star")) {
+            $("[href*=#p" + fileName + "]").prepend("<i class='fas fa-star'></i>");
+            $(".nav-tabs .fa-star").off('click').on('click', function (e) {
+              $(this).toggleClass("bookmark")
+            });
+          }
+        }
+        /* gnb control */
+        var parentClass = $(this).parent('li');
+        if (!$(this).hasClass('on')) {
+          $('.documents a').removeClass('on');
+          $(this).addClass('on');
+        }
+        if (parentClass.attr('class') == 'documents') {
+          $('.gnb li').removeClass('open');
+          $('.gnb li > ul').slideUp(100);
+        }
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+    {% include "common/pc/common/admin/guide/header.html" %}
+    <div class="container">
+      {% include "common/pc/common/admin/guide/sidebar.html" %}
+      <div class="con_area">
+        <div class="contents">
+          <div class="nth-tabs" id="main-tabs">
+          </div>
+          <div class="vtn_cont">
+            <div class="title_box page_tit">
+              <div class="left_align">
+                <h3>판매점 입점 승인</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="layout col_12">
+                <section class="section">
+                  <div class="title_box border_b">
+                    <div class="left_align">
+                      <h4><span class="circle"></span>상세정보</h4>
+                    </div>
+                  </div>
+                  <section class="section">
+                    <div class="table_box search">
+                      <table class="table search">
+                        <caption>필수입력, 조회조건2, 조회조건3, 조회조건4, 조회조건5, 조회조건6, 조회조건7, 조회조건8로 구성된 표</caption>
+                        <colgroup>
+                          <col style="width:10%">
+                          <col style="width:15%">
+                          <col style="width:10%">
+                          <col style="width:15%">
+                          <col style="width:10%">
+                          <col style="width:15%">
+                          <col style="width:10%">
+                          <col style="width:15%">
+                        </colgroup>
+                        <tbody>
+                          <tr>
+                            <th>NO.</th>
+                            <td><span>1</span></td>
+                            <th>사업체명</th>
+                            <td><span>ABC마트</span></td>
+                            <th>사업자번호</th>
+                            <td><span>000-00-12345</span></td>
+                            <th>대표자</th>
+                            <td><span>홍길동</span></td>
+                          </tr>
+                          <tr>
+                            <th>ID (이메일)</th>
+                            <td><span>abc@gmail.com</span></td>
+                            <th>회원가입일자</th>
+                            <td><span>2021-07-01</span></td>
+                            <th>승인관리자</th>
+                            <td><span class="state">승인대기</span></td>
+                            <th>승인관리자</th>
+                            <td>김재헌</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="fileCh_box docu">
+                      <div class="file_docu">
+                        <p>추가서류 제출</p>
+                        <div class="input_group chk_custom">
+                          <ul>
+                            <li style="cursor: default; list-style-image: none;">
+                              <label for="chk7">
+                                <input id="chk7" type="checkbox" name="checked">
+                                <span class="checkbox"></span>판매점 입점 계약서 제출완료
+                              </label>
+                              <a href="/resource/pc/bo/download/입점계약서_1차 작성본.hwp" download><i class="fas fa-file-alt"></i>첨부파일 다운로드(입점 계약서)</a>
+                            </li>
+                            <li style="cursor: default; list-style-image: none;">
+                              <label for="chk8">
+                                <input id="chk8" type="checkbox" name="checked">
+                                <span class="checkbox"></span>상품소개서 제출완료
+                              </label>
+                              <a href="/resource/pc/bo/download/상품제안서_1차 작성본.hwp" download><i class="fas fa-file-alt"></i>첨부파일 다운로드(상품소개서)</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="title_box">
+                      <div class="input_group chk_custom ml-0">
+                        <label for="chk1"><span class="circle"></span>승인반려
+                          <input type="checkbox" id="chk1">
+                          <span class="checkbox"></span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="rejection_box">
+                      <div class="title_box">
+                        <div class="left_align">
+                          <h4><span class="circle"></span>승인 반려 사유</h4>
+                        </div>
+                      </div>
+                      <select name="#" id="#">
+                        <option value="value01">서류미비(필수정보 누락)</option>
+                      </select>
+                      <div class="textarea_group">
+                        <textarea style="height:170px;" title="텍스트 입력"></textarea>
+                      </div>
+                    </div>
+                    <div class="title_box mb-0">
+                      <div class="right_align button_group">
+                        <a href="/admin/storeList" class="button del"><span>승인요청 목록</span></a>
+                        <a href="/admin/storeList" class="button del"><span>취소</span></a>
+                        <button type="button" class="save"><span>저장</span></button>
+                      </div>
+                    </div>
+              </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% include "common/pc/common/admin/guide/footer.html" %}
+    </div>
+  </div>
+  </div>
+</body>
+</html>

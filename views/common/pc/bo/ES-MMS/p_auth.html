@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>ES-GMS</title>
+
+    <link rel="stylesheet" href="/resource/pc/bo/windowContainer/css/jquery.scrollbar.min.css" />
+    <link rel="stylesheet" href="/resource/pc/bo/windowContainer/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/resource/pc/bo/windowContainer/css/nth-icons.css" />
+    <link rel="stylesheet" href="/resource/pc/bo/windowContainer/css/nth-tabs.css" />
+    <link rel="stylesheet" href="/resource/pc/bo/ax5ui/css/ax5ui.all.css" />
+    <link rel="stylesheet" href="/css/pc/bo/main.css" />
+
+    <script src="/resource/pc/bo/jquery.min.js"></script>
+    <script src="/resource/pc/bo/windowContainer/js/jquery.scrollbar.min.js"></script>
+    <script src="/resource/pc/bo/windowContainer/js/bootstrap.min.js"></script>
+    <script src="/resource/pc/bo/windowContainer/js/nth-tabs.js"></script>
+    <script src="/resource/pc/bo/ax5ui/js/ax5ui.all.min.js"></script>
+    <script src="/js/pc/bo/script.js"></script>
+
+    <script>
+      // console.log("titletitle" + titletitle)
+      // 모달
+      var mask = new ax5.ui.mask();
+      var modal = new ax5.ui.modal();
+      var modalCallBack = function () {
+        modal.close();
+      };
+      // main tab
+      var nthTabs;
+
+      $(function () {
+        $(".scrollbar-inner").scrollbar(); // menu scroll
+
+        // main tab - 대시보드
+        nthTabs = $("#main-tabs").nthTabs();
+        nthTabs.addTab({
+          id: "p100",
+          title: "가이드 리스트",
+          active: true,
+          allowClose: false,
+        });
+
+        /* 메뉴 페이지 연동 */
+        $(".documents a")
+          .off("click")
+          .on("click", function (e) {
+            e.preventDefault();
+            var val = $(this).text();
+            var href = $(this).attr("href").split(".");
+            var fileName = href[0].substring(2);
+
+            ////////// 탭 생성시 중복확인 안함(default 태그) //////////
+            //                nthTabs.addTab({
+            //                    id: "p"+anum,
+            //                    title:val,
+            //                    url: 'p_'+anum+'.html',
+            //                    active: true,
+            //                    allowClose: true
+            //                })
+
+            ////////// 탭 중복시 존재하는 지 확인후 생성 //////////
+            if (nthTabs.isExistsTab("#p" + fileName)) {
+              nthTabs.toggleTab("#p" + fileName);
+            } else {
+              nthTabs.addTab({
+                id: "p" + fileName,
+                title: val,
+                url: this.href,
+                active: true,
+                allowClose: true,
+              });
+              /* 탭 추가 생성시 북마크아이콘 추가*/
+              if (
+                !$("[href*=#p" + fileName + "]")
+                  .find("i")
+                  .hasClass("fa-star")
+              ) {
+                $("[href*=#p" + fileName + "]").prepend("<i class='fas fa-star'></i>");
+                $(".nav-tabs .fa-star")
+                  .off("click")
+                  .on("click", function (e) {
+                    $(this).toggleClass("bookmark");
+                  });
+              }
+            }
+            /* gnb control */
+            var parentClass = $(this).parent("li");
+            if (!$(this).hasClass("on")) {
+              $(".documents a").removeClass("on");
+              $(this).addClass("on");
+            }
+            if (parentClass.attr("class") == "documents") {
+              $(".gnb li").removeClass("open");
+              $(".gnb li > ul").slideUp(100);
+            }
+          });
+      });
+    </script>
+
+    <!-- ax5grid -->
+    <script type="text/javascript">
+      var fn_disabled = function () {
+        return function () {
+          return this.value != "edit";
+        };
+      };
+      sampleData = {};
+      var gridView = {
+        initView: function () {
+          this.target = new ax5.ui.grid();
+          this.target.setConfig({
+            target: $('[data-ax5grid="first-grid"]'),
+            frozenColumnIndex: 2,
+            frozenRowIndex: 0,
+            showLineNumber: true,
+            showRowSelector: false,
+            multipleSelect: false,
+            lineNumberColumnWidth: 40,
+            rowSelectorColumnWidth: 28,
+            sortable: true, // 모든 컬럼에 정렬 아이콘 표시
+            multiSort: false, // 다중 정렬 여부
+            remoteSort: false, // remoteSort에 함수를 sortable 컬럼이 클릭되었을때 실행 setColumnSort를 직접 구현. (remoteSort를 사용하면 헤더에 정렬 상태만 표시 하고 데이터 정렬은 처리 안함)
+            header: {
+              align: "center",
+              columnHeight: 33,
+            },
+            body: {
+              align: "center",
+              columnHeight: 33,
+            },
+            page: {
+              height: 30,
+              display: true,
+              firstIcon: '<i class="fas fa-angle-double-left" aria-hidden="true"></i>',
+              prevIcon: '<i class="fas fa-angle-left" aria-hidden="true"></i>',
+              nextIcon: '<i class="fas fa-angle-right" aria-hidden="true"></i>',
+              lastIcon: '<i class="fas fa-angle-double-right" aria-hidden="true"></i>',
+              onChange: function () {
+                gridView.setData(this.page.selectPage);
+              },
+            },
+            columns: [
+              { key: "이름", label: "이름" },
+              { key: "이메일", label: "이메일" },
+              { key: "상태", label: "상태" },
+              { key: "최종승인자", label: "최종승인자" },
+            ],
+          });
+          return this;
+        },
+
+        setData: function (_pageNo) {
+          var list = [];
+          var list_date = sampleData;
+          var list_length = sampleData.length;
+          for (var i = 0, l = list_length; i < l; i++) {
+            list.push(list_date);
+          }
+
+          this.target.setData({
+            list: list_date,
+            page: {
+              currentPage: _pageNo || 0,
+              pageSize: 50,
+              totalElements: 100,
+              totalPages: 100,
+            },
+          });
+
+          return this;
+        },
+      };
+
+      $(document.body).ready(function () {
+        gridView.initView().setData();
+      });
+    </script>
+  </head>
+
+  <body>
+    <div class="comming_soon">
+      <!-- <div>
+        <h1><span>홍길동(ABC마트)</span>님 환영합니다.</h1>
+        <p>※ 판매점 파트너 회원가입 승인절차가 진행중입니다.</p>
+        <p>심사완료에 필요한 추가서류를 제출해주세요 (이메일 안내)</p>
+        <br>
+        <p>회원가입 후 특별한 이슈사항이 없는 경우 약 5일 이내에 승인결과를 안내드립니다.</p>
+        <p>승인결과는 회원가입 시 입력하신 이메일로 안내됩니다.</p>
+        <a href="#">메인 페이지로 이동</a>
+      </div> -->
+        <div>
+          <h1><span>{{user.nick}}</span>님 환영합니다.</h1>
+          {% if user.auth === 121 %}
+          <p>※ 가이드 파트너 회원가입 승인절차가 진행중입니다.</p>
+          {% elif user.auth === 155 %}
+          <p>※ 판매점 파트너 회원가입 승인절차가 진행중입니다.</p>
+          {% endif %}
+          <p>심사완료에 필요한 추가서류를 제출해주세요 (이메일 안내)</p>
+          <br />
+          <p>회원가입 후 특별한 이슈사항이 없는 경우 약 5일 이내에 승인결과를 안내드립니다.</p>
+          <p>승인결과는 회원가입 시 입력하신 이메일로 안내됩니다.</p>
+          <a href="/">메인 페이지로 이동</a>
+        </div>
+    </div>
+    <div class="wrap">
+    <header class="header">
+      <div class="logo">
+        <h1>
+          ES-MMS
+        </h1>
+      </div>
+      <div class="navbar">
+        <div class="left_align">
+          <button type="button" class="open_menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </button>
+          <div class="search_box">
+            <form action="" method="">
+              <input type="text" id="search" name="search">
+              <label for="search">
+                <i class="fas fa-search"></i>
+                검색어를 입력하세요.
+              </label>
+              <input type="submit" value="Search">
+            </form>
+          </div>
+        </div>
+        <div class="right_align">
+          <div class="notification_box">
+            <button type="button" id="noti" class="act" data-navpopOpen="notification">
+              <i class="icon ion-ios-notifications-outline"></i>
+              <span class="indicator">99</span>
+            </button>
+            <div class="navpop_cont" data-navpopCont="notification">
+              <div class="pop_head">
+                <strong>3개</strong>의 새로운 메세지가 있습니다.
+                <button type="button" data-navpopClose="notification"><i class="icon nth-icon-close-mini"></i></button>
+              </div>
+              <div class="pop_body">
+                <ul>
+                  <li><a href="#">공지사항 내용입니다.</a></li>
+                  <li><a href="#">추가 공지</a></li>
+                  <li><a href="#">참고하여 주시기 바랍니다.</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="profile_box">
+            <button type="button" id="profile" data-navpopOpen="profile">
+              <span class="profile_photo"></span>
+              <span class="profile_info">승인 대기자 님</span>
+              <i class="fas fa-angle-down"></i>
+            </button>
+            <div class="navpop_cont" data-navpopCont="profile">
+              <div class="pop_head">
+                <strong>승인 대기자</strong>님 (가이드)
+                <button type="button" data-navpopClose="profile"><i class="icon nth-icon-close-mini"></i></button>
+              </div>
+              <div class="pop_body">
+                <ul>
+                  <li><a href="#"><i class="icon ion-md-person"></i>내정보</a></li>
+                  <li><a href="#"><i class="icon ion-md-settings"></i>설정</a></li>
+                  <li><a href="3"><i class="icon ion-md-exit"></i>로그아웃</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+      <div class="container">
+        <div class="menu_area">
+          <h2 class="txt_hidden">메뉴</h2>
+          <div class="menu_wrap">
+            <div class="tabs" data-tab="tabWrap">
+              <ul class="tab_links">
+                <li><button type="button" data-tablink=".tabs .all_menu"><span class="icon"></span>전체메뉴</button></li>
+              </ul>
+              <div class="tab_contents scrollbar-inner all_menu">
+                <ul class="gnb">
+                  <li><a href="/">
+                      <i class="fas fa-chart-line"></i>승인 후 이용이 가능합니다.</a>
+                  </li>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="con_area">
+          <div class="contents">
+            <div class="nth-tabs" id="main-tabs"></div>
+            <div class="vtn_cont">
+              <div class="title_box page_tit">
+                <div class="left_align">
+                  <h3>승인 대기 페이지</h3>
+                </div>
+              </div>
+              <div class="row">
+                <div class="layout col_12">
+                  <section class="section">
+                    <div class="title_box">
+                      <div class="left_align">
+                        <h4>주문 목록 <span class="type">(승인대기 건수 : ∞ 건)</span></h4>
+                      </div>
+                    </div>
+                    <section class="section">
+                      <div class="title_box">
+                        <div class="left_align">
+                          <span><strong>상태 : </strong></span>
+                          <div class="select_group">
+                            <select title="조건선택" style="width: 120px">
+                              <option value="option01">전체</option>
+                              <option value="option02">승인</option>
+                              <option value="option03">반려</option>
+                              <option value="option04">대기</option>
+                            </select>
+                          </div>
+                          <span class="noti">* 승인처리 버튼 클릭 시, 승인처리 상세화면으로 이동합니다.</span>
+                        </div>
+                      </div>
+                      <div class="grid_box">
+                        <div id="grid-parent">
+                          <div data-ax5grid="first-grid" style="height: 500px" data-ax5grid-config="{}"></div>
+                        </div>
+                      </div>
+                    </section>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <span>Copyright ⓒ VREDU. All Rights Reserved.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

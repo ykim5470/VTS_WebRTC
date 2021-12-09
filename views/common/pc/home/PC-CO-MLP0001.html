@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+  <title>EnjoyStreet</title>
+
+  <link rel="icon" href="http://www.enjoystreet.com/img/enjoystreet.ico" />
+  <link rel="shortcut icon" href="http://www.enjoystreet.com/img/enjoystreet.ico" />
+  <link rel="stylesheet" href="/css/pc/login.css" />
+  <script src="/resource/pc/jquery.min.js"></script>
+  <script src="/js/pc/script.js"></script>
+  <script src="/js/pc/company.js"></script>
+  <!-- <script>
+    $(document).ready(function() {
+      var search_var = $("input.search_val").val();
+      $("input.search_input").click(function(){
+        console.log("ok")
+        if($("input.search_val").val() == "4858800534"){
+          $(".search_t").find("tbody").html("<tr><td class='inc_number'>"+"485-88-0000"+"</td><td><div class='inc_name'>"+"(주)브이알에듀"+"</div></td><td>"+"김재헌"+"</td></tr>")
+          $(".inc_name").click(function() {
+            window.open('about:blank', '_self').close();
+            $(opener.document).find("#inc_num02").val($(".inc_number").text())
+            $(opener.document).find("#inc_num02").prev().find(".inc_check").addClass("on")
+            $(opener.document).find("#name_04").val($(".inc_name").text())
+            $(opener.document).find("#signFrm02").find(".inc_box").addClass("pass")
+            $(opener.document).find("#signFrm02").find(".compa_box").addClass("pass")
+            function check_submit(){
+              if( $(opener.document).find("#signFrm02 .name_box").hasClass("pass") === true && $(opener.document).find("#signFrm02 .email_box").hasClass("pass") === true && $(opener.document).find("#signFrm02 .pass_box").hasClass("pass") === true && $(opener.document).find("#signFrm02 .terms_box").hasClass("pass") === true && $(opener.document).find("#signFrm02 .inc_box").hasClass("pass") === true && $(opener.document).find("#signFrm02 .compa_box").hasClass("pass") === true){
+                $(opener.document).find("#signFrm02 button.sign_com_btn").attr('disabled', false);
+              }
+            }
+            check_submit();
+          });
+        }
+      })
+
+      $(".close_btn").click(function() {
+          window.open('about:blank', '_self').close();
+      });
+    });
+  </script> -->
+</head>
+<body>
+  <div class="wrap login sub inc_search">
+    <div class="sub_title_box">사업자 번호 검색</div>
+    <div class="sub_cont">
+      <div>
+        <p>* 사업체명 검색 시, 사업자등록증에 등록한 상호명으로 입력하세요.</p>
+        <p>등록한 상호명과 다를 경우 검색이 되지 않습니다.</p>
+        <p>* 사업자등록번호로 검색시는 ‘-’ 를 빼고 입력해 주세요.</p>
+        <div class="option">
+          <select name="option01" id="option01">
+            <option value="사업자 번호">사업자 번호</option>
+            <option value="사업체명">사업체명</option>
+          </select>
+          <!-- <input type="text" value="" name="search_val" class="search_val">  -->
+          {% if company %}
+          <input type="text" value="{{company}}" name="search_val" class="search_val" onkeyup="if(window.event.keyCode==13){search_input()}"> 
+          {% else %}
+          <input type="text" value="" name="search_val" class="search_val" onkeyup="if(window.event.keyCode==13){search_input()}"> 
+          {% endif %}
+          <!-- {{company}} -->
+          <input type="button" value="&#xf002" class="search_input"/ onclick="search_input()">
+        </div>
+        <div class="search_t" id="search_t">
+          <table>
+            <colgroup>
+              <col style="width:125px">
+              <col style="width:calc(100% - 215px)">
+              <col style="width:90px">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>사업자 번호</th>
+                <th>사업체명</th>
+                <th>대표자</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for user in exUser %}
+              <tr><td class='inc_number'>{{user.cmpRgsNmb}}</td><td><div class='inc_name'>{{user.cmpRgsName}}</div></td><td>{{user.nick}}</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          
+        </div>
+      </div>
+    </div>
+    <button class="close_btn">닫기</button>
+  </div>
+</body>
+</html>

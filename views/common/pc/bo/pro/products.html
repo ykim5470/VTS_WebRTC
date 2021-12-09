@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.0.min.js" 
+            integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" 
+            crossorigin="anonymous"></script>
+        <!--폰트어섬추가 -->
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!--폰트어섬추가 -->
+        <!-- jQuery 아래 두세요 -->
+        <!--bootstrap js 추가 -->
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- <script type="text/javascript" src="/static/common.js"></script>
+        <link rel="stylesheet" href="/static/common.css"> -->
+    </head>
+
+<div class="col-sm-10">
+
+    <select name="num" onchange="num(this.value)">
+        <option value="1" selected>전체</option>
+        <option value="2">승인대기</option> 
+        <option value="3">승인완료</option>
+        <option value="4">반려</option>
+    </select>
+
+    <!-- 전체 -->
+    <div id="1" style="display:block">
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>제목</th>
+                <th>작성일</th>
+                <th>게시물 현재 상태</th>
+                <th>게시물 상태 변경 </th>
+                <th>게시물 삭제</th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td>
+                    <a href="/store/products/detail/{{ product.id }}">{{ product.name }}</a>
+                </td>
+                <td>
+                    {{ product.dateFormat( product.createdAt ) }}
+                </td>
+                <td>
+                    {% if product.status === 0 %}
+                    <p> 승인 대기 중 </p>
+                    {% elif product.status === 1 %}
+                    <p> 승인 </p>
+                    {% else %}
+                    <p> 반려 </p>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="/store/products/confirm/{{ product.id }}" class="btn btn-primary" onclick="return confirm('승인하시겠습니까?')">승인</a>
+                    <a href="/store/products/return/{{ product.id }}" class="btn btn-danger" onclick="return confirm('반려하시겠습니까?')">반려</a>
+                </td>
+                <td>
+                    <a href="/store/products/delete/{{ product.id }}" class="btn btn-default" onclick="return confirm('삭제하시겠습니까?')">삭제</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- 승인 대기 -->
+    <div id="2" style="display:none">
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>제목</th>
+                <th>작성일</th>
+                <th>게시물 현재 상태</th>
+                <th>게시물 상태 변경 </th>
+                <th>게시물 삭제</th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td>
+                    <a href="/store/products/detail/{{ product.id }}">{{ product.name }}</a>
+                </td>
+                <td>
+                    {{ product.dateFormat( product.createdAt ) }}
+                </td>
+                <td>
+                    {% if product.status === 0 %}
+                    <p> 승인 대기 중 </p>
+                    {% elif product.status === 1 %}
+                    <p> 승인 </p>
+                    {% else %}
+                    <p> 반려 </p>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="/store/products/confirm/{{ product.id }}" class="btn btn-primary" onclick="return confirm('승인하시겠습니까?')">승인</a>
+                    <a href="/store/products/return/{{ product.id }}" class="btn btn-danger" onclick="return confirm('반려하시겠습니까?')">반려</a>
+                </td>
+                <td>
+                    <a href="/store/products/delete/{{ product.id }}" class="btn btn-default" onclick="return confirm('삭제하시겠습니까?')">삭제</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- 승인 완료 -->
+    <div id="3" style="display:none">
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>제목</th>
+                <th>작성일</th>
+                <th>게시물 현재 상태</th>
+                <th>게시물 상태 변경 </th>
+                <th>게시물 삭제</th>
+            </tr>
+            {% if product.status === 1 %}
+                {% for product in products %}
+                <tr>
+                    <td>
+                        <a href="/store/products/detail/{{ product.id }}">{{ product.name }}</a>
+                    </td>
+                    <td>
+                        {{ product.dateFormat( product.createdAt ) }}
+                    </td>
+                    <td>
+                        {% if product.status === 0 %}
+                        <p> 승인 대기 중 </p>
+                        {% elif product.status === 1 %}
+                        <p> 승인 </p>
+                        {% else %}
+                        <p> 반려 </p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="/store/products/confirm/{{ product.id }}" class="btn btn-primary" onclick="return confirm('승인하시겠습니까?')">승인</a>
+                        <a href="/store/products/return/{{ product.id }}" class="btn btn-danger" onclick="return confirm('반려하시겠습니까?')">반려</a>
+                    </td>
+                    <td>
+                        <a href="/store/products/delete/{{ product.id }}" class="btn btn-default" onclick="return confirm('삭제하시겠습니까?')">삭제</a>
+                    </td>
+                </tr>
+                {% endfor %}
+        {% endif %}
+        </table>
+    </div>
+
+    <!-- 반려 -->
+    <div id="4" style="display:none">
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>제목</th>
+                <th>작성일</th>
+                <th>게시물 현재 상태</th>
+                <th>게시물 상태 변경 </th>
+                <th>게시물 삭제</th>
+            </tr>
+            {% if product.status === 2 %}
+                {% for product in products %}
+                <tr>
+                    <td>
+                        <a href="/store/products/detail/{{ product.id }}">{{ product.name }}</a>
+                    </td>
+                    <td>
+                        {{ product.dateFormat( product.createdAt ) }}
+                    </td>
+                    <td>
+                        {% if product.status === 0 %}
+                        <p> 승인 대기 중 </p>
+                        {% elif product.status === 1 %}
+                        <p> 승인 </p>
+                        {% else %}
+                        <p> 반려 </p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="/store/products/confirm/{{ product.id }}" class="btn btn-primary" onclick="return confirm('승인하시겠습니까?')">승인</a>
+                        <a href="/store/products/return/{{ product.id }}" class="btn btn-danger" onclick="return confirm('반려하시겠습니까?')">반려</a>
+                    </td>
+                    <td>
+                        <a href="/store/products/delete/{{ product.id }}" class="btn btn-default" onclick="return confirm('삭제하시겠습니까?')">삭제</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+    </div>
+
+    <a href="/store/products/write" class="btn btn-default">작성하기</a>
+
+</div>
+
+<script>
+
+function num(value){
+    for(i=1; i<=4 ;i++){
+        document.getElementById(i).style.display="none";
+    }
+    document.getElementById(value).style.display="block";
+}
+
+
+
+</script>
+</html>

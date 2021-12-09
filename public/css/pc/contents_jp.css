@@ -1,0 +1,16 @@
+@import "contents.css";
+
+.menu_wrap > p, .menu_wrap .gnb li, .section01 .con_area_txt h1{font-weight:600;}
+.pop_up .p_left .p_txt, .g_name{font-family:'azuki';font-size: 30px;letter-spacing: -2px;}
+.pop_up .p_right ul.p_r_wrap li p{word-break:initial;font-weight: 400;}
+.card_wrap .card_box > p{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.pop_up.tour .tour_info > ul li span, .pop_up.tour .p_cont_wrap .p_right .p_textarea p{font-weight:300;word-break: normal;}
+
+@media (max-width: 1024px){
+  .pop_up.tour .p_cont_wrap .p_right .p_textarea p {word-break:normal;}
+  .pop_up.tour .tour_info > p, .pop_up.tour .tour_info > span{margin-bottom:10px;}
+  .pop_up.tour .tour_info > p {margin-bottom:5px;}
+}
+@media (max-width: 768px){
+  .pop_up .p_left .p_txt, .g_name{font-size: 22px;}
+}

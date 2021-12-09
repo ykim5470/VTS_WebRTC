@@ -1,0 +1,8 @@
+@import "main.css";
+
+.fa, .far, .fas {font-family: "Font Awesome 5 Free" !important;}
+.owl01 .owl-item div h4{word-break: normal;}
+
+@media (max-width: 1024px){
+  .owl01 .owl-item div h4{padding: 95px 35px 85px;}
+}

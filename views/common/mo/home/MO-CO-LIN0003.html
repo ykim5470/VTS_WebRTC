@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <title>Enjoy Street</title>
+  <link rel="stylesheet" href="/resource/mo/ax5ui/css/ax5ui.all.css">
+  <link rel="stylesheet" href="/css/mo/login.css">
+
+  <script src="/resource/mo/jquery.min.js"></script>
+  <script src="/resource/mo/ax5ui/js/ax5ui.all.min.js"></script>
+  <script src="/js/mo/script.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      // tap panel
+      function tabOpen($target){
+        var $wrap = $target.closest("[data-tab]");
+        $wrap.find("[data-tablink]").each(function(){
+          $(this).parent().removeClass("on");
+          $($(this).attr("data-tablink")).addClass("hidden");
+        });
+        $target.parent().addClass("on");
+        $($target.attr("data-tablink")).removeClass("hidden");
+      }
+      function tabSet(){
+        $("[data-tab]").each(function(){
+          var $tab = $(this).find("[data-tablink]");
+          if ($tab.filter(".on").length){
+            tabOpen($tab.filter(".on").eq(0));
+          } else {
+            tabOpen($tab.eq(0));
+          }
+        });
+      }      
+      $('a[href="#"]').on('click', function(e){
+        e.preventDefault();
+      });
+      tabSet(); // tap menu
+      $(document).on("click", "[data-tablink]", function(e){
+        e.preventDefault();
+        tabOpen($(this));
+      })
+      // email select
+      $("#selectEmail").change(function() {
+        var email_box01 = $(this).val();
+        if (email_box01 == "직접입력") {
+          $("input[name='email_2']").val('');
+          $("input[name='email_2']").attr('readonly', false);
+        } else {
+          $("input[name='email_2']").val(email_box01);
+          $("input[name='email_2']").attr('readonly', true);
+        }
+      });
+      // email select02
+      $("#selectEmail02").change(function() {
+        var email_box02 = $(this).val();
+        if (email_box02 == "직접입력") {
+          $("input[name='email_4']").val('');
+          $("input[name='email_4']").attr('readonly', false);
+        } else {
+          $("input[name='email_4']").val(email_box02);
+          $("input[name='email_4']").attr('readonly', true);
+        } 
+      });
+    });   
+  </script>
+</head>
+<body>
+  <div class="wrap login sub">
+    <header class="sub header">
+      <a href="/m/forget">
+        <span>이전</span>
+        <i class="fas fa-chevron-left"></i>
+      </a>
+      <h1>아이디/비밀번호 찾기</h1>
+    </header>
+    <div class="sub_cont find_com">
+      <div>
+        <i class="far fa-smile"></i>
+        <p>고객님의<br>아이디 찾기가 완료되었습니다.</p>
+        <div>아이디 : <span>{{ email }}</span></div>
+      </div>
+      <a href="/m/login" class="sign_btn">로그인</a>
+    </div>
+  </div>
+</body>
+</html>

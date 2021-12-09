@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <title>EnjoyStreet</title>
+  
+  <link rel="icon" href="http://www.enjoystreet.com/img/enjoystreet.ico">
+  <link rel="shortcut icon" href="http://www.enjoystreet.com/img/enjoystreet.ico">
+  <link rel="stylesheet" href="/css/mo/login.css">
+
+  <script src="/resource/mo/jquery.min.js"></script>
+  <script src="/js/mo/script.js"></script>
+</head>
+<body>
+  <div class="wrap sub step login">
+    <header class="sub header">
+      <a href="/m/login">
+        <span>이전</span>
+        <i class="fas fa-chevron-left"></i>
+        <h1>회원가입</h1>
+      </a>
+    </header>
+    <div class="sub_cont sign">
+      <div class="sub_header">
+        <img src="/img/mo/enjoystreet_black.svg" alt="EnjoyStreet 로고">
+      </div>
+      <div class="sign_kakao">
+        <a href="/auth/kakao"><img src="/img/mo/sns01.svg" alt="카카오 회원가입">카카오로 회원가입</a>
+        <div class="or"></div>
+      </div>
+      <div>
+        <form id="signFrm" action="/m/register" method="post">
+          <div class="sign_form">
+            <div class="form_row name_box">
+              <label for="name_01">이름</label>
+              <input type="text" id="name_01" name="name_01" placeholder="이름을 입력해주세요." title="이름입력">
+              <p class="err_msg"></p>
+            </div>
+            <div class="form_row email_box">
+              <div>
+                <label for="email_01">이메일</label>
+                <span class="email_check">(체크 완료)</span>
+              </div>
+              <input type="text" name="email_01" value="" id="email_01">
+              <span>@</span>
+              <input type="text" name="email_02" value="" id="email_02" placeholder="- - 직접입력 - -">
+              <select id="selectEmail">
+                <option value="직접입력" selected="selected">직접입력</option>
+                <option value="gmail.com">gmail.com</option>
+                <option value="naver.com">naver.com</option>
+                <option value="daum.net">daum.net</option>
+                <option value="hotmail.com">hotmail.com</option>
+                <option value="nate.com">nate.com</option>
+              </select>
+              <input type="button" name="emailCheck01" id="emailCheck01" value="중복체크" onclick="dupCheck()" class="emailCheck" />
+              <p class="err_msg"></p>
+            </div>
+            <div class="form_row pass_box">              
+              <div class="pw_cont pwd">
+                <label for="pw">비밀번호 입력</label>
+                <input type="password" id="pw" name="password" placeholder="8자 이상으로 입력해주세요." maxlength="12">
+                <div class="tooltip">
+                  <ul class="chk_list">
+                      <li class="pwdRule1">영문 + 숫자 + 특수 문자 2종류 포함</li>
+                      <li class="pwdRule2">연속된 숫자 및 반복 숫자, 문자 4자 이상 제한</li>
+                      <li class="pwdRule3">8자이상 12자미만</li>
+                  </ul>
+                </div>                
+                <p class="err_msg"></p>
+              </div>
+              <div class="pw_cont re_pwd">
+                <label for="rePw">비밀번호 확인</label>
+                <input type="password" id="rePw" placeholder="비밀번호를 다시한번 입력하세요." maxlength="12" disabled>
+                <p class="err_msg"></p>
+              </div>
+            </div>            
+            <div class="sub_header">
+              <span>EnjoyStreet <b>회원약관</b></span>
+            </div>
+            <div class="terms_box">
+              <ul>
+                <li>
+                  <input type="checkbox" name="이용약관 동의" id="chk1" disabled>
+                  <div class="term_01">EnjoyStreet 온라인 플랫폼 이용약관 동의<span>(필수)</span></div>
+                  <div class="term_pop">
+                    <div class="term_service">
+                      {% include "common/mo/common/terms/ter0001.html" %}
+                    </div>
+                    <div class="term_check_box">
+                      <div class="term_check disabled">동의합니다</div>
+                      <div class="term_check_close">닫기</div>
+                    </div>
+                  </div>                  
+                  <div class="back_img"></div>
+                </li>
+                <li>
+                  <input type="checkbox" name="개인정보 처리방침" id="chk2" disabled>
+                  <div class="term_02">EnjoyStreet 온라인 플랫폼 개인정보 처리방침 동의<span>(필수)</span></div>
+                  <div class="term_pop">
+                    <div class="term_service">
+                      {% include "common/mo/common/terms/ter0002.html" %}
+                    </div>
+                    <div class="term_check_box">
+                      <div class="term_check disabled">동의합니다</div>
+                      <div class="term_check_close">닫기</div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="btn_group">
+              <button type="submit" class="sign_com_btn" disabled>회원가입</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function(event){
+      // name validation 
+      var getName= RegExp(/^[가-힣]+$/);
+      // email validation
+      var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+      // password validation
+      var getRlap = /(\w)\1\1\1/     
+      var getSpec = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+
+      // name
+      $("#name_01").keyup(function(){
+        var nameCheck = "false"          
+        if($("#name_01").val() == ''){
+          $('#name_01').focus();
+          $(".name_box").removeClass('pass')
+          $('.name_box .err_msg').text("필수입력 항목입니다.").show();
+          $("button.sign_com_btn").attr('disabled', true);
+          return false;
+        }else if(!getName.test($("#name_01").val())){
+          $("#name_01").focus();
+          $(".name_box").removeClass('pass')
+          $(".name_box .err_msg").text("이름을 확인하세요.").show();
+          $("button.sign_com_btn").attr('disabled', true);
+          return false;
+        }else if(getName.test($("#name_01").val()) || $("#name_01") != ''){
+          $(".name_box .err_msg").hide();
+          $(".name_box").addClass('pass')
+        }      
+        check_submit();
+      })
+       
+      // email select
+      $("#selectEmail").change(function() {
+        var email_box01 = $(this).val();
+        if (email_box01 == "직접입력") {
+          console.log("ok")
+          $("input[name='email_02']").val('');
+          $("input[name='email_02']").attr('readonly', false);
+          $("button.sign_com_btn").attr('disabled', true);
+          $(".email_box").removeClass('pass')
+          check_submit();
+        } else {
+          $("input[name='email_02']").val(email_box01);
+          $("input[name='email_02']").attr('readonly', true);
+          $(".email_box .err_msg").hide();
+          $(".email_box").addClass('pass')
+          check_submit();
+        }
+      });
+      
+      // email
+      $("#email_01, #email_02").keyup(function(){ 
+        var email_1 = $("input[name='email_01").val()
+        var email_2 = $("input[name='email_02").val()
+        var check_email = email_1 + "@" + email_2
+        var emailCheck = "false"
+        // email check
+        if (email_1 == '' && email_2 == '') {
+          $(".email_box").removeClass('pass')
+          $(".email_box .err_msg").text("필수입력 항목입니다.").show();
+          $("button.sign_com_btn").attr('disabled', true);
+          return false;
+        }
+        else if (!getMail.test(check_email)) {
+          $(".email_box").removeClass('pass')
+          $(".email_box .err_msg").text("이메일 형식을 확인하세요.").show();
+          $("button.sign_com_btn").attr('disabled', true);
+          return false;
+        }else if(getName.test(check_email) || check_email != ''){
+          $(".email_box .err_msg").hide();
+          $(".email_box").addClass('pass')
+        }    
+        check_submit();
+      })
+      
+      // pass
+      $("#pw, #rePw").keyup(function(){
+        // password validation
+        var pw = $("#pw").val();
+        var getNumb = pw.search(/[0-9]/g);
+        var getText = pw.search(/[a-z]/ig); 
+        // check
+        pwCheck01 = "false"
+        pwCheck02 = "false"
+        pwCheck03 = "false"
+        pwCheck04 = "false"
+        // check total
+        pwCheck = "false"
+        repwCheck = "false"
+        if(pw == ""){
+          $(".pwd .err_msg").text("필수 입력 입니다.").show();
+          $(".chk_list li").removeClass("on")
+          $("button.sign_com_btn").attr('disabled', true);
+          $(".pass_box").removeClass('pass')
+          $("#rePw").attr('disabled', true).val('');
+          pwCheck01 = "false"
+          return false;
+        }else if(pw != ""){
+          $(".pwd .err_msg").hide();
+          pwCheck01 = "true"
+        }
+
+        if(pw.length < 8 || pw.length > 12){
+          pwCheck02 = "false"
+          $(".pwdRule3").removeClass("on")
+          $("button.sign_com_btn").attr('disabled', true);
+          $("#rePw").attr('disabled', true).val('');
+          $(".pass_box").removeClass('pass')
+          $(".re_pwd .err_msg").hide();
+          $(".pwd .err_msg").hide();
+          return false;
+        }else if(pw.length > 8 || pw.length < 12){
+          $(".pwdRule3").addClass("on")
+          $(".pwd .err_msg").hide();
+          pwCheck02 = "true"
+        }        
+        
+        if(getRlap.test(pw)){
+          pwCheck03 = "false"
+          $(".pwdRule2").removeClass("on")
+          $("button.sign_com_btn").attr('disabled', true);
+          $("#rePw").attr('disabled', true).val('');
+          $(".pass_box").removeClass('pass')
+          $(".re_pwd .err_msg").hide();
+          $(".pwd .err_msg").hide();
+          return false;
+        }else if(!getRlap.test(pw)){
+          $(".pwdRule2").addClass("on")
+          $(".pwd .err_msg").hide();
+          pwCheck03 = "true"
+        }     
+
+        if(!getSpec.test(pw)){
+          pwCheck04 = "false"
+          $(".pwdRule1").removeClass("on")
+          $("button.sign_com_btn").attr('disabled', true);
+          $("#rePw").attr('disabled', true).val('');
+          $(".pass_box").removeClass('pass')
+          $(".re_pwd .err_msg").hide();
+          $(".pwd .err_msg").hide();
+          return false;
+        }else if(getSpec.test(pw)){
+          $(".pwdRule1").addClass("on")
+          $(".pwd .err_msg").hide();
+          pwCheck04 = "true"
+        }
+        if((pwCheck01 = "true") && (pwCheck02 = "true") && (pwCheck03 = "true") && (pwCheck04 = "true")){
+          pwCheck = "true"
+          $("#rePw").attr('disabled', false);
+          $("#pw, #rePw").keyup(function(){
+            var pw = $("#pw").val();
+            var rePw = $("#rePw").val();
+            $("#pw").keyup(function(){              
+              $("#rePw").val('');
+              $(".re_pwd .err_msg").hide();
+            })
+            if(rePw == ''){
+              $("button.sign_com_btn").attr('disabled', true);
+              $(".pass_box").removeClass('pass')
+              return false;
+            }else if(rePw != pw){
+              $("button.sign_com_btn").attr('disabled', true);
+              $(".pass_box").removeClass('pass')
+              $(".re_pwd .err_msg").text("비밀번호가 일치하지 않습니다.").show();               
+              return false;
+            }else if(rePw == pw){
+              $(".re_pwd .err_msg").hide();
+              $(".pass_box").addClass('pass')
+            }
+            check_submit();
+          })
+        }
+      })
+       // terms
+      $("[class*='term_0']").click(function(){        
+        $("body").toggleClass('over');
+        $(".back_img").toggleClass('active');
+        $(".pop_up").toggleClass('active');
+        $(this).siblings(".term_pop").show(200)
+        $(".term_service").scroll(function(){
+            var box = $(this);
+            var scrollTop = $(this).scrollTop();
+            var boxHeight = $(this).outerHeight();
+            var scrollHeight = box[0].scrollHeight;
+
+            if (scrollTop + 648 >= scrollHeight) {
+              $(this).siblings(".term_check_box").children(".term_check").removeClass("disabled").addClass("pass")
+            }
+        });
+        if($(".term_check").hasClass("pass")){
+          $(".term_service").scrollTop(0);
+        }
+      });
+      $(".term_check_close").on('click', function(){
+        $(".term_pop").hide(200)
+        $("body").removeClass('over');
+        $(".back_img").removeClass('active');
+      })
+      $(".term_check").click(function(){
+        if($(this).hasClass("pass")){          
+          $("body").removeClass('over');
+          $(".back_img").removeClass('active');
+          $(".term_pop").hide(200)
+          $(this).parents("li").addClass("pass")
+          $(this).parents("li").find("input[type='checkbox']").attr('disabled', false).prop("checked", true)
+          var li_leng_on = $(".terms_box").children("ul").find("li.pass").length
+          var li_leng = $(".terms_box").children("ul").find("li").length
+          if(li_leng == li_leng_on){
+            $(".terms_box").addClass("pass")
+          }
+          check_submit();
+        } 
+      })
+      $("li").find("input[type='checkbox']").click(function(){
+        $(this).parents("li").addClass("pass")
+        if(!$(this).is(":checked")){          
+          $(".terms_box").removeClass("pass")
+          $("button.sign_com_btn").attr('disabled', true);
+          $(this).parents("li").removeClass("pass")
+          check_submit();
+        }
+        var li_leng_on = $(".terms_box").children("ul").find("li.pass").length
+        var li_leng = $(".terms_box").children("ul").find("li").length
+        if(li_leng == li_leng_on){
+          $(".terms_box").addClass("pass")
+          check_submit();
+        }
+      })
+
+      var check_ture = "true";
+      function check_submit(){
+        if( $(".name_box").hasClass("pass") === true && $(".email_box").hasClass("pass") === true && $(".pass_box").hasClass("pass") === true && $(".terms_box").hasClass("pass") === true ){
+          $("button.sign_com_btn").attr('disabled', false);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

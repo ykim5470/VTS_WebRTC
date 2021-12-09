@@ -1,0 +1,133 @@
+@charset "utf-8";
+@import "fontawesome.css";
+@import "font.css";
+
+* {margin:0;padding:0;font-family:'NanumSquare','Malgun Gothic',sans-serif;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+html,body {padding:0; margin:0;height:100%;line-height:1;font-size: 13px;font-family:'NanumSquare','Malgun Gothic',sans-serif;}
+body {width:100%;background-color:#fff;overflow-x: hidden;}
+body.over {overflow: hidden;}
+body.main_body {background: linear-gradient(180deg, #181d30 65%, #ffffff 35%);min-width: 1920px;min-height: 937px;overflow: hidden;}
+article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
+ul, li, ol {list-style: none;}
+blockquote, q {quotes: none;}
+blockquote:before, blockquote:after, q:before, q:after {content: ''; content: none;}
+table {border-collapse: collapse;border-spacing: 0;}
+td {word-break:break-all;}
+a {text-decoration: none; color:#000;}
+form { margin:0; padding:0; }
+fieldset { margin:0; padding:0; border:none;}
+img {border:0; vertical-align:middle;}
+caption{visibility:hidden; width:0; height:0; margin:0; padding:0; font-size:0; line-height:0}
+button {border-radius:0; margin:0; padding:0; border:0; outline: none; background:none;cursor: pointer;}
+input[type=text],input[type=password],input[type=number],input {border: 1px solid #8a8e94;vertical-align:middle;}
+input[type=date] {background-color: #fff;height: 30px;}
+select {padding:1px;border: 1px solid #d0d8dd;background: #fff;vertical-align:middle;font-size:11px;cursor: pointer;}
+label.radio {margin-right:5px;line-height: 1.5;margin-top:2px;}
+label.radio input[type=radio] {margin-right:2px;}
+.txt_hidden {margin: 0; padding: 0;font-size:0; line-height:0; color:transparent; overflow:hidden; text-indent:-999999px;}
+legend, .hidden {position:fixed; left:-999999px; width:1px; height:1px; overflow:hidden; font-size:0; line-height:0; color:transparent; text-indent:-999999px; opacity:0; visibility:hidden;}
+.mb_0{margin-bottom:0 !important;}
+.pb_0{padding-bottom:0 !important;}
+
+
+/* ------------------------ common component css ---------------------------- */
+/* fontawsome icon */
+.fa, .far, .fas, .fab {}
+
+/* 12 grid layout system */
+.row {position:relative;display: flex;display: -ms-flexbox;height: 100%;}
+.layout .layout {border:0;}
+.col_12 {width:100%;}
+.col_11 {width:calc(100% / 12 * 11);}
+.col_10 {width:calc(100% / 12 * 10);}
+.col_9 {width:calc(100% / 12 * 9);}
+.col_8 {width:calc(100% / 12 * 8);}
+.col_7 {width:calc(100% / 12 * 7);}
+.col_6 {width:calc(100% / 12 * 6);}
+.col_5 {width:calc(100% / 12 * 5);}
+.col_4 {width:calc(100% / 12 * 4);}
+.col_3 {width:calc(100% / 12 * 3);}
+.col_2 {width:calc(100% / 12 * 2);}
+.col_1 {width:calc(100% / 12 * 1);}
+.row .layout:last-child {border-right:0}
+
+/* scroll */
+::-webkit-scrollbar { -webkit-appearance: none; }
+::-webkit-scrollbar:vertical { width: 0; }
+::-webkit-scrollbar:horizontal { height: 0; }
+::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, .5); border-radius: 10px; border: 2px solid #ffffff; }
+::-webkit-scrollbar-track { border-radius: 10px; background-color: #ffffff; }
+
+.mt10 {margin-top: 10px !important}
+
+.ta_c {text-align: center !important;}
+.bg_white{background:#fff !important}
+
+.f_left {float: left}
+.f_right {float: right}
+
+.btn_r {display: inline-block;border:1px solid #dcdcdc;border-radius: 50px;background-color: #fff}
+button[disabled] {opacity: 0.4}
+
+.select_box select {min-width: 50px;height: 30px;line-height: 30px;}
+
+/* custom radio, checkbox */
+.chk_custom label {position:relative;cursor:pointer;font-weight:400;display: inline-block;}
+.chk_custom label span {display: block; border-radius: 5px;background-color: #fff;}
+.chk_custom label input:checked + span {color: #fff;background-color: #29cae4}
+.chk_custom label input[type="checkbox"],
+.chk_custom label input[type="radio"]{position:fixed; left:-999999px; width:1px; height:1px; opacity:0;}
+.chk_custom.sty01 label .checkbox {padding: 3px 6px;width: 50px;height: 20px;border-radius: 50px;background: #dadada;box-shadow: 0px 0px 6px 0 rgba(94, 94, 94, 1);}
+.chk_custom.sty01 label .checkbox:after {content: '';display: block;width: 15px;height: 15px;background-color: #fff;border-radius: 50%;-webkit-transition: all .15s ease;transition: all .15s ease;}
+.chk_custom.sty01 label input[type="checkbox"]:checked ~ .checkbox {background-color: #ff4e4c}
+.chk_custom.sty01 label input[type="checkbox"]:checked ~ .checkbox:after {-webkit-transform: translateX(25px);transform: translateX(25px);}
+
+/* file_box */
+.file_box {position: relative;}
+.file_box label {display: inline-block;width: 50px;height: 50px;line-height: 50px;text-align: center;font-size: 24px;border-radius: 50%;overflow: hidden;background-color: #fff;background-size: cover;background-repeat: no-repeat}
+.file_box label i:before {margin-left: -4px}
+.file_box label + i {position: absolute;bottom: -3px;left: -1px;font-size: 20px;background-color: #fff;border-radius: 50%}
+.file_box input {position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0,0,0,0);border: 0;}
+
+.title_box {overflow: hidden;}
+
+/* accodion */
+.accodion .acc_title {display: block;padding:10px;line-height: 30px;border-bottom: 1px solid #dadada;font-size: 15px;}
+.accodion .acc_title i {float: right;display: block;width: 30px;line-height: 30px;font-size: 20px;}
+.accodion .acc_cont {display: none;padding: 10px;border-bottom: 1px solid #dadada}
+
+/* ax5ui custom */
+label{margin-bottom:0; font-weight:400;}
+.radio, .checkbox{margin:0; display:inline-block;}
+input[type="radio"], input[type="checkbox"]{margin-top:0;}
+
+/* ax5ui toast cumstom */
+.ax5-ui-toast-container.top-center{left:50%; top:0; transform:translateX(-50%);}
+.ax5-ui-toast-container.top-center .ax5-ui-toast {-webkit-animation: ax-toast-bottom .3s cubic-bezier(0.86, 0, 0.07, 1);-o-animation: ax-toast-bottom .3s cubic-bezier(0.86, 0, 0.07, 1);animation: ax-toast-bottom .3s cubic-bezier(0.86, 0, 0.07, 1);}
+.ax5-ui-toast-container .ax5-ui-toast {padding: 0 6px;height: 41px;border:1px solid #5567ff;border-radius: 5px;color:#414145; box-shadow:none;}
+.ax5-ui-toast-container .ax5-ui-toast .ax-toast-icon{padding: 0 0px;}
+.ax5-ui-toast-container .ax5-ui-toast .ax-toast-icon .far{width:initial; line-height:1.9; color:inherit;}
+.ax5-ui-toast-container .ax-toast-buttons .ax-button-wrap button {padding: 4px 7px 4px;}
+.ax-button-wrap button {font-size:12px;}
+.ax5-ui-toast-container .ax5-ui-toast .ax-toast-close {vertical-align: middle;}
+.ax5-ui-toast-container .ax5-ui-toast.primary {border-color: #b0e8f9; color: #0ca7d7}
+.ax5-ui-toast-container .ax5-ui-toast.primary .ax-toast-icon .far,
+.ax5-ui-toast-container .ax5-ui-toast.primary .ax-toast-close {color: #0ca7d7}
+.ax5-ui-toast.primary .ax-button-wrap button {background: #dbf4fc; color: #0ca7d7;}
+.ax5-ui-toast-container .ax5-ui-toast.success {border-color: #c4e097; color: #508106}
+.ax5-ui-toast-container .ax5-ui-toast.success .ax-toast-icon .far,
+.ax5-ui-toast-container .ax5-ui-toast.success .ax-toast-close  {color: #508106}
+.ax5-ui-toast.success .ax-button-wrap button {background: #deebcb; color: #508106;}
+.ax5-ui-toast-container .ax5-ui-toast.info {border-color: #b1b3f1; color: #5355aa}
+.ax5-ui-toast-container .ax5-ui-toast.info .ax-toast-icon .far,
+.ax5-ui-toast-container .ax5-ui-toast.info .ax-toast-close {color: #5355aa}
+.ax5-ui-toast.info .ax-button-wrap button {background: #d6d7f9; color: #5355aa;}
+.ax5-ui-toast-container .ax5-ui-toast.danger {border-color: #feb8c6; color: #fc6180}
+.ax5-ui-toast-container .ax5-ui-toast.danger .ax-toast-icon .far,
+.ax5-ui-toast-container .ax5-ui-toast.danger .ax-toast-close {color: #fc6180}
+.ax5-ui-toast.danger .ax-button-wrap button {color: #fc6180;border: 1px solid #fc6180;border-radius: 5px;}
+.ax5-ui-toast.danger .ax-button-wrap button *{color: #fc6180;}
+.ax5-ui-toast-container .ax5-ui-toast.warning {border-color: #fad17a; color: #f5a536}
+.ax5-ui-toast-container .ax5-ui-toast.warning .ax-toast-icon .far,
+.ax5-ui-toast-container .ax5-ui-toast.warning .ax-toast-close {color: #f5a536}
+.ax5-ui-toast.warning .ax-button-wrap button {background: #fdebc4; color: #f5a536;}

@@ -1,0 +1,5 @@
+@import "contents.css";
+
+.menu_wrap .gnb li:last-child a{font-size: 16px;}
+.pop_up .p_body p:first-child{letter-spacing:-1px;}
+.pop_up.tour .tour_info > ul li span.t_course{line-height:18px;}

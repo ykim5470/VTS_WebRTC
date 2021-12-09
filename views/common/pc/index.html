@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="google-site-verification" content="j8qzNXdVWfNoTSQhRJn2mZERy5XsyNQwAxPuGXi471Q" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="enjoystreet.com" />
+    <meta name="title" content="엔조이스트릿" />
+    <meta
+      name="description"
+      content="모바일에서 경험하는 현장감 넘치는 특별한 여행과 인터랙티브한 쇼핑경험 또한 나에게 딱 맞는 맞춤여행과 다양한 테마를 경험해 보세요. 여행 전문 가이드가 여러분을 기다립니다 또한 가이드 여러분을 환영합니다."
+    />
+    <meta name="keywords" content="엔조이스트리트 , 엔조이스트릿 , 라이브투어 , 맞춤여행 , 인터렉티브 , 쇼핑경험 , APP , 전문가이드" />
+    <meta property="og:type" content="website" data-dynamic="true" />
+    <meta property="og:title" content="엔조이스트릿" data-dynamic="true" />
+    <meta
+      property="og:description"
+      content="모바일에서 경험하는 현장감 넘치는 특별한 여행과 인터랙티브한 쇼핑경험 또한 나에게 딱 맞는 맞춤여행과 다양한 테마를 경험해 보세요. 여행 전문 가이드가 여러분을 기다립니다 또한 가이드 여러분을 환영합니다."
+      data-dynamic="true"
+    />
+    <meta property="og:url" content="http://enjoystreet.com/" data-dynamic="true" />
+
+    <link rel="icon" href="http://www.enjoystreet.com/img/enjoystreet.ico" />
+    <link rel="shortcut icon" href="http://www.enjoystreet.com/img/enjoystreet.ico" />
+    <link rel="stylesheet" href="/resource/pc/owlcarousel/owl.carousel.min.css" />
+    <link rel="stylesheet" href="/resource/pc/owlcarousel/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="/resource/pc/pagination/pagination.css" />
+    <link rel="stylesheet" href="/css/pc/main.css" />
+    <script src="/resource/pc/jquery.min.js"></script>
+    <script src="/resource/pc/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/resource/pc/pagination/pagination.min.js"></script>
+    <script src="/js/pc/script.js"></script>
+    <title>EnjoyStreet</title>
+    <script>
+      $(document).ready(function () {
+        $(function () {
+          $("img[usemap]").rwdImageMaps();
+          $("#map1").width("100%");
+        });
+
+        /* owlCarousel */
+        $(".owl01").owlCarousel({
+          items: 1,
+          loop: true,
+          dots: true,
+          autoplay: true,
+        });
+        $(".owl02").owlCarousel({
+          items: 1,
+          loop: false,
+          dots: true,
+          autoplay: false,
+        });
+        $(".owl03").owlCarousel({
+          items: 1,
+          loop: false,
+          dots: true,
+          autoplay: false,
+        });
+        /* 디바이스 사이즈에 따른 pagination 컨텐츠 조절 */
+        let container = $("#pagination");
+
+        $(window).resize(function () {
+          var width = $(window).width();
+          var inner = 10;
+          if (width >= 1739) {
+            var inner = 10;
+          } else if (width >= 769 && width < 1740) {
+            var inner = 8;
+          } else if (width < 769) {
+            var inner = 6;
+          }
+          /* pagination */
+          container.pagination({
+            pageSize: inner,
+            showPageNumbers: false,
+            showNavigator: false,
+            showFirst: true,
+            dataSource: [
+              { name: "guide_01", value: "guide01" },
+              { name: "guide_02", value: "guide02" },
+              { name: "guide_03", value: "guide03" },
+              { name: "guide_04", value: "guide04" },
+              { name: "guide_05", value: "guide05" },
+              { name: "guide_06", value: "guide06" },
+              { name: "guide_07", value: "guide07" },
+              { name: "guide_08", value: "guide08" },
+              { name: "guide_09", value: "guide09" },
+              { name: "guide_10", value: "guide10" },
+              { name: "guide_05", value: "guide05" },
+              { name: "guide_06", value: "guide06" },
+              { name: "guide_07", value: "guide07" },
+              { name: "guide_08", value: "guide08" },
+              { name: "guide_09", value: "guide09" },
+              { name: "guide_10", value: "guide10" },
+              { name: "guide_01", value: "guide01" },
+              { name: "guide_02", value: "guide02" },
+              { name: "guide_03", value: "guide03" },
+              { name: "guide_04", value: "guide04" },
+            ],
+            callback: function (data, pagination) {
+              var dataHtml = "<ul>";
+              /* pagination 콘텐츠 설정 */
+              $.each(data, function (index, item) {
+                dataHtml +=
+                  "<li><div>" + '<a href="/intro/guide" style="background: url(/img/pc/' + item.name + '.png)center top no-repeat;background-size:cover;" >' + item.value + "</a>" + "</div></li>";
+              });
+              dataHtml += "</ul>";
+              $("#data-container").html(dataHtml);
+            },
+          });
+        });
+
+        /* pagination */
+        var width = $(window).width();
+        if (width >= 1739) {
+          var inner = 10;
+        } else if (width >= 769 && width < 1740) {
+          var inner = 8;
+        } else if (width < 769) {
+          var inner = 6;
+        }
+        container.pagination({
+          pageSize: inner,
+          showPageNumbers: false,
+          showNavigator: false,
+          showFirst: true,
+          dataSource: [
+            { name: "guide_01", value: "guide01" },
+            { name: "guide_02", value: "guide02" },
+            { name: "guide_03", value: "guide03" },
+            { name: "guide_04", value: "guide04" },
+            { name: "guide_05", value: "guide05" },
+            { name: "guide_06", value: "guide06" },
+            { name: "guide_07", value: "guide07" },
+            { name: "guide_08", value: "guide08" },
+            { name: "guide_09", value: "guide09" },
+            { name: "guide_10", value: "guide10" },
+            { name: "guide_05", value: "guide05" },
+            { name: "guide_06", value: "guide06" },
+            { name: "guide_07", value: "guide07" },
+            { name: "guide_08", value: "guide08" },
+            { name: "guide_09", value: "guide09" },
+            { name: "guide_10", value: "guide10" },
+            { name: "guide_01", value: "guide01" },
+            { name: "guide_02", value: "guide02" },
+            { name: "guide_03", value: "guide03" },
+            { name: "guide_04", value: "guide04" },
+          ],
+          callback: function (data, pagination) {
+            var dataHtml = "<ul>";
+            /* pagination 콘텐츠 설정 */
+            $.each(data, function (index, item) {
+              dataHtml +=
+                "<li><div>" +
+                '<a href="html/ko/PC-CO-KWP0001.html" style="background: url(/img/pc/' +
+                item.name +
+                '.png)center top no-repeat;background-size:cover;" >' +
+                item.value +
+                "</a>" +
+                "</div></li>";
+            });
+            dataHtml += "</ul>";
+            $("#data-container").html(dataHtml);
+          },
+        });
+
+        /* 페이지 하단 이동 버튼 */
+        var scrollhegiht = $(document).height();
+        $(".more_btn span").click(function () {
+          $("html, body").animate(
+            {
+              scrollTop: scrollhegiht,
+            },
+            800
+          );
+        });
+
+        /* section04 가이드 이미지 변화 이벤트 */
+        function getRandom(min, max) {
+          return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+        function getRandomArray(min, max, count) {
+          if (max - min + 1 < count) return;
+          var rst = [];
+          while (1) {
+            var index = getRandom(min, max);
+            if (rst.indexOf(index) > -1) {
+              continue;
+            }
+            rst.push(index);
+            if (rst.length == count) {
+              break;
+            }
+          }
+          return rst.sort(function (a, b) {
+            return a - b;
+          });
+        }
+        setInterval(function () {
+          getRandomArray(1, 10, 6);
+          var bgNum = getRandomArray(1, 10, 6);
+          var bgResult01 = bgNum[0];
+          bgResult01 = "00" + bgResult01;
+          bgResult01 = bgResult01.slice(-2);
+          var bgResult02 = bgNum[1];
+          bgResult02 = "00" + bgResult02;
+          bgResult02 = bgResult02.slice(-2);
+          var bgResult03 = bgNum[2];
+          bgResult03 = "00" + bgResult03;
+          bgResult03 = bgResult03.slice(-2);
+          var bgResult04 = bgNum[3];
+          bgResult04 = "00" + bgResult04;
+          bgResult04 = bgResult04.slice(-2);
+          var bgResult05 = bgNum[4];
+          bgResult05 = "00" + bgResult05;
+          bgResult05 = bgResult05.slice(-2);
+
+          $(".group_01")
+            .css({ "background-image": "url('/img/pc/guide_" + bgResult03 + ".png')" })
+            .text("guide" + bgResult03);
+          $(".group_02")
+            .css({ "background-image": "url('/img/pc/guide_" + bgResult02 + ".png')" })
+            .text("guide" + bgResult02);
+          $(".group_03")
+            .css({ "background-image": "url('/img/pc/guide_" + bgResult01 + ".png')" })
+            .text("guide" + bgResult01);
+          $(".group_04")
+            .css({ "background-image": "url('/img/pc/guide_" + bgResult04 + ".png')" })
+            .text("guide" + bgResult04);
+          $(".group_05")
+            .css({ "background-image": "url('/img/pc/guide_" + bgResult05 + ".png')" })
+            .text("guide" + bgResult05);
+        }, 1000);
+      });
+
+      /* 스크롤 이벤트 */
+      window.onload = function () {
+        var elm = ".wheel";
+        var last_y = 0; // 스크롤 마지막 하단 높이
+        var onpage_on = true;
+        var isScroll = false;
+
+        $(elm).each(function (index) {
+          $(this).on("mousewheel DOMMouseScroll", function (e) {
+            if(last_y > $("html").scrollTop() && !onpage_on){
+              onpage_on = true;
+              isScroll = false;
+            }
+            if(!onpage_on) return; 
+            e.preventDefault();
+            e.stopPropagation();		
+            if(isScroll) return;
+            isScroll = true;	
+            var delta = 0;
+            if (!event) event = window.event;
+            if (event.wheelDelta) {
+              console.log(event)
+              delta = event.wheelDelta / 120;
+              if (window.opera) delta = -delta;
+            } else if (event.detail) delta = -event.detail / 1;
+            var moveTop = $(window).scrollTop();
+            var elmSelecter = $(elm).eq(index);
+            if (delta < 0) {
+              if ($(elmSelecter).next() != undefined) {
+                try {
+                  moveTop = $(elmSelecter).next().offset().top;
+                } catch (e) {}
+              }
+            } else {
+              if ($(elmSelecter).prev() != undefined) {
+                try {
+                  moveTop = $(elmSelecter).prev().offset().top;
+                } catch (e) {}
+              }
+            }
+            $("html,body")
+              .stop()
+              .animate({scrollTop: moveTop - 86 + "px"}, 600, function (){isScroll=false;});
+          });
+        });
+      };
+
+      $(document).ready(function () {
+        $(document).bind("contextmenu", function (e) {
+          return false;
+        });
+      });
+      $(document).bind("selectstart", function () {
+        return false;
+      });
+      $(document).bind("dragstart", function () {
+        return false;
+      });
+
+      // comingsoon alert
+      function soon_btn() {
+        alert("서비스 준비중입니다.");
+      }
+
+      // cookie load
+      var getCookie = function (cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(";");
+        for (var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == " ") c = c.substring(1);
+          if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+        }
+        return "";
+      };
+      // 24hour setting
+      var setCookie = function (cname, cvalue, exdays) {
+        var todayDate = new Date();
+        todayDate.setTime(todayDate.getTime() + exdays * 24 * 60 * 60 * 1000);
+        var expires = "expires=" + todayDate.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+      };
+      var couponClose = function () {
+        if ($("input[name='chkbox']").is(":checked") == true) {
+          setCookie("close", "Y", 1);
+        }
+        $(".show_pop").hide();
+      };
+      $(document).ready(function () {
+        var cookiedata = document.cookie;
+        if (cookiedata.indexOf("close=Y") < 0) {
+          $(".show_pop").show();
+        } else {
+          $(".show_pop").hide();
+        }
+        $("#close").click(function () {
+          couponClose();
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="cont_warp">
+      <div class="cont_hd">
+        <div class="top_nav" id="cont_hd">
+          <div class="top_left">
+            <div class="logo_box">
+              <a href="/main"><img src="/img/pc/vts_logo.svg" alt="EnjoyStreet로고" /></a>
+            </div>
+            <div class="menu_box">
+              <ul>
+                <li><a href="/intro/guide">Tourist Guide</a></li>
+                <li><a href="/intro/trip">Recommended Tour</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="nav_lnb top_right">
+            <ul class="lang_box">
+              <li>
+                <a href="/main" data-lang="ko"><img src="/img/pc/kr.svg" alt="korean" /></a>
+              </li>
+              <li>
+                <a href="/main" data-lang="cn"><img src="/img/pc/chn.svg" alt="chinese" /></a>
+              </li>
+              <li>
+                <a href="/main" data-lang="us"><img src="/img/pc/usa.svg" alt="english " /></a>
+              </li>
+              <li>
+                <a href="/main" data-lang="jp"><img src="/img/pc/jpn.svg" alt="japanese" /></a>
+              </li>
+            </ul>
+            <ul class="login_box">
+              {% if user %}
+              <li><a href="/auth/logout">로그아웃</a></li>
+              {% else %}
+              <li><a href="/guide/login">가이드 로그인</a></li>
+              <li><a href="/store/login">판매점 로그인</a></li>
+              <li><a href="/signup/partner">회원가입</a></li>
+              {% endif %}
+            </ul>
+          </div>
+          <nav class="nav_slidenav">
+            <span class="close_sidenav"><i class="fas fa-times"></i></span>
+            <div class="cont_box">
+              <p>LANGUAGE</p>
+              <ul class="lang_box">
+                <li>
+                  <a href="/main" data-lang="ko"><img src="/img/pc/kr.svg" alt="korean" />KOREAN</a>
+                </li>
+                <li>
+                  <a href="/main" data-lang="cn"><img src="/img/pc/chn.svg" alt="Chinese" />CHINESE</a>
+                </li>
+                <li>
+                  <a href="/main" data-lang="us"><img src="/img/pc/usa.svg" alt="english " />ENGLISH</a>
+                </li>
+                <li>
+                  <a href="/main" data-lang="jp"><img src="/img/pc/jpn.svg" alt="japanese" />JAPANESE</a>
+                </li>
+              </ul>
+              <ul class="login_box">
+                {% if user %}
+                <li><a href="/auth/logout">로그아웃</a></li>
+                {% else %}
+                <li><a href="/guide/login">가이드 로그인</a></li>
+                <li><a href="/store/login">판매점 로그인</a></li>
+                <li><a href="/signup/partner">회원가입</a></li>
+                {% endif %}
+              </ul>
+              <div class="menu_wrap">
+                <p>카테고리</p>
+                <ul class="gnb">
+                  <li><a href="/intro/guide">가이드</a></li>
+                  <li><a href="/intro/trip">추천 투어</a></li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          <div class="hamburger_wrapper">
+            <span class="hamburger"><i class="fas fa-bars"></i></span>
+          </div>
+          <div class="back_img"></div>
+          <div class="show_pop">
+            <img src="/img/pc/pop_img/img_notice_sv.png" alt="관광벤처기업 공모 당선 팝업 이미지" usemap="#map1" />
+            <map name="map1">
+              <area shape="rect" coords="23,375,427,407" href="http://tourbiz.spectory.net/tourbiz/2021contest/2021/1/noticeDetail?postId=5582&page=1" alt="" target="_blank" />
+              <area shape="rect" coords="24,420,426,451" href="https://news.mt.co.kr/mtview.php?no=2021051410370739916" alt="" target="_blank" />
+            </map>
+            <div class="show_pop_close">
+              <span id="check" class="btnTodayHide"><input type="checkbox" value="checkbox" name="chkbox" id="chkday" /><label for="chkday">오늘 하루 열지 않기</label></span>
+              <span id="close" class="btnClose">[ 닫기 ]</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="main_cont scrollbar-inner">
+        <article class="section_wrap">
+          <div class="main_banner wheel">
+            <ul class="l_txt">
+              <li>문의사항</li>
+              <li>help@enjoystreet.com</li>
+            </ul>
+            <div class="blue_box">
+              <p class="s_tit">VTS(Virtual Travel System)</p>
+              <p class="b_tit">라이브투어 영상보기</p>
+              <p class="txt">전문가이드와 함께 떠나는<br />VTS 여행(도시서울편)</p>
+              <div class="more_btn">
+                <div class="show_v">> 샘플영상 보러가기</div>
+                <span></span>
+              </div>
+            </div>
+            <div class="owl-carousel owl-theme owl-loaded owl-drag owl01">
+              <div class="item">
+                <div class="img01">
+                  <div>
+                    <h4>Enjoy Street 만의<br />특별한 여행을 경험해보세요!</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="img02">
+                  <div><h4>세상에 단 하나뿐인 나만의 여행을 만들어 드립니다.</h4></div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="img03">
+                  <div><h4>우리는 여행의 새로운 기준과 트렌드를 만들고 이끌어 갑니다.</h4></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <section class="section01 wheel">
+            <img src="/img/pc/microphone.svg" alt="microphone" />
+            <div class="inner">
+              <div class="circle"></div>
+              <div class="owl-carousel owl-theme owl-loaded owl-drag chang_content_wrap owl02">
+                <div class="item">
+                  <div class="chang_box">
+                    <div class="chang_img">
+                      <img src="/img/pc/slide_img01.jpg" alt="첫번째 섹션 첫번째 슬라이드 이미지" />
+                    </div>
+                    <div class="chang_content">
+                      <h3>모바일에서 경험하는 현장감 넘치는 특별한 여행</h3>
+                      <h2>나의 소리로 경험하는 다양한 여행 서비스</h2>
+                      <p>뛰어난 실시간 음성인식 기술과 분석으로,<br />개인화된 상품추천부터 여행기록까지 새로운 여행경험을 선사합니다.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="chang_box">
+                    <div class="chang_img">
+                      <img src="/img/pc/slide_img02.jpg" alt="두번째 섹션 첫번째 슬라이드 이미지" />
+                    </div>
+                    <div class="chang_content">
+                      <h3>인터랙티브한 쇼핑 경험</h3>
+                      <h2>유쾌한 경험 서비스</h2>
+                      <p>AR과 쇼핑을 결합한 새롭고<br />즐거운 체험을 선사합니다.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="section02 wheel">
+            <img src="/img/pc/travel_map.svg" alt="travel map" />
+            <div class="inner">
+              <div class="more_btn"><a href="/intro/trip">MORE</a><span></span></div>
+              <div class="owl-carousel owl-theme owl-loaded owl-drag chang_content_wrap owl03">
+                <div class="item">
+                  <div class="chang_box">
+                    <div class="chang_img">
+                      <img src="/img/pc/slide_img03.jpg" alt="세번째 섹션 첫번째 슬라이드 이미지" />
+                    </div>
+                    <div class="chang_content">
+                      <h2>나에게 딱 맞는 맞춤여행을 경험해 보세요.</h2>
+                      <p>여러분들을 위한<br />여러분들의 의한<br />여러분들의 여행만을 만들어 드립니다.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="chang_box">
+                    <div class="chang_img">
+                      <img src="/img/pc/slide_img04.jpg" alt="네번째 섹션 첫번째 슬라이드 이미지" />
+                    </div>
+                    <div class="chang_content">
+                      <h2>다양한 테마를 경험해 보세요.</h2>
+                      <p>헤리티지부터<br />트렌디까지<br />다채로운 여행테마를<br />제공합니다.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="chang_box">
+                    <div class="chang_img">
+                      <img src="/img/pc/slide_img05.jpg" alt="다섯번째 섹션 첫번째 슬라이드 이미지" />
+                    </div>
+                    <div class="chang_content">
+                      <h2>합리적이고 정직한 요금</h2>
+                      <p>거품을 빼고<br />여행 본질에 집중했습니다.<br />선택한 여행지 거리 기준으로<br />제공합니다.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="section03 wheel">
+            <h2>VTS<span>(Virtual Travel System)</span></h2>
+            <div class="inner">
+              <section class="guide_paging_wrap">
+                <div class="guide_txt">
+                  <h2>여행 전문 가이드가 여러분을 기다립니다.</h2>
+                  <h3>다양한 분야와 테마를 겸비한 전문 가이드를 만나보세요.</h3>
+                  <p>※가이드 클릭 시 정보를 열람할 수 있습니다.</p>
+                </div>
+                <div id="pagination"></div>
+                <div id="data-container"></div>
+              </section>
+            </div>
+          </section>
+          <section class="section04 wheel">
+            <div class="inner">
+              <section class="guide_paging_wrap">
+                <div class="guide_txt">
+                  <h2>가이드 여러분을 환영합니다.</h2>
+                  <h3>다양한 분야와 테마를 겸비한 전문가이드를 우리는 기다립니다.</h3>
+                </div>
+                <div class="center">
+                  <ul>
+                    <li><div class="guide_img group_01" style="background-image: url('/img/pc/guide_01.png')"></div></li>
+                    <li><div class="guide_img group_02" style="background-image: url('/img/pc/guide_02.png')"></div></li>
+                    <li><div class="guide_img group_03" style="background-image: url('/img/pc/guide_03.png')"></div></li>
+                    <li><div class="guide_img group_04" style="background-image: url('/img/pc/guide_04.png')"></div></li>
+                    <li><div class="guide_img group_05" style="background-image: url('/img/pc/guide_05.png')"></div></li>
+                  </ul>
+                </div>
+              </section>
+            </div>
+          </section>
+          <section class="section05 wheel">
+            <div class="inner">
+              <h2>Enjoy street</h2>
+              <h3>모바일로 만나는 Enjoy Street <b>라이브투어</b>와 <b>맞춤투어</b> 서비스</h3>
+              <ul>
+                <li>
+                  <img src="/img/pc/bottom_img01.svg" alt="" />
+                  <p>여행전문가이드와<br />함께하는 비대면<br />실시간 라이브투어</p>
+                </li>
+                <li>
+                  <img src="/img/pc/bottom_img02.svg" alt="" />
+                  <p>여행객과 여행전문가이드,<br />소상공인을 연결하는<br />공유와 상생의 플랫폼</p>
+                </li>
+                <li>
+                  <img src="/img/pc/bottom_img03.svg" alt="" />
+                  <p>라이브투어 중<br />경험하는<br />E-COMMERCE 기능</p>
+                </li>
+                <li>
+                  <img src="/img/pc/bottom_img04.svg" alt="" />
+                  <p>거리기준 수수료<br />모델에 따른<br />맞춤투어 설계</p>
+                </li>
+              </ul>
+              <section class="download_guide">
+                <button onclick="soon_btn()">Enjoy Street 경험하기</button>
+              </section>
+              <img src="/img/pc/hand_bg.png" alt="스마트폰 손 이미지" />
+            </div>
+          </section>
+          <footer class="cont_ft wheel">
+            <div class="ft_text">
+              <div class="ft_terms">
+                <div class="left_align">
+                  <a href="/TermsOfService">이용약관</a>
+                  <a href="/PrivacyPolicy">개인정보처리방침</a>
+                  <a href="/TermsOfLocation">위치정보이용약관</a>
+                </div>
+                <div class="right_align">
+                  <div class="in_guide">
+                    <a href="/GuideSubscribe">가이드 가입안내</a>
+                    <a href="/StoreSubscribe">판매점 입점안내</a>
+                  </div>
+                </div>
+              </div>
+              <div class="b_01">
+                <img src="/img/pc/enjoystreet_white.svg" alt="Enjoystreet white" />
+                <div class="sns_box">
+                  <ul>
+                    <li><a href="#" class="sns_nblog"></a></li>
+                    <li><a href="#" class="sns_instar"></a></li>
+                    <li><a href="#" class="sns_youtube"></a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="b_02">
+                <span>주식회사 브이알에듀</span>
+                <span>대표 김재헌</span>
+                <span>사업등록번호 485-88-00534</span>
+                <a target="_blank" href="https://www.ftc.go.kr/www/bizCommView.do?key=3765&apv_perm_no=2021313022530202876&pageUnit=10&searchCnd=wrkr_no&searchKrwd=4858800534&pageIndex=1">사업자정보확인</a>
+              </div>
+              <div class="b_03">
+                <span>개인정보보호 책임자 김재헌</span>
+                <span>통신판매업신고번호 제2021-서울마포-2876</span>
+                <span>관광사업자 등록번호 제2021-07호</span>
+              </div>
+              <div class="b_04">
+                <span>04034 서울특별시 마포구 양화로 81 3층 346호</span>
+              </div>
+              <div class="b_05">
+                <span>Tel. 070-8221-1839</span>
+                <span>Fax. 02-6322-2736</span>
+                <span>E-Mail. help@enjoystreet.com</span>
+              </div>
+              <div class="b_06 copy">
+                <span>브이알에듀는 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 상품·거래정보 및 거래에 관한 의무와 책임은 판매자에게 있습니다.</span>
+                <span>Copyright 2021 Enjoy Street, All rights reserved.</span>
+              </div>
+            </div>
+          </footer>
+        </article>
+      </section>
+      <div class="show_v_pop">
+        <span class="close">x</span>
+        <div class="v_wrap">
+          <iframe class="video" src="//www.youtube.com/embed/NhQcw69dthg?autoplay=1&rel=0&showsearch=0&loop=1&muted=1" allow="autoplay" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

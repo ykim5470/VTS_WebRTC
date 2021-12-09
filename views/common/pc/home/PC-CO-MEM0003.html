@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <title>EnjoyStreet</title>
+
+    <link rel="icon" href="http://www.enjoystreet.com/img/enjoystreet.ico" />
+    <link rel="shortcut icon" href="http://www.enjoystreet.com/img/enjoystreet.ico" />
+    <link rel="stylesheet" href="/css/pc/login.css" />
+    <script src="/resource/pc/jquery.min.js"></script>
+    <script src="/js/pc/script.js"></script>
+    <script src="/js/mo/idcheck.js"></script>
+    <script>
+      $(window).on("load", function () {
+        $(".login_box li").last().addClass("hide");
+      });
+    </script>
+  </head>
+  <body>
+    <div class="wrap sub step login">
+      {% include "common/pc/common/header.html" %}
+      <div class="sub_cont sign">
+        <div class="sub_header">
+          <img src="/img/pc/enjoystreet_black.svg" alt="EnjoyStreet 로고" />
+          <p><b>판매점</b> 회원가입</p>
+        </div>
+        <div class="tabs sign_form" data-tab="tabWrap">
+          <div class="title_box">
+            <ul class="tab_links">
+              <li class="on"><a href="#" data-tablink=".tabs .tab01">판매점 대표</a></li>
+              <li><a href="#" data-tablink=".tabs .tab02">판매점 직원</a></li>
+            </ul>
+          </div>
+          <div class="tab-content find">
+            <div class="tab tab01">
+              <!-- <form id="signFrm" target="payviewer" action="PC-CO-MEM0006.html" onsubmit="window.open('PC-CO-MEM0006.html', 'payviewer', 'width=600, height=800,resizeable,scrollbars');"> -->
+              <form id="signFrm" action="/store/register/admin" method="post">
+                <div>
+                  <div class="form_row name_box">
+                    <label for="name_01">대표 이름</label>
+                    <input type="text" id="name_01" name="name_01" placeholder="이름을 입력해주세요." title="이름입력" />
+                    <p class="err_msg"></p>
+                  </div>
+                  <div class="form_row compa_box">
+                    <label for="name_02">상호명</label>
+                    <span class="inc_info"><i class="fas fa-info-circle"></i>사업체명 입력 시 사업자등록증에 등록한 업체명을 입력해 주세요.</span>
+                    <input type="text" id="name_02" name="name_02" placeholder="상호명을 입력해주세요." title="이름입력" />
+                    <p class="err_msg"></p>
+                  </div>
+                  <div class="form_row inc_box">
+                    <label for="inc_num">사업자 번호</label>
+                    <span class="inc_check">(체크 완료)</span>
+                    <span class="inc_info"><i class="fas fa-info-circle"></i>사업자 번호 입력시 '-'를 빼고 입력해 주세요</span>
+                    <input type="text" name="inc_num" id="inc_num" placeholder="예 : 0000000000" maxlength="12" />
+                    <input type="button" name="overlapCheck01" id="overlapCheck01" value="중복체크" onclick="companyCheck()" class="overlapCheck" />
+                    <p class="err_msg"></p>
+                  </div>
+                  <div class="form_row email_box">
+                    <div>
+                      <label for="email_01">이메일</label>
+                      <span class="email_check">(체크 완료)</span>
+                    </div>
+                    <input type="text" name="email_01" value="" id="email_01" />
+                    <span>@</span>
+                    <input type="text" name="email_02" value="" id="email_02" placeholder="- - 직접입력 - -" />
+                    <select id="selectEmail">
+                      <option value="직접입력" selected="selected">직접입력</option>
+                      <option value="gmail.com">gmail.com</option>
+                      <option value="naver.com">naver.com</option>
+                      <option value="daum.net">daum.net</option>
+                      <option value="hotmail.com">hotmail.com</option>
+                      <option value="nate.com">nate.com</option>
+                    </select>
+                    <input type="button" name="emailCheck01" id="emailCheck01" value="중복체크" onclick="dupCheck()" class="emailCheck" />
+                    <p class="err_msg"></p>
+                  </div>
+                  <div class="form_row pass_box">
+                    <div class="pw_cont pwd">
+                      <label for="pw">비밀번호 입력</label>
+                      <input type="password" id="pw" name="password" placeholder="8자 이상으로 입력해주세요." maxlength="20" />
+                      <div class="tooltip">
+                        <ul class="chk_list">
+                          <li class="pwdRule1">영문 + 숫자 + 특수 문자 2종류 포함</li>
+                          <li class="pwdRule2">연속된 숫자 및 반복 숫자, 문자 4자 이상 제한</li>
+                          <li class="pwdRule3">8자이상 20자미만</li>
+                        </ul>
+                      </div>
+                      <p class="err_msg"></p>
+                    </div>
+                    <div class="pw_cont re_pwd">
+                      <label for="rePw">비밀번호 확인</label>
+                      <input type="password" id="rePw" placeholder="비밀번호를 다시한번 입력하세요." maxlength="20" disabled />
+                      <p class="err_msg"></p>
+                    </div>
+                  </div>
+                  <div class="sub_header">
+                    <p>회원약관</p>
+                  </div>
+                  <div class="terms_box">
+                    <div class="terms_all_cont">
+                      <label class="chk_custom" for="chk_all01">
+                        <input type="checkbox" name="모두 동의" id="chk_all01" />
+                        <span class="checkbox"></span>
+                        모두 동의합니다.
+                      </label>
+                      <p>전체동의는 필수 및 선택정보에 대한 동의도 포함되어 있으며, 개별적으로도 동의를 선택하실 수 있습니다. 선택항목에 대한 동의를 거부하시는 경우에도 서비스는 이용이 가능합니다.</p>
+                    </div>
+                    <ul class="terms_cont">
+                      <li class="must">
+                        <label class="chk_custom mr-0" for="chk1">
+                          <input type="checkbox" name="이용약관 동의" id="chk1" disabled />
+                          <span class="checkbox"></span>
+                        </label>
+                        <div class="term_01">EnjoyStreet 온라인 플랫폼 이용약관 동의<span>(필수)</span></div>
+                        <div class="term_pop">
+                          <div class="term_service">{% include "common/pc/common/terms/ter0002.html" %}</div>
+                          <div class="term_check_box">
+                            <div class="term_check disabled">동의합니다</div>
+                            <div class="term_check_close">닫기</div>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="must">
+                        <label class="chk_custom mr-0" for="chk2">
+                          <input type="checkbox" name="개인정보 처리방침" id="chk2" disabled />
+                          <span class="checkbox"></span>
+                        </label>
+                        <div class="term_02">EnjoyStreet 온라인 플랫폼 개인정보 처리방침 동의<span>(필수)</span></div>
+                        <div class="term_pop">
+                          <div class="term_service">{% include "common/pc/common/terms/ter0002.html" %}</div>
+                          <div class="term_check_box">
+                            <div class="term_check disabled">동의합니다</div>
+                            <div class="term_check_close">닫기</div>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <label class="chk_custom mr-0" for="chk3">
+                          <input type="checkbox" name="위치정보 이용약관 동의" id="chk3" />
+                          <span class="checkbox"></span>
+                        </label>
+                        <div class="term_03">프로모션에 관한 추가정보 활용 동의<span>(선택)</span></div>
+                        <div class="term_pop">
+                          <div class="term_service">{% include "common/pc/common/terms/ter0002.html" %}</div>
+                          <div class="term_check_box">
+                            <div class="term_check disabled">동의합니다</div>
+                            <div class="term_check_close">닫기</div>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="more_info pass">
+                        <label class="chk_custom mr-0" for="chk4">
+                          <input type="checkbox" name="위치정보 이용약관 동의" id="chk4" />
+                          <span class="checkbox"></span>
+                        </label>
+                        <div class="term_03">맞춤 서비스를 위한 추가정보 수집에 대한 동의<span>(선택)</span></div>
+                        <div class="term_pop">
+                          <div class="term_service">{% include "common/pc/common/terms/ter0002.html" %}</div>
+                          <div class="term_check_box">
+                            <div class="term_check disabled">동의합니다</div>
+                            <div class="term_check_close">닫기</div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                    <div class="enter_info">
+                      <p>맞춤 서비스를 위한 추가정보 수집 항목</p>
+                      <table>
+                        <colgroup>
+                          <col style="width: 75px" />
+                          <col style="width: calc(100% - 75px)" />
+                        </colgroup>
+                        <tbody>
+                          <tr>
+                            <th>생년월일</th>
+                            <td>
+                              <select name="i_year_01" id="i_year"></select>
+                              <span>년</span>
+                              <select name="i_month_01" id="i_month"></select>
+                              <span>월</span>
+                              <select name="i_day_01" id="i_day"></select>
+                              <span>일</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>성별</th>
+                            <td>
+                              <div class="input_group opt_custom" id="gen_check">
+                                <label for="opt1">
+                                  <input type="radio" name="gender_01" id="opt1" value="남자" />
+                                  <span class="radiobox"></span>남자
+                                </label>
+                                <label for="opt2">
+                                  <input type="radio" name="gender_01" id="opt2" value="여자" />
+                                  <span class="radiobox"></span>여자
+                                </label>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>전화번호</th>
+                            <td><input type="text" name="ph_num_01" class="ph_num" id="ph_num" placeholder="예 : 010-1234-5679" maxlength="13" /></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="btn_group">
+                    <a class="back" href="/signup/partner">되돌아가기</a>
+                    <button id="join-btn" type="submit" class="sign_com_btn" disabled>회원가입</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="tab tab02 find hidden">
+              <!-- <form id="signFrm02" target="payviewer" action="PC-CO-MEM0006.html" onsubmit="window.open('PC-CO-MEM0006.html', 'payviewer', 'width=600, height=800,resizeable,scrollbars');"> -->
+              <form id="signFrm02" action="/store/register" method="post">
+                <div>
+                  <div class="form_row name_box">
+                    <label for="name_03">이름</label>
+                    <input type="text" id="name_03" name="name_03" placeholder="이름을 입력해주세요." title="이름입력" />
+                    <p class="err_msg"></p>
+                  </div>
+                  <div class="form_row inc_box">
+                    <div>
+                      <label for="inc_num02">사업자 번호</label>
+                      <span class="inc_check">(체크 완료)</span>
+                    </div>
+                    <input type="text" name="inc_num02" id="inc_num02" placeholder="우측의 검색 버튼을 클릭하여, 사업자 번호를 조회해 주세요." maxlength="12" disabled />
+                    <input type="button" name="overlapCheck02" id="overlapCheck02" value="&#xf002" class="overlapCheck search" onclick="window.open('/store/signup/bsnsrc', '_blank', 'width=410, height=550, location=no, status=no, toolbar=no, scrollbars=no') " >
+                    <p class="err_msg"></p>
+                  </div>
+                  <div class="form_row compa_box">
+                    <label for="name_04">사업체명</label>
+                    <input type="text" id="name_04" name="name_04" placeholder="사업자 번호 입력 시 자동 반영됩니다." title="이름입력" disabled />
+                    <p class="err_msg"></p>
+                  </div>
+                  <div class="form_row email_box">
+                    <div>
+                      <label for="email_03">이메일</label>
+                      <span class="email_check">(체크 완료)</span>
+                    </div>
+                    <input type="text" name="email_03" value="" id="email_03" />
+                    <span>@</span>
+                    <input type="text" name="email_04" value="" id="email_04" placeholder="- - 직접입력 - -" />
+                    <select id="selectEmail">
+                      <option value="직접입력" selected="selected">직접입력</option>
+                      <option value="gmail.com">gmail.com</option>
+                      <option value="naver.com">naver.com</option>
+                      <option value="daum.net">daum.net</option>
+                      <option value="hotmail.com">hotmail.com</option>
+                      <option value="nate.com">nate.com</option>
+                    </select>
+                    <input type="button" name="emailCheck02" id="emailCheck02" value="중복체크" onclick="dupEmpCheck()" class="emailCheck" />
+                    <p class="err_msg"></p>
+                  </div>
+                  <div class="form_row pass_box">
+                    <div class="pw_cont pwd">
+                      <label for="pw02">비밀번호 입력</label>
+                      <input type="password" id="pw02" name="password_02" placeholder="8자 이상으로 입력해주세요." maxlength="20" />
+                      <div class="tooltip">
+                        <ul class="chk_list">
+                          <li class="pwdRule1">영문 + 숫자 + 특수 문자 2종류 포함</li>
+                          <li class="pwdRule2">연속된 숫자 및 반복 숫자, 문자 4자 이상 제한</li>
+                          <li class="pwdRule3">8자이상 20자미만</li>
+                        </ul>
+                      </div>
+                      <p class="err_msg"></p>
+                    </div>
+                    <div class="pw_cont re_pwd">
+                      <label for="rePw02">비밀번호 확인</label>
+                      <input type="password" id="rePw02" placeholder="비밀번호를 다시한번 입력하세요." maxlength="20" disabled />
+                      <p class="err_msg"></p>
+                    </div>
+                  </div>
+                  <div class="sub_header">
+                    <p>회원약관</p>
+                  </div>
+                  <div class="terms_box">
+                    <div class="terms_all_cont">
+                      <label class="chk_custom" for="chk_all02">
+                        <input type="checkbox" name="모두 동의" id="chk_all02" />
+                        <span class="checkbox"></span>
+                        모두 동의합니다.
+                      </label>
+                      <p>전체동의는 필수 및 선택정보에 대한 동의도 포함되어 있으며, 개별적으로도 동의를 선택하실 수 있습니다. 선택항목에 대한 동의를 거부하시는 경우에도 서비스는 이용이 가능합니다.</p>
+                    </div>
+                    <ul class="terms_cont">
+                      <li class="must">
+                        <label class="chk_custom mr-0" for="chk3">
+                          <input type="checkbox" name="이용약관 동의" id="chk3" disabled />
+                          <span class="checkbox"></span>
+                        </label>
+                        <div class="term_01">EnjoyStreet 온라인 플랫폼 이용약관 동의<span>(필수)</span></div>
+                        <div class="term_pop">
+                          <div class="term_service">{% include "common/pc/common/terms/ter0002.html" %}</div>
+                          <div class="term_check_box">
+                            <div class="term_check disabled">동의합니다</div>
+                            <div class="term_check_close">닫기</div>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="must">
+                        <label class="chk_custom mr-0" for="chk4">
+                          <input type="checkbox" name="개인정보 처리방침" id="chk4" disabled />
+                          <span class="checkbox"></span>
+                        </label>
+                        <div class="term_02">EnjoyStreet 온라인 플랫폼 개인정보 처리방침 동의<span>(필수)</span></div>
+                        <div class="term_pop">
+                          <div class="term_service">{% include "common/pc/common/terms/ter0002.html" %}</div>
+                          <div class="term_check_box">
+                            <div class="term_check disabled">동의합니다</div>
+                            <div class="term_check_close">닫기</div>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <label class="chk_custom mr-0" for="chk5">
+                          <input type="checkbox" name="위치정보 이용약관 동의" id="chk5" />
+                          <span class="checkbox"></span>
+                        </label>
+                        <div class="term_03">프로모션에 관한 추가정보 활용 동의<span>(선택)</span></div>
+                        <div class="term_pop">
+                          <div class="term_service">{% include "common/pc/common/terms/ter0002.html" %}</div>
+                          <div class="term_check_box">
+                            <div class="term_check disabled">동의합니다</div>
+                            <div class="term_check_close">닫기</div>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="more_info pass">
+                        <label class="chk_custom mr-0" for="chk6">
+                          <input type="checkbox" name="위치정보 이용약관 동의" id="chk6" />
+                          <span class="checkbox"></span>
+                        </label>
+                        <div class="term_03">맞춤 서비스를 위한 추가정보 수집에 대한 동의<span>(선택)</span></div>
+                        <div class="term_pop">
+                          <div class="term_service">{% include "common/pc/common/terms/ter0002.html" %}</div>
+                          <div class="term_check_box">
+                            <div class="term_check disabled">동의합니다</div>
+                            <div class="term_check_close">닫기</div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                    <div class="enter_info">
+                      <p>맞춤 서비스를 위한 추가정보 수집 항목</p>
+                      <table>
+                        <colgroup>
+                          <col style="width: 75px" />
+                          <col style="width: calc(100% - 75px)" />
+                        </colgroup>
+                        <tbody>
+                          <tr>
+                            <th>생년월일</th>
+                            <td>
+                              <select name="i_year_02" id="i_year02"></select>
+                              <span>년</span>
+                              <select name="i_month_02" id="i_month02"></select>
+                              <span>월</span>
+                              <select name="i_day_02" id="i_day02"></select>
+                              <span>일</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>성별</th>
+                            <td>
+                              <div class="input_group opt_custom" id="gen_check02">
+                                <label for="opt3">
+                                  <input type="radio" name="gender_02" id="opt3" value="남자" />
+                                  <span class="radiobox"></span>남자
+                                </label>
+                                <label for="opt4">
+                                  <input type="radio" name="gender_02" id="opt4" value="여자" />
+                                  <span class="radiobox"></span>여자
+                                </label>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>전화번호</th>
+                            <td><input type="text" class="ph_num" name="ph_num_02" id="ph_num_02" placeholder="예 : 010-1234-5679" maxlength="13" /></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="btn_group">
+                    <a class="back" href="/signup/partner">되돌아가기</a>
+                    <button id="join-btn" type="submit" class="sign_com_btn" disabled>회원가입</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% include "common/pc/common/footer.html" %}
+    </div>
+    <script>
+      // 대표자 가입
+      $(function (event01) {
+        // name validation
+        var getName = RegExp(/^[가-힣]+$/);
+        // email validation
+        var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+        // password validation
+        var getRlap = /(\w)\1\1\1/;
+        var getSpec = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+
+        // name
+        $("#signFrm #name_01").keyup(function () {
+          var nameCheck = "false";
+          if ($("#signFrm #name_01").val() == "") {
+            $("#signFrm #name_01").focus();
+            $("#signFrm .name_box").removeClass("pass");
+            $("#signFrm .name_box .err_msg").text("필수입력 항목입니다.").show();
+            $("#signFrm button.sign_com_btn").attr("disabled", true);
+            return false;
+          } else if (!getName.test($("#signFrm #name_01").val())) {
+            $("#signFrm #name_01").focus();
+            $("#signFrm .name_box").removeClass("pass");
+            $("#signFrm .name_box .err_msg").text("이름을 확인하세요.").show();
+            $("#signFrm button.sign_com_btn").attr("disabled", true);
+            return false;
+          } else if (getName.test($("#signFrm #name_01").val()) || $("#signFrm #name_01") != "") {
+            $("#signFrm .name_box .err_msg").hide();
+            $("#signFrm .name_box").addClass("pass");
+          }
+          check_submit();
+        });
+
+        // company
+        $("#signFrm #name_02").keyup(function () {
+          var nameCheck = "false";
+          if ($("#signFrm #name_02").val() == "") {
+            $("#signFrm #name_02").focus();
+            $("#signFrm .compa_box").removeClass("pass");
+            $("#signFrm .compa_box .err_msg").text("필수입력 항목입니다.").show();
+            $("#signFrm button.sign_com_btn").attr("disabled", true);
+            return false;
+          } else if (getName.test($("#signFrm #name_02").val()) || $("#signFrm #name_02") != "") {
+            $("#signFrm .compa_box .err_msg").hide();
+            $("#signFrm .compa_box").addClass("pass");
+          }
+          check_submit();
+        });
+
+        // email select
+        $("#signFrm #selectEmail").change(function () {
+          var email_box01 = $(this).val();
+          if (email_box01 == "직접입력") {
+            console.log("ok");
+            $("#signFrm input[name='email_02']").val("");
+            $("#signFrm input[name='email_02']").attr("readonly", false);
+            $("#signFrm button.sign_com_btn").attr("disabled", true);
+            $("#signFrm .email_box").removeClass("pass");
+            check_submit();
+          } else {
+            $("#signFrm input[name='email_02']").val(email_box01);
+            $("#signFrm input[name='email_02']").attr("readonly", true);
+            $("#signFrm .email_box .err_msg").hide();
+            $("#signFrm .email_box").addClass("pass");
+            check_submit();
+          }
+        });
+
+        // email
+        $("#signFrm #email_01, #signFrm #email_02").keyup(function () {
+          var email_1 = $("input[name='email_01").val();
+          var email_2 = $("input[name='email_02").val();
+          var check_email = email_1 + "@" + email_2;
+          var emailCheck = "false";
+          // email check
+          if (email_1 == "" && email_2 == "") {
+            $("#signFrm .email_box").removeClass("pass");
+            $("#signFrm .email_box .err_msg").text("필수입력 항목입니다.").show();
+            $("#signFrm button.sign_com_btn").attr("disabled", true);
+            return false;
+          } else if (!getMail.test(check_email)) {
+            $("#signFrm .email_box").removeClass("pass");
+            $("#signFrm .email_box .err_msg").text("이메일 형식을 확인하세요.").show();
+            $("#signFrm button.sign_com_btn").attr("disabled", true);
+            return false;
+          } else if (getName.test(check_email) || check_email != "") {
+            $("#signFrm .email_box .err_msg").hide();
+            $("#signFrm .email_box").addClass("pass");
+          }
+          check_submit();
+        });
+
+        // pass
+        $("#signFrm #pw, #signFrm #rePw").keyup(function () {
+          // password validation
+          var pw = $("#signFrm #pw").val();
+          var getNumb = pw.search(/[0-9]/g);
+          var getText = pw.search(/[a-z]/gi);
+          // check
+          pwCheck01 = "false";
+          pwCheck02 = "false";
+          pwCheck03 = "false";
+          pwCheck04 = "false";
+          // check total
+          pwCheck = "false";
+          repwCheck = "false";
+          if (pw == "") {
+            $("#signFrm .pwd .err_msg").text("필수 입력 입니다.").show();
+            $("#signFrm .chk_list li").removeClass("on");
+            $("#signFrm button.sign_com_btn").attr("disabled", true);
+            $("#signFrm .pass_box").removeClass("pass");
+            $("#signFrm #rePw").attr("disabled", true).val("");
+            pwCheck01 = "false";
+            return false;
+          } else if (pw != "") {
+            $("#signFrm .pwd .err_msg").hide();
+            pwCheck01 = "true";
+          }
+
+          if (pw.length < 8 || pw.length > 20) {
+            pwCheck02 = "false";
+            $("#signFrm .pwdRule3").removeClass("on");
+            $("#signFrm button.sign_com_btn").attr("disabled", true);
+            $("#signFrm #rePw").attr("disabled", true).val("");
+            $("#signFrm .pass_box").removeClass("pass");
+            $("#signFrm .re_pwd .err_msg").hide();
+            $("#signFrm .pwd .err_msg").hide();
+            return false;
+          } else if (pw.length > 8 || pw.length < 20) {
+            $("#signFrm .pwdRule3").addClass("on");
+            $("#signFrm .pwd .err_msg").hide();
+            pwCheck02 = "true";
+          }
+
+          if (getRlap.test(pw)) {
+            pwCheck03 = "false";
+            $("#signFrm .pwdRule2").removeClass("on");
+            $("#signFrm button.sign_com_btn").attr("disabled", true);
+            $("#signFrm #rePw").attr("disabled", true).val("");
+            $("#signFrm .pass_box").removeClass("pass");
+            $("#signFrm .re_pwd .err_msg").hide();
+            $("#signFrm .pwd .err_msg").hide();
+            return false;
+          } else if (!getRlap.test(pw)) {
+            $("#signFrm .pwdRule2").addClass("on");
+            $("#signFrm .pwd .err_msg").hide();
+            pwCheck03 = "true";
+          }
+
+          if (!getSpec.test(pw)) {
+            pwCheck04 = "false";
+            $("#signFrm .pwdRule1").removeClass("on");
+            $("#signFrm button.sign_com_btn").attr("disabled", true);
+            $("#signFrm #rePw").attr("disabled", true).val("");
+            $("#signFrm .pass_box").removeClass("pass");
+            $("#signFrm .re_pwd .err_msg").hide();
+            $("#signFrm .pwd .err_msg").hide();
+            return false;
+          } else if (getSpec.test(pw)) {
+            $("#signFrm .pwdRule1").addClass("on");
+            $("#signFrm .pwd .err_msg").hide();
+            pwCheck04 = "true";
+          }
+          if ((pwCheck01 = "true") && (pwCheck02 = "true") && (pwCheck03 = "true") && (pwCheck04 = "true")) {
+            pwCheck = "true";
+            $("#signFrm #rePw").attr("disabled", false);
+            $("#signFrm #pw, #rePw").keyup(function () {
+              var pw = $("#signFrm #pw").val();
+              var rePw = $("#signFrm #rePw").val();
+              $("#signFrm #pw").keyup(function () {
+                $("#signFrm #rePw").val("");
+                $("#signFrm .re_pwd .err_msg").hide();
+              });
+              if (rePw == "") {
+                $("#signFrm button.sign_com_btn").attr("disabled", true);
+                $("#signFrm .pass_box").removeClass("pass");
+                return false;
+              } else if (rePw != pw) {
+                $("#signFrm button.sign_com_btn").attr("disabled", true);
+                $("#signFrm .pass_box").removeClass("pass");
+                $("#signFrm .re_pwd .err_msg").text("비밀번호가 일치하지 않습니다.").show();
+                return false;
+              } else if (rePw == pw) {
+                $("#signFrm .re_pwd .err_msg").hide();
+                $("#signFrm .pass_box").addClass("pass");
+              }
+              check_submit();
+            });
+          }
+        });
+
+        // registration
+        $("#signFrm #inc_num").keydown(function(event){
+          var key = event.charCode || event.keyCode || 0;
+          $text = $(this);
+          $text.val($text.val().replace(/[^0-9-]/gi,""))
+          if (key !== 8 && key !== 9) {
+            if ($text.val().length === 3) {
+              $text.val($text.val() + '-');
+              console.log("dasd")
+            }
+            if ($text.val().length === 6) {
+              $text.val($text.val() + '-');
+            }
+          }
+          return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
+            
+          if($("#signFrm #inc_num").val() == ""){
+            $("#signFrm .inc_box .inc_check").removeClass("on")
+            $("#signFrm .inc_box .err_msg").text("사업자 번호를 확인하세요.").show();
+            $("#signFrm button.sign_com_btn").attr('disabled', true);
+            $("#signFrm .inc_box").removeClass('pass')
+            return false;
+          }else if($("#signFrm #inc_num").val() != ""){
+            $("#signFrm .inc_box .inc_check").removeClass("on")
+            $("#signFrm .inc_box .err_msg").hide();
+          }
+          if($("#signFrm #inc_num").val().length >= 12){
+            $("#signFrm .inc_box .inc_check").removeClass("on")
+            $("#signFrm .inc_box .err_msg").text("사업자 번호 중복체크를 완료해 주세요.").show();
+            $("#signFrm button.sign_com_btn").attr('disabled', true);
+            $("#signFrm .inc_box").removeClass('pass')
+          }
+          if($("#signFrm #inc_num").val().length <= 12){
+            $("#signFrm .inc_box .inc_check").removeClass("on")
+            $("#signFrm .inc_box").removeClass("pass")
+            $("#signFrm button.sign_com_btn").attr('disabled', true);
+            check_submit();
+          }
+        })
+  
+        // // registration overlap check
+        // $("#overlapCheck01").on('click', function(){
+        //   var inc_input_num = $("#signFrm #inc_num").val().replace(/\-/g,'');
+        //   if($("#signFrm #inc_num").val() == ""){
+        //     $(this).focus();
+        //     $("#signFrm .inc_box .inc_check").removeClass("on")
+        //     $("#signFrm .inc_box .err_msg").text("사업자 번호를 확인하세요.").show();
+        //     $("#signFrm button.sign_com_btn").attr('disabled', true);
+        //     $("#signFrm .inc_box").removeClass('pass')
+        //   }
+        //   if(inc_input_num == test_inc_num){
+        //     console.log(inc_input_num)
+        //     console.log(test_inc_num)
+        //     console.log("ok")
+        //     $("#signFrm .inc_box .inc_check").addClass("on")
+        //     $("#signFrm .inc_box .err_msg").hide();
+        //     $("#signFrm .inc_box").addClass("pass")
+        //     check_submit();
+        //   }else if($("#signFrm #inc_num").val().length < 12){
+        //     $(this).focus();
+        //     $("#signFrm .inc_box .inc_check").removeClass("on")
+        //     $("#signFrm .inc_box .err_msg").text("사업자 번호를 확인하세요.").show();
+        //     $("#signFrm .inc_box").removeClass("pass")
+        //     $("#signFrm button.sign_com_btn").attr('disabled', true);
+        //     check_submit();
+        //   }else if($("#signFrm #inc_num").val().length != test_inc_num){
+        //     $(this).focus();
+        //     $("#signFrm .inc_box .inc_check").removeClass("on")
+        //     $("#signFrm .inc_box .err_msg").text("이미 등록된 사업자 번호 입니다..").show();
+        //     $("#signFrm .inc_box").removeClass("pass")
+        //     $("#signFrm button.sign_com_btn").attr('disabled', true);
+        //     check_submit();
+        //   }
+        // })
+
+        // terms
+        // all check
+        $("#signFrm input#chk_all01").click(function () {
+          if ($(this).is(":checked") == true) {
+            $("#signFrm .terms_cont").find("li").addClass("pass").find("input[type='checkbox']").prop("checked", true).prop("disabled", false);
+            $("#signFrm .terms_cont").find("li").find(".term_check_box").find(".term_check").removeClass("disabled").addClass("pass");
+            $("#signFrm .more_info").removeClass("pass");
+            termCheck();
+            check_submit();
+          } else if ($(this).is(":checked") == false) {
+            $("#signFrm .terms_cont").find("li").removeClass("pass").find("input[type='checkbox']").prop("checked", false);
+            $("#signFrm .more_info").addClass("pass");
+            termCheck();
+            check_submit();
+          }
+        });
+        // terms checkbox
+        $("#signFrm [class*='term_0']").click(function () {
+          $("body").toggleClass("over");
+          $(".back_img").toggleClass("active");
+          $(".pop_up").toggleClass("active");
+          $(this).siblings(".term_pop").show(200);
+          $("#signFrm .term_service").scroll(function () {
+            var box = $(this);
+            var scrollTop = $(this).scrollTop();
+            var boxHeight = $(this).outerHeight();
+            var scrollHeight = box[0].scrollHeight;
+
+            if (scrollTop + 648 >= scrollHeight) {
+              $(this).siblings("#signFrm .term_check_box").children(".term_check").removeClass("disabled").addClass("pass");
+            }
+          });
+          if ($("#signFrm .term_check").hasClass("pass")) {
+            $("#signFrm .term_service").scrollTop(0);
+          }
+          termCheck();
+          check_submit();
+        });
+        $("#signFrm .term_check_close").on("click", function () {
+          $("#signFrm .term_pop").hide(200);
+          $("body").removeClass("over");
+          $(".back_img").removeClass("active");
+        });
+        $("#signFrm .term_check").click(function () {
+          if ($(this).hasClass("pass")) {
+            $("body").removeClass("over");
+            $(".back_img").removeClass("active");
+            $(".term_pop").hide(200);
+            $(this).parents("li").addClass("pass");
+            $("#signFrm .more_info").removeClass("pass");
+            $(this).parents("li").find("input[type='checkbox']").attr("disabled", false).prop("checked", true);
+            termCheck();
+            check_submit();
+          }
+        });
+        $("#signFrm li")
+          .find("input[type='checkbox']")
+          .click(function () {
+            if ($(this).is(":checked")) {
+              $(this).parents("li").addClass("pass");
+              if($("#signFrm li.more_info.pass").find("input[type='checkbox']").is(":checked") == true){
+                $("#signFrm li.more_info").removeClass("pass")
+              }
+            }
+            if (!$(this).is(":checked")) {
+              $("#signFrm .terms_box").removeClass("pass");
+              $("#signFrm button.sign_com_btn").attr("disabled", true);
+              $(this).parents("li").removeClass("pass");
+              $("#signFrm input#chk_all01").prop("checked", false);
+              if($("#signFrm li.more_info.pass").find("input[type='checkbox']").is(":checked") == false){
+                $("#signFrm li.more_info").addClass("pass")
+              }
+            }
+            termCheck();
+            check_submit();
+          });
+        // date select
+        var dt = new Date();
+        var com_year = dt.getFullYear();
+        $("#signFrm #i_year").parents("tr").addClass("pass");
+        for (var y = com_year - 100; y <= com_year + 0; y++) {
+          $("#signFrm #i_year").prepend("<option value='" + y + "'>" + y + "</option>");
+        }
+        for (var i = 1; i <= 12; i++) {
+          $("#signFrm #i_month").prepend("<option value='" + i + "'>" + i + "</option>");
+        }
+        for (var i = 1; i <= 31; i++) {
+          $("#signFrm #i_day").prepend("<option value='" + i + "'>" + i + "</option>");
+        }
+        $("#signFrm #i_year").children("option").eq(0).prop("selected", true);
+        $("#signFrm #i_month").children("option").eq(0).prop("selected", true);
+        $("#signFrm #i_day").children("option").eq(0).prop("selected", true);
+
+        // gender select
+        $("#signFrm input[name=gender_01]").click(function () {
+          $("#signFrm #gen_check").parents("tr").addClass("pass");
+          total_info();
+        });
+
+        // phone number
+        $("#signFrm #ph_num").keydown(function (event) {
+          var key = event.charCode || event.keyCode || 0;
+          $text = $(this);
+          if ($text.val().length < 13) {
+            $("#signFrm #ph_num").parents("tr").removeClass("pass");
+          }
+          if ($text.val().length >= 12) {
+            $("#signFrm #ph_num").parents("tr").addClass("pass");
+          }
+          if (key !== 8 && key !== 9) {
+            if ($text.val().length === 3) {
+              $text.val($text.val() + "-");
+            }
+            if ($text.val().length === 8) {
+              $text.val($text.val() + "-");
+            }
+          }
+          total_info();
+          return key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105);
+        });
+
+        // total check
+        function total_info() {
+          var info_tb = $("#signFrm .enter_info").find("tbody").find("tr").length;
+          var info_pass_tb = $("#signFrm .enter_info").find("tbody").find("tr.pass").length;
+          if (info_tb == info_pass_tb) {
+            $("#signFrm .more_info").addClass("pass");
+          } else if (info_tb != info_pass_tb) {
+            $("#signFrm .more_info").removeClass("pass");
+          }
+          termCheck();
+          check_submit();
+        }
+
+        function termCheck() {
+          var li_leng_on = $("#signFrm .terms_box").children("ul").find("li.must, li.more_info").length;
+          var li_leng = $("#signFrm .terms_box").children("ul").find("li.must.pass, li.more_info.pass").length;
+          var li_all_length = $("#signFrm .terms_box").children("ul").find("li").length;
+          var li_all_pass = $("#signFrm .terms_box").children("ul").find("li.pass").length;
+          console.log(li_leng_on);
+          console.log(li_leng);
+
+          if (li_leng == li_leng_on) {
+            $("#signFrm .terms_box").addClass("pass");
+            check_submit();
+          } else if (li_leng != li_leng_on) {
+            $("#signFrm .terms_box").removeClass("pass");
+            check_submit();
+          }
+          if ($("#signFrm .terms_cont").find("li").length == li_leng_on) {
+            $("#signFrm input#chk_all01").prop("checked", true);
+            check_submit();
+          }
+          if (li_all_length == li_all_pass) {
+            $("#signFrm input#chk_all01").prop("checked", true);
+            check_submit();
+          }
+          // more input
+          if ($("#signFrm li.more_info").find("input[type='checkbox']").is(":checked") == true) {
+            $("#signFrm .enter_info").addClass("on");
+          } else if ($("#signFrm li.more_info").find("input[type='checkbox']").is(":checked") == false) {
+            $("#signFrm .enter_info").removeClass("on");
+          }
+        }
+
+        // all pass check
+        var check_ture = "true";
+        function check_submit() {
+          if (
+            $("#signFrm .name_box").hasClass("pass") === true &&
+            $("#signFrm .email_box").hasClass("pass") === true &&
+            $("#signFrm .pass_box").hasClass("pass") === true &&
+            $("#signFrm .terms_box").hasClass("pass") === true &&
+            $("#signFrm .inc_box").hasClass("pass") === true
+          ) {
+            $("#signFrm button.sign_com_btn").attr("disabled", false);
+          } else {
+            $("button.sign_com_btn").attr("disabled", true);
+          }
+        }
+      });
+      // 직원 가입
+      $(function (event02) {
+        // name validation
+        var getName = RegExp(/^[가-힣]+$/);
+        // email validation
+        var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+        // password validation
+        var getRlap = /(\w)\1\1\1/;
+        var getSpec = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+
+        // name
+        $("#signFrm02 #name_03").keyup(function () {
+          var nameCheck = "false";
+          if ($("#signFrm02 #name_03").val() == "") {
+            $("#signFrm02 #name_03").focus();
+            $("#signFrm02 .name_box").removeClass("pass");
+            $("#signFrm02 .name_box .err_msg").text("필수입력 항목입니다.").show();
+            $("#signFrm02 button.sign_com_btn").attr("disabled", true);
+            return false;
+          } else if (!getName.test($("#signFrm02 #name_03").val())) {
+            $("#signFrm02 #name_03").focus();
+            $("#signFrm02 .name_box").removeClass("pass");
+            $("#signFrm02 .name_box .err_msg").text("이름을 확인하세요.").show();
+            $("#signFrm02 button.sign_com_btn").attr("disabled", true);
+            return false;
+          } else if (getName.test($("#signFrm02 #name_03").val()) || $("#signFrm02 #name_03") != "") {
+            $("#signFrm02 .name_box .err_msg").hide();
+            $("#signFrm02 .name_box").addClass("pass");
+          }
+          check_submit();
+        });
+
+        // company
+        $("#signFrm02 #name_04").keyup(function () {
+          var nameCheck = "false";
+          if ($("#signFrm02 #name_04").val() == "") {
+            $("#signFrm02 #name_04").focus();
+            $("#signFrm02 .compa_box").removeClass("pass");
+            $("#signFrm02 .compa_box .err_msg").text("필수입력 항목입니다.").show();
+            $("#signFrm02 button.sign_com_btn").attr("disabled", true);
+            return false;
+          } else if (getName.test($("#signFrm02 #name_04").val()) || $("#signFrm02 #name_04") != "") {
+            $("#signFrm02 .compa_box .err_msg").hide();
+            $("#signFrm02 .compa_box").addClass("pass");
+          }
+          check_submit();
+        });
+
+        // email select
+        $("#signFrm02 #selectEmail").change(function () {
+          var email_box01 = $(this).val();
+          if (email_box01 == "직접입력") {
+            console.log("ok");
+            $("#signFrm02 input[name='email_04']").val("");
+            $("#signFrm02 input[name='email_04']").attr("readonly", false);
+            $("#signFrm02 button.sign_com_btn").attr("disabled", true);
+            $("#signFrm02 .email_box").removeClass("pass");
+            check_submit();
+          } else {
+            $("#signFrm02 input[name='email_04']").val(email_box01);
+            $("#signFrm02 input[name='email_04']").attr("readonly", true);
+            $("#signFrm02 .email_box .err_msg").hide();
+            $("#signFrm02 .email_box").addClass("pass");
+            check_submit();
+          }
+        });
+
+        // // email
+        // $("#signFrm02 #email_03, #signFrm02 #email_04").keyup(function () {
+        //   var email_1 = $("input[name='email_03").val();
+        //   var email_2 = $("input[name='email_04").val();
+        //   var check_email = email_1 + "@" + email_2;
+        //   var emailCheck = "false";
+        //   // email check
+        //   if (email_1 == "" && email_2 == "") {
+        //     $("#signFrm02 .email_box").removeClass("pass");
+        //     $("#signFrm02 .email_box .err_msg").text("필수입력 항목입니다.").show();
+        //     $("#signFrm02 button.sign_com_btn").attr("disabled", true);
+        //     return false;
+        //   } else if (!getMail.test(check_email)) {
+        //     $("#signFrm02 .email_box").removeClass("pass");
+        //     $("#signFrm02 .email_box .err_msg").text("이메일 형식을 확인하세요.").show();
+        //     $("#signFrm02 button.sign_com_btn").attr("disabled", true);
+        //     return false;
+        //   } else if (getName.test(check_email) || check_email != "") {
+        //     $("#signFrm02 .email_box .err_msg").hide();
+        //     $("#signFrm02 .email_box").addClass("pass");
+        //   }
+        //   check_submit();
+        // });
+
+        // pass
+        $("#signFrm02 #pw02, #signFrm02 #rePw02").keyup(function () {
+          // password validation
+          var pw = $("#signFrm02 #pw02").val();
+          var getNumb = pw.search(/[0-9]/g);
+          var getText = pw.search(/[a-z]/gi);
+          // check
+          pwCheck01 = "false";
+          pwCheck02 = "false";
+          pwCheck03 = "false";
+          pwCheck04 = "false";
+          // check total
+          pwCheck = "false";
+          repwCheck = "false";
+          if (pw == "") {
+            $("#signFrm02 .pwd .err_msg").text("필수 입력 입니다.").show();
+            $("#signFrm02 .chk_list li").removeClass("on");
+            $("#signFrm02 button.sign_com_btn").attr("disabled", true);
+            $("#signFrm02 .pass_box").removeClass("pass");
+            $("#signFrm02 #rePw02").attr("disabled", true).val("");
+            pwCheck01 = "false";
+            return false;
+          } else if (pw != "") {
+            $("#signFrm02 .pwd .err_msg").hide();
+            pwCheck01 = "true";
+          }
+
+          if (pw.length < 8 || pw.length > 20) {
+            pwCheck02 = "false";
+            $("#signFrm02 .pwdRule3").removeClass("on");
+            $("#signFrm02 button.sign_com_btn").attr("disabled", true);
+            $("#signFrm02 #rePw02").attr("disabled", true).val("");
+            $("#signFrm02 .pass_box").removeClass("pass");
+            $("#signFrm02 .re_pwd .err_msg").hide();
+            $("#signFrm02 .pwd .err_msg").hide();
+            return false;
+          } else if (pw.length > 8 || pw.length < 20) {
+            $("#signFrm02 .pwdRule3").addClass("on");
+            $("#signFrm02 .pwd .err_msg").hide();
+            pwCheck02 = "true";
+          }
+
+          if (getRlap.test(pw)) {
+            pwCheck03 = "false";
+            $("#signFrm02 .pwdRule2").removeClass("on");
+            $("#signFrm02 button.sign_com_btn").attr("disabled", true);
+            $("#signFrm02 #rePw02").attr("disabled", true).val("");
+            $("#signFrm02 .pass_box").removeClass("pass");
+            $("#signFrm02 .re_pwd .err_msg").hide();
+            $("#signFrm02 .pwd .err_msg").hide();
+            return false;
+          } else if (!getRlap.test(pw)) {
+            $("#signFrm02 .pwdRule2").addClass("on");
+            $("#signFrm02 .pwd .err_msg").hide();
+            pwCheck03 = "true";
+          }
+
+          if (!getSpec.test(pw)) {
+            pwCheck04 = "false";
+            $("#signFrm02 .pwdRule1").removeClass("on");
+            $("#signFrm02 button.sign_com_btn").attr("disabled", true);
+            $("#signFrm02 #rePw02").attr("disabled", true).val("");
+            $("#signFrm02 .pass_box").removeClass("pass");
+            $("#signFrm02 .re_pwd .err_msg").hide();
+            $("#signFrm02 .pwd .err_msg").hide();
+            return false;
+          } else if (getSpec.test(pw)) {
+            $("#signFrm02 .pwdRule1").addClass("on");
+            $("#signFrm02 .pwd .err_msg").hide();
+            pwCheck04 = "true";
+          }
+          if ((pwCheck01 = "true") && (pwCheck02 = "true") && (pwCheck03 = "true") && (pwCheck04 = "true")) {
+            pwCheck = "true";
+            $("#signFrm02 #rePw02").attr("disabled", false);
+            $("#signFrm02 #pw02, #rePw02").keyup(function () {
+              var pw = $("#signFrm02 #pw02").val();
+              var rePw = $("#signFrm02 #rePw02").val();
+              $("#signFrm02 #pw02").keyup(function () {
+                $("#signFrm02 #rePw02").val("");
+                $("#signFrm02 .re_pwd .err_msg").hide();
+              });
+              if (rePw == "") {
+                $("#signFrm02 button.sign_com_btn").attr("disabled", true);
+                $("#signFrm02 .pass_box").removeClass("pass");
+                return false;
+              } else if (rePw != pw) {
+                $("#signFrm02 button.sign_com_btn").attr("disabled", true);
+                $("#signFrm02 .pass_box").removeClass("pass");
+                $("#signFrm02 .re_pwd .err_msg").text("비밀번호가 일치하지 않습니다.").show();
+                return false;
+              } else if (rePw == pw) {
+                $("#signFrm02 .re_pwd .err_msg").hide();
+                $("#signFrm02 .pass_box").addClass("pass");
+              }
+              check_submit();
+            });
+          }
+        });
+
+        // registration
+        function licenseNum(str) {
+          str = str.replace(/[^0-9]/g, "");
+          var tmp = "";
+          if (str.length < 4) {
+            return str;
+          } else if (str.length < 7) {
+            tmp += str.substr(0, 3);
+            tmp += "-";
+            tmp += str.substr(3);
+            return tmp;
+          } else {
+            tmp += str.substr(0, 3);
+            tmp += "-";
+            tmp += str.substr(1, 2);
+            tmp += "-";
+            tmp += str.substr(5);
+            return tmp;
+          }
+          return str;
+        }
+        var inc_num = document.getElementById("inc_num02");
+        inc_num.onkeyup = function (event) {
+          event = event || window.event;
+          var val = this.value.trim();
+          this.value = licenseNum(val);
+          if ($("#signFrm02 #inc_num02").val().length >= 12) {
+            console.log($("#signFrm02 #inc_num02").val().length);
+            $("#signFrm02 .inc_box").addClass("pass");
+            check_submit();
+          } else if ($("#signFrm02 #inc_num02").val().length <= 12) {
+            console.log($("#signFrm02 #inc_num02").val().length);
+            $("#signFrm02 .inc_box").removeClass("pass");
+            $("#signFrm02 button.sign_com_btn").attr("disabled", true);
+            check_submit();
+          }
+        };
+
+        // terms
+        // all check
+        $("#signFrm02 input#chk_all02").click(function () {
+          if ($(this).is(":checked") == true) {
+            $("#signFrm02 .terms_cont").find("li").addClass("pass").find("input[type='checkbox']").prop("checked", true).prop("disabled", false);
+            $("#signFrm02 .terms_cont").find("li").find(".term_check_box").find(".term_check").removeClass("disabled").addClass("pass");
+            $("#signFrm02 .more_info").removeClass("pass");
+            termCheck();
+            check_submit();
+          } else if ($(this).is(":checked") == false) {
+            $("#signFrm02 .terms_cont").find("li").removeClass("pass").find("input[type='checkbox']").prop("checked", false);
+            $("#signFrm02 .more_info").addClass("pass");
+            termCheck();
+            check_submit();
+          }
+        });
+        // terms checkbox
+        $("#signFrm02 [class*='term_0']").click(function () {
+          $("body").toggleClass("over");
+          $(".back_img").toggleClass("active");
+          $(".pop_up").toggleClass("active");
+          $(this).siblings(".term_pop").show(200);
+          $("#signFrm02 .term_service").scroll(function () {
+            var box = $(this);
+            var scrollTop = $(this).scrollTop();
+            var boxHeight = $(this).outerHeight();
+            var scrollHeight = box[0].scrollHeight;
+
+            if (scrollTop + 648 >= scrollHeight) {
+              $(this).siblings("#signFrm02 .term_check_box").children(".term_check").removeClass("disabled").addClass("pass");
+            }
+          });
+          if ($("#signFrm02 .term_check").hasClass("pass")) {
+            $("#signFrm02 .term_service").scrollTop(0);
+          }
+          termCheck();
+          check_submit();
+        });
+        $("#signFrm02 .term_check_close").on("click", function () {
+          $("#signFrm02 .term_pop").hide(200);
+          $("body").removeClass("over");
+          $(".back_img").removeClass("active");
+        });
+        $("#signFrm02 .term_check").click(function () {
+          if ($(this).hasClass("pass")) {
+            $("body").removeClass("over");
+            $(".back_img").removeClass("active");
+            $(".term_pop").hide(200);
+            $(this).parents("li").addClass("pass");
+            $("#signFrm02 .more_info").removeClass("pass");
+            $(this).parents("li").find("input[type='checkbox']").attr("disabled", false).prop("checked", true);
+            termCheck();
+            check_submit();
+          }
+        });
+        $("#signFrm02 li")
+          .find("input[type='checkbox']")
+          .click(function () {
+            if ($(this).is(":checked")) {
+              $(this).parents("li").addClass("pass");
+              if($("#signFrm02 li.more_info.pass").find("input[type='checkbox']").is(":checked") == true){
+                $("#signFrm02 li.more_info").removeClass("pass")
+              }
+            }
+            if (!$(this).is(":checked")) {
+              $("#signFrm02 .terms_box").removeClass("pass");
+              $("#signFrm02 button.sign_com_btn").attr("disabled", true);
+              $(this).parents("li").removeClass("pass");
+              $("#signFrm02 input#chk_all02").prop("checked", false);
+              if($("#signFrm02 li.more_info.pass").find("input[type='checkbox']").is(":checked") == false){
+                $("#signFrm02 li.more_info").addClass("pass")
+              }
+            }
+            termCheck();
+            check_submit();
+          });
+        // date select
+        var dt = new Date();
+        var com_year = dt.getFullYear();
+        $("#signFrm02 #i_year02").parents("tr").addClass("pass");
+        for (var y = com_year - 100; y <= com_year + 0; y++) {
+          $("#signFrm02 #i_year02").prepend("<option value='" + y + "'>" + y + "</option>");
+        }
+        for (var i = 1; i <= 12; i++) {
+          $("#signFrm02 #i_month02").prepend("<option value='" + i + "'>" + i + "</option>");
+        }
+        for (var i = 1; i <= 31; i++) {
+          $("#signFrm02 #i_day02").prepend("<option value='" + i + "'>" + i + "</option>");
+        }
+        $("#signFrm02 #i_year02").children("option").eq(0).prop("selected", true);
+        $("#signFrm02 #i_month02").children("option").eq(0).prop("selected", true);
+        $("#signFrm02 #i_day02").children("option").eq(0).prop("selected", true);
+
+        // gender select
+        $("#signFrm02 input[name=gender_02]").click(function () {
+          $("#signFrm02 #gen_check02").parents("tr").addClass("pass");
+          total_info();
+        });
+
+        // phone number
+        $("#signFrm02 #ph_num_02").keydown(function (event) {
+          var key = event.charCode || event.keyCode || 0;
+          $text = $(this);
+          if ($text.val().length < 13) {
+            $("#signFrm02 #ph_num_02").parents("tr").removeClass("pass");
+          }
+          if ($text.val().length >= 12) {
+            $("#signFrm02 #ph_num_02").parents("tr").addClass("pass");
+          }
+          if (key !== 8 && key !== 9) {
+            if ($text.val().length === 3) {
+              $text.val($text.val() + "-");
+            }
+            if ($text.val().length === 8) {
+              $text.val($text.val() + "-");
+            }
+          }
+          total_info();
+          return key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105);
+        });
+
+        // total check
+        function total_info() {
+          var info_tb = $("#signFrm02 .enter_info").find("tbody").find("tr").length;
+          var info_pass_tb = $("#signFrm02 .enter_info").find("tbody").find("tr.pass").length;
+          if (info_tb == info_pass_tb) {
+            $("#signFrm02 .more_info").addClass("pass");
+          } else if (info_tb != info_pass_tb) {
+            $("#signFrm02 .more_info").removeClass("pass");
+          }
+          termCheck();
+          check_submit();
+        }
+
+        function termCheck() {
+          var li_leng_on = $("#signFrm02 .terms_box").children("ul").find("li.must, li.more_info").length;
+          var li_leng = $("#signFrm02 .terms_box").children("ul").find("li.must.pass, li.more_info.pass").length;
+          var li_all_length = $("#signFrm02 .terms_box").children("ul").find("li").length;
+          var li_all_pass = $("#signFrm02 .terms_box").children("ul").find("li.pass").length;
+          console.log(li_leng_on);
+          console.log(li_leng);
+
+          if (li_leng == li_leng_on) {
+            $("#signFrm02 .terms_box").addClass("pass");
+            check_submit();
+          } else if (li_leng != li_leng_on) {
+            $("#signFrm02 .terms_box").removeClass("pass");
+            check_submit();
+          }
+          if ($("#signFrm02 .terms_cont").find("li").length == li_leng_on) {
+            $("#signFrm02 input#chk_all02").prop("checked", true);
+            check_submit();
+          }
+          if (li_all_length == li_all_pass) {
+            $("#signFrm02 input#chk_all02").prop("checked", true);
+            check_submit();
+          }
+          // more input
+          if ($("#signFrm02 li.more_info").find("input[type='checkbox']").is(":checked") == true) {
+            $("#signFrm02 .enter_info").addClass("on");
+          } else if ($("#signFrm02 li.more_info").find("input[type='checkbox']").is(":checked") == false) {
+            $("#signFrm02 .enter_info").removeClass("on");
+          }
+        }
+
+      });
+      
+        // all pass check
+        var check_ture = "true";
+        function check_submit() {
+          if (
+            $("#signFrm02 .name_box").hasClass("pass") === true &&
+            $("#signFrm02 .email_box").hasClass("pass") === true &&
+            $("#signFrm02 .pass_box").hasClass("pass") === true &&
+            $("#signFrm02 .terms_box").hasClass("pass") === true &&
+            $("#signFrm02 .inc_box").hasClass("pass") === true
+          ) {
+            $("#signFrm02 button.sign_com_btn").attr("disabled", false);
+          } else {
+            $("button.sign_com_btn").attr("disabled", true);
+          }
+        }
+    </script>
+  </body>
+</html>

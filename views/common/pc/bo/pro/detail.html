@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.0.min.js" 
+            integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" 
+            crossorigin="anonymous"></script>
+        <!--폰트어섬추가 -->
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!--폰트어섬추가 -->
+        <!-- jQuery 아래 두세요 -->
+        <!--bootstrap js 추가 -->
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- <script type="text/javascript" src="/static/common.js"></script>
+        <link rel="stylesheet" href="/static/common.css"> -->
+    </head>
+
+    <div class="col-sm-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{ product.name }}
+            </div>
+            <div class="panel-body">
+                <div style="padding-bottom: 10px">
+                    작성일 : {{ product.dateFormat( product.createdAt ) }}
+                </div>
+
+                {{ product.description | safe }}
+
+                <hr />
+                <ul>
+                    {% for memo in product.Memo %}
+                        <li>
+                            {{ memo.content }}
+                            (
+                                <a href="/store/products/delete/{{ product.id }}/{{ memo.id }}" 
+                                    onclick="return confirm('삭제하시겠습니까?')">
+                                    삭제
+                                </a>
+                            )
+                        </li>
+                    {% endfor %}
+                </ul>
+                메모작성하기
+                <form action="" method="post">
+                    <textarea class="form-control" name="content" required></textarea>
+                    <button class="btn btn-primary" style="margin-top: 10px">메모작성</button>
+                </form>
+            </div>
+        </div>
+
+        <a href="/store/products" class="btn btn-default">목록으로</a>
+        <a href="/store/products/edit/{{ product.id }}" class="btn btn-primary">수정</a>
+    </div>
+
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ES-MMS</title>
+
+  <link rel="stylesheet" href="/resource/pc/bo/windowContainer/css/jquery.scrollbar.min.css">
+  <link rel="stylesheet" href="/resource/pc/bo/windowContainer/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/resource/pc/bo/windowContainer/css/nth-icons.css">
+  <link rel="stylesheet" href="/resource/pc/bo/windowContainer/css/nth-tabs.css">
+  <link rel="stylesheet" href="/resource/pc/bo/ax5ui/css/ax5ui.all.css">
+  <link rel="stylesheet" href="/css/pc/bo/main.css">
+
+  <script src="/resource/pc/bo/jquery.min.js"></script>
+  <script src="/resource/pc/bo/windowContainer/js/jquery.scrollbar.min.js"></script>
+  <script src="/resource/pc/bo/windowContainer/js/bootstrap.min.js"></script>
+  <script src="/resource/pc/bo/windowContainer/js/nth-tabs.js"></script>
+  <script src="/resource/pc/bo/ax5ui/js/ax5ui.all.min.js"></script>
+  <script src="/js/pc/bo/script.js"></script>
+
+  <script>
+    // 모달
+    var mask = new ax5.ui.mask();
+    var modal = new ax5.ui.modal();
+    var modalCallBack = function () {
+      modal.close();
+    };
+    // main tab
+    var nthTabs;
+
+    $(function () {
+      $('.scrollbar-inner').scrollbar(); // menu scroll
+
+      // main tab - 대시보드
+      nthTabs = $("#main-tabs").nthTabs();
+      nthTabs.addTab({
+        id: 'p101',
+        title: '가이드 상세',
+        active: true,
+        allowClose: false
+      });
+
+      /* 메뉴 페이지 연동 */
+      $('.documents a').off("click").on('click', function (e) {
+        e.preventDefault();
+        var val = $(this).text();
+        var href = $(this).attr('href').split('.');
+        var fileName = href[0].substring(2);
+
+        if (nthTabs.isExistsTab('#p' + fileName)) {
+          nthTabs.toggleTab('#p' + fileName);
+        } else {
+          nthTabs.addTab({
+            id: "p" + fileName,
+            title: val,
+            url: this.href,
+            active: true,
+            allowClose: true
+          });
+          /* 탭 추가 생성시 북마크아이콘 추가*/
+          if (!$("[href*=#p" + fileName + "]").find("i").hasClass("fa-star")) {
+            $("[href*=#p" + fileName + "]").prepend("<i class='fas fa-star'></i>");
+            $(".nav-tabs .fa-star").off('click').on('click', function (e) {
+              $(this).toggleClass("bookmark")
+            });
+          }
+        }
+        /* gnb control */
+        var parentClass = $(this).parent('li');
+        if (!$(this).hasClass('on')) {
+          $('.documents a').removeClass('on');
+          $(this).addClass('on');
+        }
+        if (parentClass.attr('class') == 'documents') {
+          $('.gnb li').removeClass('open');
+          $('.gnb li > ul').slideUp(100);
+        }
+      });
+    });
+    // 가이드 이미지 파일 체크
+    $(window).load(function(){
+      var img_box = $(".file_img").children().length
+      if(img_box > 0){
+        $(".file_img").css({"background":"none"})
+      }
+    })
+    // radio check
+    $(document).ready(function(){
+      var in_approval = $("#approval")
+      var in_rejection = $("#rejection")
+      var in_cancel = $("#cancel")
+      $(in_rejection).click(function(){
+        $(".rejection_box").addClass("active").siblings().removeClass("active")
+        $("button.save").prop("disabled", true);
+        $(".rejection_box").find("textarea").keyup(function(){
+          var text_length = $(this).val().length;
+          if(text_length > 0){
+            $("button.save").prop("disabled", false);
+          }else if(text_length <= 0){
+            $("button.save").prop("disabled", true);
+          }
+        })
+      })
+      $(in_cancel).click(function(){
+        $(".cancel_box").addClass("active").siblings().removeClass("active")
+        $("button.save").prop("disabled", true);
+        $(".cancel_box").find("textarea").keyup(function(){
+          var text_length = $(this).val().length;
+          if(text_length > 0){
+            $("button.save").prop("disabled", false);
+          }else if(text_length <= 0){
+            $("button.save").prop("disabled", true);
+          }
+        })
+      })
+      $(approval).click(function(){
+        $(".insert_box").children().removeClass("active")
+        $("button.save").prop("disabled", false);
+      })
+    })
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+    {{ users.id }}
+    {% include "common/pc/common/admin/guide/header.html" %}
+    <div class="container">
+      {% include "common/pc/common/admin/guide/sidebar.html" %}
+      <div class="con_area">
+        <div class="contents">
+          <div class="nth-tabs" id="main-tabs">
+          </div>
+          <div class="vtn_cont">
+            <div class="title_box page_tit">
+              <div class="left_align">
+                <h3>가이드 상세</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="layout col_12">
+                <section class="section">
+                  <div class="title_box border_b">
+                    <div class="left_align">
+                      <h4><span class="circle"></span>상세정보</h4>
+                    </div>
+                  </div>
+                  <section class="section">
+                    <div class="table_box search">
+                      <table class="table search">
+                        <caption>필수입력, 조회조건2, 조회조건3, 조회조건4, 조회조건5, 조회조건6, 조회조건7, 조회조건8로 구성된 표</caption>
+                        <colgroup>
+                          <col style="width:10%">
+                          <col style="width:15%">
+                          <col style="width:10%">
+                          <col style="width:15%">
+                          <col style="width:10%">
+                          <col style="width:15%">
+                        </colgroup>
+                        <tbody>
+                          <tr>
+                            <th>NO.</th>
+                            <td><span>{{ users.id }}</span></td>
+                            <th>이름</th>
+                            <td><span>{{ users.nick }}</span></td>
+                            <th>ID (이메일)</th>
+                            <td><span>{{ users.email }}</span></td>
+                          </tr>
+                          <tr>
+                            <th>회원가입일자</th>
+                            <td><span>{{ users.dateFormat(users.createdAt) }}</span></td>
+                            <th>상태</th>
+                            {% if users.confirm === 10 %}
+                            <td><span class="state">승인 대기</span></td>
+                            {% elif users.confirm === 99 %}
+                            <td><span class="state">승인 완료</span></td>
+                            {% elif users.confirm === 54 %}
+                            <td><span class="state">승인 취소</span></td>
+                            {% elif users.confirm === 44 %}
+                            <td><span class="state">반려</span></td>
+                            {% endif %}
+                            <th>최종승인자</th>
+                            <td><span>{{ users.approvalid }}</span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="fileCh_box">
+                      <div class="file_img">
+                        <img src="{{ LicenseIMG }}" alt="가이드 이미지">
+                      </div>
+                    </div>
+                    <div class="history_box border_b mb-12">
+                      {% for memo in memos %}
+                      <div class="title_box">
+                        <div class="left_align">
+                          <h4><span class="circle"></span>승인반려 히스토리<span class="history">(  승인자 : <span class="name">{{ memo.approvalid }}</span>, 승인시간 : <span class="time">{{ memo.dateFormat(memo.createdAt) }}</span>)</span></h4>
+                        </div>
+                      </div>
+                      <div class="textarea_group">                        
+                          <textarea style="height:100px;" title="텍스트 입력" disabled>
+{% if memo.confirm === 10 %}승인 대기
+{% elif memo.confirm === 99 %}승인 완료
+{% elif memo.confirm === 54 %}승인 취소
+{% elif memo.confirm === 44 %}반려
+{% endif %}
+사유 : {{ memo. reason }}
+상세 : {{ memo. memo }}
+                          </textarea>
+                      </div>
+                      {% endfor %}
+                    </div>
+
+                    <form id="conFrm" method="POST" action="/admin/confirm_check/{{ users.id }}" >
+                      <div class="insert_box">
+                        {% if users.confirm === 54 %}
+                        <div class="input_group opt_custom mb-12" id="confirm_check">
+                          <label for="approval">
+                            <span class="circle"></span>승인
+                            <input type="radio" name="confirmCheck01" id="approval" value="승인" disabled>
+                            <span class="radiobox"></span>
+                          </label>
+                          <label for="rejection">
+                            <span class="circle"></span>반려
+                            <input type="radio" name="confirmCheck01" id="rejection" value="반려" disabled>
+                            <span class="radiobox"></span>
+                          </label>
+                          <label for="cancel">
+                            <span class="circle"></span>승인취소
+                            <input type="radio" name="confirmCheck01" id="cancel" value="승인취소" disabled>
+                            <span class="radiobox"></span>
+                          </label>
+                        </div>
+                        {% else %}
+
+                        <div class="input_group opt_custom mb-12" id="confirm_check">
+                          <label for="approval">
+                            <span class="circle"></span>승인
+                            <input type="radio" name="confirmCheck01" id="approval" value="승인">
+                            <span class="radiobox"></span>
+                          </label>
+                          <label for="rejection">
+                            <span class="circle"></span>반려
+                            <input type="radio" name="confirmCheck01" id="rejection" value="반려">
+                            <span class="radiobox"></span>
+                          </label>
+                          <label for="cancel">
+                            <span class="circle"></span>승인취소
+                            <input type="radio" name="confirmCheck01" id="cancel" value="승인취소">
+                            <span class="radiobox"></span>
+                          </label>
+                        </div>
+                        {% endif %}
+                        
+
+                        <div class="rejection_box">
+                          <div class="title_box">
+                            <div class="left_align">
+                              <h4><span class="circle"></span>승인 반려 사유</h4>
+                            </div>
+                          </div>
+                          <select name="reason01" id="#">
+                            <option value="서류미비(필수정보 누락)">서류미비(필수정보 누락)</option>
+                            <option value="기타 사항">기타 사항</option>
+                          </select>
+                          <div class="textarea_group">
+                            <textarea name="memo01" style="height:170px;" title="텍스트 입력" placeholder="승인 반려 사유를 입력해주세요. 사유를 입력하지 않으면 저장(승인) 버튼이 활성화되지 않습니다."></textarea>
+                          </div>
+                        </div>
+
+                        <div class="cancel_box">
+                          <div class="title_box">
+                            <div class="left_align">
+                              <h4><span class="circle"></span>승인 취소 사유</h4>
+                            </div>
+                          </div>
+                          <select name="reason02" id="#">
+                            <option value="서류미비(필수정보 누락)">서류미비(필수정보 누락)</option>
+                            <option value="기타 사항">기타 사항</option>
+                          </select>
+                          <div class="textarea_group">
+                            <textarea name="memo02" style="height:170px;" title="텍스트 입력" placeholder="승인 취소 사유를 입력해주세요. 사유를 입력하지 않으면 저장(승인 취소) 버튼이 활성화되지 않습니다."></textarea>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="title_box mb-0">
+                        <div class="right_align button_group">
+                          <a href="/admin/guideList" class="button del"><span>승인요청 목록</span></a>
+                          <a href="/admin/guideList" class="button del"><span>취소</span></a>
+                          <button id="save_btn" type="submit" class="save" disabled><span>저장</span></button>
+                        </div>
+                      </div>
+                      
+                    </form>
+                  </section>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% include "common/pc/common/admin/guide/footer.html" %}
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <title>Enjoy Street</title>
+  <link rel="stylesheet" href="/resource/mo/ax5ui/css/ax5ui.all.css">
+  <link rel="stylesheet" href="/css/mo/login.css">
+
+  <script src="/resource/mo/jquery.min.js"></script>
+  <script src="/resource/mo/ax5ui/js/ax5ui.all.min.js"></script>
+  <script src="/js/mo/script.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      // tap panel
+      function tabOpen($target){
+        var $wrap = $target.closest("[data-tab]");
+        $wrap.find("[data-tablink]").each(function(){
+          $(this).parent().removeClass("on");
+          $($(this).attr("data-tablink")).addClass("hidden");
+        });
+        $target.parent().addClass("on");
+        $($target.attr("data-tablink")).removeClass("hidden");
+      }
+      function tabSet(){
+        $("[data-tab]").each(function(){
+          var $tab = $(this).find("[data-tablink]");
+          if ($tab.filter(".on").length){
+            tabOpen($tab.filter(".on").eq(0));
+          } else {
+            tabOpen($tab.eq(0));
+          }
+        });
+      }      
+      $('a[href="#"]').on('click', function(e){
+        e.preventDefault();
+      });
+      tabSet(); // tap menu
+      $(document).on("click", "[data-tablink]", function(e){
+        e.preventDefault();
+        tabOpen($(this));
+      })
+      // email select
+      $("#selectEmail").change(function() {
+        var email_box01 = $(this).val();
+        if (email_box01 == "직접입력") {
+          $("input[name='email_2']").val('');
+          $("input[name='email_2']").attr('readonly', false);
+        } else {
+          $("input[name='email_2']").val(email_box01);
+          $("input[name='email_2']").attr('readonly', true);
+        }
+      });
+      // email select02
+      $("#selectEmail02").change(function() {
+        var email_box02 = $(this).val();
+        if (email_box02 == "직접입력") {
+          $("input[name='email_4']").val('');
+          $("input[name='email_4']").attr('readonly', false);
+        } else {
+          $("input[name='email_4']").val(email_box02);
+          $("input[name='email_4']").attr('readonly', true);
+        } 
+      });
+    });   
+  </script>
+</head>
+<body>
+  <div class="wrap login sub">
+    <header class="sub header">
+      <a href="/m/login">
+        <span>이전</span>
+        <i class="fas fa-chevron-left"></i>
+      </a>
+      <h1>아이디/비밀번호 찾기</h1>
+    </header>
+    <div class="sub_cont main">
+      <div class="tabs" data-tab="tabWrap">
+        <div class="title_box">
+          <ul class="tab_links">
+            <li class="on"><a href="#" data-tablink=".tabs .tab01">아이디 찾기</a></li>
+            <li><a href="#" data-tablink=".tabs .tab02">비밀번호 찾기</a></li>
+          </ul>
+        </div>
+        <div class="tab-content find">
+          <div class="tab tab01">
+            <form action="/m/find/id" method="post" class="form" id="emailFind">                        
+              <div class="name_box">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name_01" placeholder="이름을 입력해주세요." title="이름입력">
+                <p class="err_msg"></p>
+              </div>
+              <div class="email_box">
+                <label for="email">이메일</label>
+                <input type="text" name="email_1" name="email_01" value="">
+                <span>@</span>
+                <input type="text" name="email_2" name="email_02" value="" placeholder="- - 직접입력 - -">
+                <select id="selectEmail">
+                  <option value="직접입력" selected="selected">직접입력</option>
+                  <option value="gmail.com">gmail.com</option>
+                  <option value="naver.com">naver.com</option>
+                  <option value="daum.net">daum.net</option>
+                  <option value="hotmail.com">hotmail.com</option>
+                  <option value="nate.com">nate.com</option>
+                </select>
+                <p class="err_msg"></p>
+              </div>
+              <button type="submit" class="find_btn"><span>이메일 인증하기</span></button>
+            </form>
+          </div>
+          <div class="tab tab02 hidden">
+            <form action="/m/find/pw" method="post" class="form" id="passFind">                        
+              <div class="name_box">
+                <label for="name02">이름</label>
+                <input type="text" id="name02" name="name_02" placeholder="이름을 입력해주세요." title="이름입력">
+                <p class="err_msg"></p>
+              </div>
+              <div class="email_box">
+                <label for="email02">이메일</label>
+                <input type="text" name="email_3" value="">
+                <span>@</span>
+                <input type="text" name="email_4" value="" placeholder="- - 직접입력 - -">
+                <select id="selectEmail02">
+                  <option value="직접입력" selected="selected">직접입력</option>
+                  <option value="gmail.com">gmail.com</option>
+                  <option value="naver.com">naver.com</option>
+                  <option value="daum.net">daum.net</option>
+                  <option value="hotmail.com">hotmail.com</option>
+                  <option value="nate.com">nate.com</option>
+                </select>
+                <p class="err_msg"></p>
+              </div>
+              <div>
+                <p>ENJOY STREET  가입 시 사용한 이메일 주소를 입력해주시면,<br> 비밀번호를 재설정할 수 있는 링크를 보내 드립니다.</p>
+              </div>
+              <button type="submit" class="find_btn"><span>비밀번호 재설정 링크</span></button>
+            </form>
+          </div>
+        </div>
+        <div id="checking" style="display:none;">{{ errorCode }}</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function(){      
+      var count = 0
+      var checked = "true"
+      var toast = new ax5.ui.toast();
+      
+      // email find
+      $('#emailFind').on('submit', function(){
+        var email_1 = $("input[name='email_1").val()
+        var email_2 = $("input[name='email_2").val()
+        var check_email = email_1 + "@" + email_2
+        
+        // name validation 
+        var getName= RegExp(/^[가-힣]+$/);
+        // email validation
+        var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+        
+        // test id/pw
+        var test_name = "브이알에듀"
+        var test_id = "vredu@vreducation.kr"
+        var test_id02 = "vredu02@vreducation.kr"
+
+        // name check
+        var name = $('#name').val()        
+        if (name == '') {
+          $('#name').focus();
+          $("#emailFind .name_box .err_msg").text("필수입력 항목입니다.").show();
+          return false;
+        }
+        else if (!getName.test($("#name").val())) {
+          $("#name").focus();
+          $("#emailFind .name_box .err_msg").text("이름을 확인하세요.").show();
+          return false;
+        }
+        $("#emailFind .err_msg").hide();
+
+        // email check
+        if (check_email == '') {
+          $("#email").focus();
+          $("#emailFind .email_box .err_msg").text("필수입력 항목입니다.").show();
+          return false;
+        }
+        else if (!getMail.test(check_email)) {
+          $("#email").focus();
+          $("#emailFind .email_box .err_msg").text("이메일 형식을 확인하세요.").show();
+          return false;
+        }
+        // quit account
+        // else if(name == test_name && check_email == test_id02){
+        //   toast.setConfig({
+        //     theme: 'primary',
+        //     width:'310',
+        //     containerPosition: "top-center",
+        //     icon: '<i class="fas fa-exclamation-triangle"></i>',
+        //     closeIcon: '<i class="fa fa-times"></i>',
+        //     lang: {"ok": "닫기"},
+        //   });
+        //   $(function() {
+        //     toast.confirm({
+        //       msg: "이미 탈퇴한 계정입니다.",
+        //     }, function() {
+        //       console.log(this);
+        //     });
+        //     $(".ax5-ui-toast-container").delay(3000).fadeOut(500, function(){
+        //       $(this).remove();
+        //     }) 
+        //   });    
+        //   return false;
+        // }
+
+        // else if (check_email != test_id) {
+        //   $("#email").focus();
+        //   toast.setConfig({
+        //     theme: 'danger',
+        //     width:'310',
+        //     containerPosition: "top-center",
+        //     icon: '<i class="fas fa-exclamation-triangle"></i>',
+        //     closeIcon: '<i class="fa fa-times"></i>',
+        //     lang: {"ok": "닫기"},
+        //   });
+        //   $(function() {
+        //     toast.confirm({
+        //       msg: "입력하신 정보가 존재하지 않습니다.",
+        //     }, function() {
+        //       console.log(this);
+        //     });
+        //     $(".ax5-ui-toast-container").delay(3000).fadeOut(500, function(){
+        //       $(this).remove();
+        //     }) 
+        //   });
+        //   return false;
+        // }
+        // if (check_email == test_id) {
+        //   $("#emailFind .email_box .err_msg").text("").show().css({"display":"none"});
+        // }
+        // $("#emailFind .err_msg").hide();
+      });
+      
+      // password find
+      $('#passFind').on('submit', function(){
+        var email_3 = $("input[name='email_3").val()
+        var email_4 = $("input[name='email_4").val()
+        var check_email = email_3 + "@" + email_4
+        
+        // name validation 
+        var getName= RegExp(/^[가-힣]+$/);
+        // email validation 
+        var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+        
+        // test id/pw
+        var test_name = "브이알에듀"
+        var test_id = "vredu@vreducation.kr"
+        var test_id02 = "vredu02@vreducation.kr"
+
+        // name check
+        var name = $('#name02').val()        
+        if (name == '') {
+          $('#name02').focus();
+          $("#passFind .name_box .err_msg").text("필수입력 항목입니다.").show();
+          return false;
+        }
+        else if (!getName.test($("#name02").val())) {
+          $("#name02").focus();
+          $("#passFind .name_box .err_msg").text("이름을 확인하세요.").show();
+          return false;
+        }
+        $("#passFind .err_msg").hide();
+
+        // email(id) check
+        if (check_email == '') {
+          $("#email02").focus();
+          $("#passFind .email_box .err_msg").text("필수입력 항목입니다.").show();
+          return false;
+        }
+        else if (!getMail.test(check_email)) {
+          $("#email02").focus();
+          $("#passFind .email_box .err_msg").text("이메일 형식을 확인하세요.").show();
+          return false;
+        }
+        // quit account
+        // else if(name == test_name && check_email == test_id02){
+        //   toast.setConfig({
+        //     theme: 'primary',
+        //     width:'310',
+        //     containerPosition: "top-center",
+        //     icon: '<i class="fas fa-exclamation-triangle"></i>',
+        //     closeIcon: '<i class="fa fa-times"></i>',
+        //     lang: {"ok": "닫기"},
+        //   });
+        //   $(function() {
+        //     toast.confirm({
+        //       msg: "이미 탈퇴한 계정입니다.",
+        //     }, function() {
+        //       console.log(this);
+        //     });
+        //     $(".ax5-ui-toast-container").delay(3000).fadeOut(500, function(){
+        //       $(this).remove();
+        //     }) 
+        //   });    
+        //   return false;
+        // }
+        // else if (check_email != test_id) {
+        //   $("#email02").focus();
+        //   toast.setConfig({
+        //     theme: 'danger',
+        //     width:'310',
+        //     containerPosition: "top-center",
+        //     icon: '<i class="fas fa-exclamation-triangle"></i>',
+        //     closeIcon: '<i class="fa fa-times"></i>',
+        //     lang: {"ok": "닫기"},
+        //   });
+        //   $(function() {
+        //     toast.confirm({
+        //       msg: "입력하신 정보가 존재하지 않습니다.",
+        //     }, function() {
+        //       console.log(this);
+        //     });
+        //     $(".ax5-ui-toast-container").delay(3000).fadeOut(500, function(){
+        //       $(this).remove();
+        //     }) 
+        //   });
+        //   return false;
+        // }
+        // if (check_email == test_id) {
+        //   $("#passFind .email_box .err_msg").text("").show().css({"display":"none"});
+        // }
+        // $("#passFind .err_msg").hide();
+      });
+    });
+    
+    $(window).load(function(){
+      var count = 0
+      var checked = "true"
+      var toast = new ax5.ui.toast();
+
+      var passAction = $("#checking").html();
+
+      if (passAction == 1) {
+        $(".id_box .err_msg").text("").show().css({"display":"none"});
+          // toast
+          toast.setConfig({
+            width:'340',
+            containerPosition: "top-center",
+            lang: {"ok": "닫기"},
+          });
+          $(function() {
+            toast.confirm({
+              theme: 'primary',
+              icon: '<i class="far fa-bell"></i>',
+              closeIcon: '<i class="fa fa-times"></i>',
+              msg: "이름이 일치하지 않습니다.",
+            }, function() {
+              console.log(this);
+            });
+          });            
+          $(".ax5-ui-toast-container").delay(3000).fadeOut(500, function(){
+            $(this).remove();
+          }) 
+        return false;
+        } else if (passAction == 2 ) {
+        $(".id_box .err_msg").text("").show().css({"display":"none"});
+          // toast
+          toast.setConfig({
+            width:'340',
+            containerPosition: "top-center",
+            lang: {"ok": "닫기"},
+          });
+          $(function() {
+            toast.confirm({
+              theme: 'primary',
+              icon: '<i class="far fa-bell"></i>',
+              closeIcon: '<i class="fa fa-times"></i>',
+              msg: "가입된 이메일이 아닙니다.",
+            }, function() {
+              console.log(this);
+            });
+          });            
+          $(".ax5-ui-toast-container").delay(3000).fadeOut(500, function(){
+            $(this).remove();
+          }) 
+        return false;
+        } else if (passAction == 3) {
+        $(".id_box .err_msg").text("").show().css({"display":"none"});
+          // toast
+          toast.setConfig({
+            width:'340',
+            containerPosition: "top-center",
+            lang: {"ok": "닫기"},
+          });
+          $(function() {
+            toast.confirm({
+              theme: 'danger',
+              icon: '<i class="far fa-bell"></i>',
+              closeIcon: '<i class="fa fa-times"></i>',
+              msg: "가입하신 정보와 일치하지 않습니다.",
+            }, function() {
+              console.log(this);
+            });
+          });            
+          $(".ax5-ui-toast-container").delay(3000).fadeOut(500, function(){
+            $(this).remove();
+          }) 
+        return false;
+        }
+      })
+    
+  </script>
+</body>
+</html>

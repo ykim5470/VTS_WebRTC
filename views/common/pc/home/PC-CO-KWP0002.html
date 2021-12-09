@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-site-verification" content="j8qzNXdVWfNoTSQhRJn2mZERy5XsyNQwAxPuGXi471Q" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="icon" href="http://www.enjoystreet.com/img/enjoystreet.ico">
+  <link rel="shortcut icon" href="http://www.enjoystreet.com/img/enjoystreet.ico">
+  <link rel="stylesheet" href="/resource/pc/pagination/pagination.css">
+  <link rel="stylesheet" href="/resource/pc/jquery.scrollbar.min/jquery.scrollbar.min.css">
+  <link rel="stylesheet" href="/resource/pc/owlcarousel/owl.carousel.min.css">
+  <link rel="stylesheet" href="/resource/pc/owlcarousel/owl.theme.default.min.css">
+  <link rel="stylesheet" href="/css/pc/contents.css">
+  <script src="/resource/pc/jquery.min.js"></script>
+  <script src="/resource/pc/pagination/pagination.min.js"></script>
+  <script src="/resource/pc/jquery.scrollbar.min/jquery.scrollbar.min.js"></script>
+  <script src="/resource/pc/owlcarousel/owl.carousel.min.js"></script>
+  <script src="/js/pc/script.js"></script>
+  <title>EnjoyStreet</title>
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YR5ECZ4DFY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-YR5ECZ4DFY');
+  </script>
+  <script>
+    $(document).ready(function(){
+      function button_event(){        
+        $(".detail").click(function(){
+          $("body").toggleClass('over');
+          $(".back_img").toggleClass('active');
+          $(".pop_up").toggleClass('active');
+        })
+      } 
+      /* 디바이스 사이즈에 따른 pagination 컨텐츠 조절 */
+      let container = $('#pagination');
+      /* pagination */
+      var width = $(window).width();
+      if(width>=1739){
+        var inner = 10;
+      }else if(width>=769 && width<1740){
+        var inner = 8;
+      }else if(width<769){
+        var inner = 6;}
+      /* pagination */
+      container.pagination({
+        pageSize: inner,
+        showNavigator: true,
+        formatNavigator: '총 <%= totalNumber %>개',
+        dataSource: [
+          {name: "/img/pc/tour_01.jpg", guide:"김범석", tournum:"tour_01", tourY:"2021", tourM:"4", tourD:"12", tourW:"월", tourTs:"09:00", tourTe:"18:00", tourmap:"경복궁 - 창덕궁 - 창경궁 - 경희궁 - 덕수궁", value:"[서울] 서울5대궁 투어", keyword01:"서울", keyword02:"고궁", keyword03:"5대궁", keyword04:"경복궁", charge:"100,000원(1인)", tourtext:"-경복궁-<br>1392년 조선을 세운 태조 이성계는 475년 동안 고려의 수도였던 개경(지금의 개성)을 버리고, 한양을 새 왕조의 수도로 정한 뒤 1395년에 경복궁을 완성한다. 조선의 궁궐 중 첫 번째로 지어진 경복궁은 조선 왕조를 상징하는 으뜸 궁궐이다. ＇큰 복을 누리라＇는 뜻을 가진 이름 ＇경복(景福)＇은 조선 개국 일등 공신인 정도전이 지은 것이다. 그 뒤 경복궁은 1592년에 일어난 임진왜란 때 불에 타 없어졌는데, 고종 때인 1867년 흥선 대원군이 조선 왕실의 위엄을 높이고자 다시 지었다. 그 덕에 경복궁은 조선의 으뜸 궁궐의 면모를 되찾았다. 하지만 얼마 안 있어 일제가 경복궁 건물 대부분을 훼손하여 근정전 등 극히 일부 건물만 보존되어 있다. 일제는 우리나라를 지배하기 위해 최고 행정 관청인 조선 총독부를 경복궁 안에 지어 궁궐 자체를 가려 버렸다.경복궁은 1990년 조선 총독부 건물을 철거하면서 복원 사업을 시작했고, 2025년 완료를 목표로 복원 사업이 활발히 진행되고 있다. 경복궁의 정문인 광화문은 광복 65주년인 지난 2010년에 제자리를 찾았다. <br><br>-덕수궁-<br>1963년 1월 18일 사적 제124호로 지정되었다. 원래 명칭은 경운궁(慶運宮)이지만, 1907년 고종이 순종에게 양위를 한 뒤 이 곳에 살자 고종의 장수를 빈다는 뜻에서 덕수궁(德壽宮)으로 개칭되었다. 현재 덕수궁의 자리는 본래 세조(世祖)의 큰아들인 도원군(桃源君: 暲)의 큰아들, 즉 세조의 큰손자인 월산대군(月山大君, 婷)의 개인 저택이었다. 도원군은 세자(世子)로 책봉되었으나 20세에 죽었다. 그래서 세자빈(世子嬪) 한(韓)씨가 출궁(出宮)을 할 때 나라에서 이 집을 지어주고 두 아들과 함께 살게 하였다. 둘째 아들인 잘산군(乽山君)이 성종(成宗)으로 즉위하면서 그의 어머니인 한씨도 입궐하게 되어 월산대군만이 거처하게 되었다.  고종이 러시아 공사관으로 피신하면서 태후(太后)와 태자비(太子妃)는 경운궁으로 거처를 옮겨 생활하였다. 그리고 1897년 고종이 러시아 공사관에서 경운궁으로 거처를 옮기면서 다시 전각 등의 건립이 이루어졌다. 그 해 9월에 대한제국(大韓帝國)이 세워지고, 고종이 황제 즉위식을 한 뒤에는 정궁(正宮)이 되었다"},
+          {name: "/img/pc/tour_02.jpg", guide:"김범석", tournum:"tour_02", tourY:"2021", tourM:"4", tourD:"12", tourW:"월", tourTs:"08:00", tourTe:"16:00", tourmap:"여의도 한강공원 벚꽃 - 한강유람선 - 63빌딩 전망대 - 수산시장", value:"[서울] 서울 관광 투어A", keyword01:"서울", keyword02:"관광", keyword03:"벚꽃", keyword04:"한강", charge:"100,000원(1인)", tourtext:"-한강유람선-<br>1986년 10월 26일, 서울특별시의 중심부를 동서로 가로지르는 유람선을 취항한 이후 2017년 현재 7개의 선착장에서 6척의 유람선(유쉘알파호, 유쉘베타호, 엘페1호, 엘페2호, 씨앤한강랜드호, 우바호)이 운영되고 있다. 유람선의 운영은 (주)이랜드크루즈가 맡고 있으며, 도심 속의 자연공간으로서 내국인은 물론 외국 관광객들에게 한강과 서울의 모습을 널리 알리고, 나아가 휴식공간을 제공할 목적으로 도입되었다.선착장은 여의도, 잠실, 뚝섬, 잠두봉, 상암, 양화 7개 지역에 있으며, 자연재해나 기상 악화 등으로 인한 결항을 제외하고는 연중 운항한다. 코스는 어느 한 선착장을 출발해 다시 출발지점으로 돌아오는 회항 코스와 어느 한 선착장을 출발해 다른 선착장에 내리는 편도 코스로 나뉜다.회항 코스는 여의도 선착장 주변을 돌면서 유람선 안에서 갈매기 먹이주기 체험이나 칵테일쇼, 라이브 공연 등 다양한 테마를 즐길 수 있다. 편도 코스는 여의도를 출발해 선유도, 양화, 상암, 잠두봉 선착장을 거쳐 여의도로 돌아오는 코스로서 여의도 선착장을 제외하곤 하선만 가능하다. 현장 발권은 평일과 주말 오전 9시부터 오후 9시까지 가능하며 여의도 선착장 및 매표소는 서울특별시 영등포구 여의동로 252(여의도동 86)에 있다<br><br>-63빌딩 전망대-<br>1980년 대한생명이 여의도에 60층 규모의 사옥 건축허가를 신청할 때부터, 60층 자리에 '서울을 한눈에 바라볼 수 있는' 전망대를 조성한다는 계획이 세워져 있었다. 특히 전망대까지 초속 9m의 초고속 엘레베이터 여덟 대를 설치하여 지상부터 전망대까지 30초 만에 오르도록 한다는 점에서 당시 언론의 주목을 받았다.[5년간의 공사 끝에 1985년 5월 30일 63빌딩이 완공되었으나 검사 시 소방시설이 부족하다는 지적에 따라 정비에 들어갔고, 이 때문에 전망대를 비롯한 관람시설은 정비를 마친 7월 27일에 일반에 공개됐다.[4] 2008년 7월 18일에 63스카이아트로 변경하였다63스카이아트(영어: 63 Sky Art)는 지상 60층에 위치하고 있다. 현재 개장한 서울특별시의 마천루 중 거의 유일하게 전망대를 갖추고 있다. 초고층 건물 중에는 유일하다 볼 수 있고 비건물 타워까지 합하면 N서울타워와 함께 유일하게 전망대가 설치되어 있다. 63빌딩은 540m/min의 빠른 속도를 가지고 있는 한국미쓰비시엘리베이터의 엘리베이터가 있으며, 지하 1층부터 지상 60층까지 운행된다. 참고로 이 엘리베이터는 민간인에게 개방된 대한민국의 엘리베이터 중 2번째로 속도가 빠르다."},
+          {name: "/img/pc/tour_03.jpg", guide:"김범석", tournum:"tour_03", tourY:"2021", tourM:"4", tourD:"12", tourW:"월", tourTs:"08:00", tourTe:"16:00", tourmap:"조계사 - 인사동 - 익선동까페거리 - 청계천-명동 - 서울N타워", value:"[서울] 서울 관광 투어B", keyword01:"서울", keyword02:"관광", keyword03:"남산", keyword04:"청계천", charge:"100,000원(1인)", tourtext:"-서울N타워-<br>서울시 용산구 남산공원길에 있는 전망타워와 문화·상업 복합시설을 통칭한다. 전망대·송신탑 부분인 N서울타워와 문화·상업 시설 부분인 서울타워플라자로 구성되는데, 등록된 정식 명칭은 'YTN서울타워'이며 남산타워 또는 서울타워라고 약칭하기도 한다. 타워의 총 높이는 탑신 135.7m와 철탑 101m를 합하여 236.7m이며, 남산의 해발고도 243m를 합하면 타워 정상의 해발고도는 479.7m에 달한다. 원래 방송국의 전파 송출을 위한 종합 전파탑으로 건설되었다. 1969년 12월 동양방송·동아방송·문화방송 등 3개 민영 방송국의 공동 투자로 착공하여 1971년 콘크리트 탑신과 공중선 철탑을 준공하였고, 1975년 8월에 전망대를 완공하였다. 완공 후 체신부를 거쳐 체신공제조합이 소유하였으며, 처음에는 보안상의 이유로 전망대를 공개하지 않다가 1980년 10월부터 서울타워라는 명칭으로 일반에 공개하였다. 1982년에는 세계거탑연맹(WFGT)에 가입하였다. <br><br>-익선동-<br>익선동은 골목과 한옥이 어우러져 아름다운 매력을 풍기는 곳으로, 남녀노소 많은 관광객들이 찾는 핫플레이스로 떠오르고 있다. 또한 젊은세대와 어르신 간 세대를 이어주는 장소이기도 하다. <br><br>-청계천-<br>길이 10.84km, 유역면적 59.83㎢이다. 북악산·인왕산·남산 등으로 둘러싸인 서울 분지의 모든 물이 여기에 모여 동쪽으로 흐르다가 왕십리 밖 살곶이다리[箭串橋] 근처에서 중랑천(中浪川)과 합쳐 서쪽으로 흐름을 바꾸어 한강으로 빠진다. 본래의 명칭은 '개천(開川)'이었다.<br>조선의 한양정도(漢陽定都) 당시 청계천은 자연하천 그대로여서 홍수가 나면 민가가 침수되는 물난리를 일으켰고, 평시에는 오수가 괴어 매우 불결하였는데, 제3대 태종이 개거공사(開渠工事)를 벌여 처음으로 치수사업을 시작하였다. 그후 영조 때에는 준설·양안석축(兩岸石築)·유로변경 등 본격적인 개천사업을 시행하였다. 이 공사로서 내의 흐름이 비로소 직선화하였다.순조·고종 때에도 준설공사는 계속되었는데 이 개천에 놓인 다리는 수표교(水標橋)·오간수교(五間水橋)·광교(廣橋)·영미교(永尾橋)·관수교(觀水橋) 등 모두 24개가 있었다. 국권피탈 후 일제강점기 초(이때에 청계천으로 이름이 바뀌었다)에는 근대적 도시계획의 성격을 띤 대대적인 준설공사가 이루어졌다."},
+          {name: "/img/pc/tour_04.jpg", guide:"김범석", tournum:"tour_04", tourY:"2021", tourM:"4", tourD:"12", tourW:"월", tourTs:"09:00", tourTe:"16:00", tourmap:"동대문시장 - 신사동 가로수길 - 이태원-홍대거리", value:"[서울] 서울 관광 투어C", keyword01:"서울", keyword02:"관광", keyword03:"동대문", keyword04:"이태원", charge:"100,000원(1인)", tourtext:"-동대문시장-<br>1905년 7월 개설되었다. 처음에는 동부 이현(梨峴)의 예지동(禮智洞)에 세워졌다 하여 ‘배우개장’으로도 불리다가 같은 해 11월 동대문시장관리를 위한 광장주식회사(廣壯株式會社)가 설립되면서 ‘광장시장’으로도 불렸다. 광장(주)은 포목상으로 거부를 이룬 종로상인 박승직(朴承稷) ·장두현(張斗鉉)·최인성(崔仁成) ·김한규(金漢奎) 등이 설립하여 동대문시장의 경영과 함께 토지·가옥의 매매와 금전대부를 겸영하였다. 11년의 통계에 의하면 점포수 98개 중 미곡상 31개, 어물상 12개, 청과상 15개, 잡화상 15개, 기타 25개로, 곡물류가 주거래 상품으로 나타나 있다.<br><br>-이태원-<br>'李泰院', '利泰院'이라고도 쓴다. 대개 역원(驛院)을 두면 그 주위에 마을이 형성되고 마을의 이름도 원의 이름을 따라 부르는 일이 관례처럼 되어 왔다. 서울 남산의 남쪽, 지금의 용산구 이태원동의 동북쪽에 역원 이태원을 두었는데 그 주변에 마을이 생기자 이 마을의 이름도 이태원이라 부르게 되었다. 1907년(융희 1) 이곳의 개발을 위하여 주민들을 당시 경기도 고양군 구역 내로 이주시키고 그 마을 이름도 이태원이라 하였다.<br>처음의 이태원은 일본인 전용 거주지로 조성되었던 곳이다. 당시 일본인들을 이타인(異他人)이라고 불렀는데 그 이름에서 마을의 이름이 유래된 것으로 여겨진다. 이름을 수도정(水道町) 2정목(二丁目)이라 하였으나 주민들은 '이태원'이라 불렀다. 1922년 4월 경성부(京城府)의 확장에 따라 이태원리는 경성부에 편입되고 그때까지 경성부와 고양군의 경계를 사이에 두고 양쪽으로 나뉘었던 2개의 이태원은 하나로 광역화하여 지금의 용산구 이태원동이 되었다. 6·25전쟁을 거친 후 미군 부대의 재배치, 미8군사령부가 인근에 있어 미군들의 위락지대로 번창하기 시작하였고, 그후 점차 외국인 관광객의 쇼핑과 관광의 명소로 발전하였다.<br><br>-홍대거리-<br>홍대거리에는 이색카페들, 소규모 갤러리와 화랑, 소품점과 패션숍, 라이브카페와 클럽, 예술시장, 각종 맛집 등은 홍대거리를 더욱 자유스럽게 만든다. 다양한 행사와 거리공연, 축제 등의 문화요소를 간직하고 있어 홍대주변은 항상 많은 사람들로 북적거린다. 또한, 홍대주변을 구성하는 미술학원거리, 피카소거리, 클럽거리, 걷고 싶은거리 등 이색거리가 홍대거리로의 발걸음을 즐겁게 한다."},
+          {name: "/img/pc/tour_05.jpg", guide:"김범석", tournum:"tour_05", tourY:"2021", tourM:"4", tourD:"12", tourW:"월", tourTs:"09:00", tourTe:"19:00", tourmap:"임진각 - 제3땅굴전시관 - 도라전망대 - 헤이리마을", value:"[파주] 파주 DMZ 투어", keyword01:"파주", keyword02:"DMZ", keyword03:"임진각", keyword04:"헤이리마을", charge:"100,000원(1인)", tourtext:"-임진각-<br>군사분계선에서 7㎞ 남쪽에 위치해 임진강을 사이에 두고 북한 땅이 손에 잡힐 듯 가까운 임진각 국민관광지는 6·25전쟁의 비극이 그대로 남아 있는 곳이다. 북한에서 내려온 실향민들을 위해 1972년에 세워진 임진각은 경기평화센터로 운영되고 있는데 북한의 생활 모습을 알려주는 자료들을 전시하고 비디오도 상영하며 3층의 전망대에서는 망원경을 통해 북한 땅을 좀 더 가까이 조망할 수 있다. 임진각 뒤편의 망배단은 설, 추석 명절이면 고향을 그리워하는 실향민들이 차례를 지내는 곳으로 유명하다. 한반도 모양의 통일연못과 경의선을 달리던 열차가 달리고 싶은 철마라는 이름의 카페와 함께 서 있고 미군참전비, 임진강지구 전적비, 버마 아웅산 순국외교사절 위령탑 등도 돌아볼 수 있다. 특히 1953년 한국전쟁 포로 1만 2,773명이 자유를 찾아 걸어서 귀환했던 자유의 다리를 직접 건너보는 체험도 할 수 있으며 대형 잔디 언덕과 야외공연장이 있어 가족 단위 나들이 코스로 추천할 만하다.<br><br>-제3땅굴전시관-<br>제3땅굴은 북한 귀순자의 땅굴공사 첩보를 근거로 1978년 10월 17일 비무장지대안에서 발견되었다. 군사분계선의 서쪽 1.2㎞지점으로 추정되는 북한지역에서 지하평균 73m의 암석층을 굴착하여 1,6km가량 남쪽으로 내려와 있다.<br>땅굴의 총 길이는 1,635m이나 관광객 안전상 265m만 공개하고 있으며 북한쪽 방향에는 3개의 콘크리트 차단벽을 설치하여 북한으로 부터의 침입을 완전히 차단하고 있다. 제3땅굴에는 DMZ 영상관, 전시관 및 상징조형물, 기념품판매장 등의 시설이 설치되어 관광객들에게 다양한 볼거리를 제공하고 있다.<br><br>-헤이리마을-<br>국내 최대 규모의 예술마을로, 넓이는 약 49만 5868m²이다. 1998년 창립총회를 시작으로 미술가·음악가·작가·건축가 등 380여 명의 예술·문화인들이 회원으로 참여하였다. 경기도 파주 지역에서 전해져 오는 전래농요인 ‘헤이리 소리’로부터 ‘헤이리’라는 마을 이름이 지어졌다. 수많은 갤러리·박물관·전시관·공연장·소극장·카페·레스토랑·서점·게스트하우스·아트숍과 예술인들의 창작·주거공간이 있다. 모든 건축물은 수십여 명의 국내외 유명 건축가가 만들었으며 산과 구릉·늪·개천 등 주어진 자연환경을 최대한 살려 설계되었다."},
+          {name: "/img/pc/tour_06.jpg", guide:"김범석", tournum:"tour_06", tourY:"2021", tourM:"4", tourD:"12", tourW:"월", tourTs:"09:00", tourTe:"19:00", tourmap:"민속촌 - 수원화성", value:"[수원] 경기도 민속촌,수원화성 투어", keyword01:"수원", keyword02:"민속촌", keyword03:"수원화성", keyword04:"조선시대", charge:"100,000원(1인)", tourtext:"-민속촌-<br>1974년 개장하였다. 옛날 관가(官家)·민가(民家)·반가(班家) 등 지방별로 구조를 달리하는 건축물이 산재하며, 그 속에는 우리 조상들의 생활 모습을 재현하고 각종 생활기구·농경기구·각종 공예품 등을 전시하고 있다. 또 각종 민속놀이·민속공예를 실연(實演)한다. 전시물의 내용은 조선 후기의 어느 한 해를 중심으로 4대의 가족 구성원들이 겪는 연중생활의 모습을 계절별로 재현해 놓고 있다. 세시풍속과 민간신앙, 연희오락, 관혼상제 등을 사실적으로 복원, 전시하고 있다.박물관은 총 7개의 전시실로 구성되어 있다. 1실은 세시풍속 전반과 기자(祈子)풍습 등을, 2실은 2월 초하루와 한식 풍습 및 유년기의 의례 및 놀이 등을, 3실은 단오행사 및 입하에서 하지까지의 농사일과 성년의례 및 교육제도 등을 전시하고 있다.4실은 여름철 농사관습과 풍습 등을, 5실은 추석에 행하는 풍속과 가을 음식 등을, 6실은 혼례관행과 김장하기, 온돌 구조 등을, 7실은 환갑에서 회혼을 거쳐 장례를 치르기까지의 과정과 겨울 풍속 등을 전시하고 있다<br><br>-수원화성-<br>화성(華城)은 경기도 수원에 있는 조선 시대의 성곽이다. 정조(正祖)가 자신의 부친인 장헌세자의 묘를 옮기면서 읍치소를 이전하고 주민을 이주시킬 수 있는 신도시를 건설하기 위해 방어 목적으로 조성하였다. 1794년 2월에 착공하여 2년 반에 걸친 공사 후 완공되었다. 성곽 전체 길이는 5.74Km이며, 높이 4~6m의 성벽이 130㏊의 면적을 에워싸고 있다.처음부터 계획되어 신축된 성곽이라는 점, 거주지로서의 읍성과 방어용 산성을 합하여 하나의 성곽도시로 만들었다는 점, 전통적인 축성 기법에 동양과 서양의 새로운 과학적 지식과 기술을 적극적으로 활용하였다는 점, 그 이전의 우리나라 성곽에 흔치 않았던 다양한 방어용 시설이 많이 첨가되었다는 점, 주변 지형에 따라 자연스러운 형태로 조성해 독특한 아름다움을 보여 준다는 점 등의 특징이 있다"},
+          {name: "/img/pc/tour_07.jpg", guide:"김범석", tournum:"tour_07", tourY:"2021", tourM:"4", tourD:"12", tourW:"월", tourTs:"08:00", tourTe:"20:00", tourmap:"남이섬 - 강촌레일바이크 - 아침고요수목원", value:"[춘천] 경기도 남이섬 근교 일일투어", keyword01:"춘천", keyword02:"남이섬", keyword03:"강촌", keyword04:"아침고요수목원", charge:"100,000원(1인)", tourtext:"-남이섬-<br>북한강에 있는 강섬으로서 총면적은 14여 만 평에 이른다. 원래는 홍수 때에만 섬으로 고립되었으나, 청평(淸平)댐의 건설로 완전한 섬을 이루게 되었다. 남이 장군의 묘소가 있는 것에 연유하여 남이섬이라 부르게 되었다.넓은 잔디밭이 전개되어 있고 둘레에 밤나무숲이 무성하고, 별장·방갈로·수영장 등 오락시설이 잘 정비되어 있으며, 서울과 가까워 많은 관광객이 찾아든다. 백자작나무길, 잣나무길, 메타 세콰이어길 등 운치있는 숲길이 명소이다. 드라마 '겨울 연가'의 촬영장소로 알려져 있다.<br><br>-강촌레일바이크-<br>2010년 12월 20일, 서울과 춘천을 이어주던 경춘선 무궁화호 열차가 마지막 운행을 마치고 역사 속으로 사라졌다. 이후 터널 안 선로는 철거됐지만, 아치 모양의 독특한 피암터널과 낡은 역사는 남았다. 오래된 '강촌'역 표지판도 그대로다. 지난해 여름, 강촌역과 김유정역을 오가는 레일바이크가 운행을 시작하면서 역사는 매표소와 쉼터로 탈바꿈했다<br><br>-아침고요수목원-<br>잣나무 숲이 울창한 축령산 자락에 한상경이 설계 조성한 수목원으로, 1996년 5월에 개원하였다. 한국식 정원의 모델을 표방하여 이에 맞도록 설계하였다. 보유식물은 총 5,000여 종이며, 자생식물이 2,000여 종, 외래식물이 3,000여 종이 있다.수목원에는 고향집정원, 무궁화동산, 고산암석원, 분재정원, 에덴정원, 시가 있는 산책로, 천년향, 석정원, 하경정원, 한국주제정원 등의 특색 있는 정원이 있다. 이외에 산수경온실, 알파인온실, 아침고요갤러리, 역사관, 추억공작소 등의 부대시설이 있다.야생화 정원과 무궁화 동산에는 우리나라 자생 야생화 1000여 종이 분포하고 있으며, 아이리스 정원에는 독일계 아이리스 800여 종이 있다. 석정원에는 230여 종의 고산 식물이 분포하고 있으며, 무궁화 200여 종도 있다. 그 밖에 백두산의 희귀 야생화 300여 종, 한국정원의 모란 40여 종 등 1,000여 종의 다양한 수목을 보유하고 있다."},
+          {name: "/img/pc/tour_08.jpg", guide:"김범석", tournum:"tour_08", tourY:"2021", tourM:"4", tourD:"12", tourW:"월", tourTs:"07:00", tourTe:"20:00", tourmap:"광성보 - 전등사 - 고인돌 - 평화전망대 - 강화역사박물관", value:"[인천] 경기도 강화도 근교 일일투어", keyword01:"인천", keyword02:"강화도", keyword03:"고인돌", keyword04:"박물관", charge:"100,000원(1인)", tourtext:"-전등사-<br>381년(소수림왕 11)에 아도(阿道)가 창건하여 진종사(眞宗寺)라 하였다. 그 후 고려 제27, 28, 30대의 충숙왕(忠肅王)·충혜왕(忠惠王)·충정왕(忠定王) 때에 수축하였고, 1625년(인조 3)과 1906년에도 중수하였으며, 또 일제강점기에도 두 차례 중수하였다.전등사라는 이름은 충렬왕(忠烈王:재위 1274∼1308)의 비 정화궁주(貞和宮主)가 이 절에 옥등(玉燈)을 시주한 데서 비롯되었다. 이때 정화궁주는 승려 인기(印奇)에게 《대장경》을 인간(印刊), 이 절에 봉안하도록 하였다고 한다.이 절에는 보물 제178호인 전등사 대웅전(大雄殿), 보물 제179호인 전등사 약사전(藥師殿), 보물 제393호인 전등사 범종(梵鐘)이 있다. 또 대웅전에는 1544년(중종 39) 정수사(淨水寺)에서 개판(改版)한 《묘법연화경(妙法蓮華經)》의 목판 104장이 보관되어 있다.<br><br>-고인돌-<br>사적으로 지정된 고인돌은 도로에서 약간 떨어진 밭 가운데에 1기가 독립해 있는 것으로, 경기지방을 비롯하여 중부지방에서는 보기 드문 거대한 탁자식(卓子式)으로서, 뚜껑돌[蓋石]은 길이 650cm, 너비 520cm나 되는 거석이고, 그 밑에 2매의 굄돌이 받치고 있다. 일반적으로 북방식 고인돌의 구조는 4매의 굄돌로 직사각형 돌방[石室]을 구축하고, 그 위에 뚜껑돌을 얹어 놓는 방식을 취하는데, 이 고인돌은 돌방의 짧은 변을 이루는 2매의 굄돌이 없다. 이것은 과거에 파괴되어 없어진 것으로 추측하고 있다.<br>전체의 지상 높이는 260cm이며, 긴 축은 남북방향을 가리키고 있다.<br><br>-강화역사박물관-2010년 10월 23일에 개관하였으며, 강화에서 출토된 유물들을 중심으로 선사시대부터 근 현대까지 강화도의 역사와 문화를 체계적으로 전시·보존·연구하기 위해 설립되었다. 총 사업비 140억원이 투입돼 세계문화유산으로 지정된 사적 제137호 강화고인돌공원내 1만5천여㎡ 부지에 지하 1층, 지상 2층, 연건축면적 4천200㎡ 규모로 지어졌다.1층에는 고려. 조선시대 등 근 현대의 강화 유물과 민속사를 볼 수 있는 전시장이 있으며, 2층에는 구석기∼청동기 시대의 상설 유물전시장과 체험관이 있고, 지하 1층은 수장고로 쓰인다. 그밖에 다양한 기획전시 및 교육, 체험프로그램도 운영하고 있다"},
+          {name: "/img/pc/tour_09.jpg", guide:"김범석", tournum:"tour_09", tourY:"2021", tourM:"4", tourD:"12", tourW:"월", tourTs:"", tourTe:" 4월 13일(화)", tourmap:"석굴암 - 불국사 - 국립박물관 - 안압지 - 대릉원 - 첨성대", value:"[경주] 경북 경주 역사유적지 2일투어", keyword01:"경주", keyword02:"역사", keyword03:"석굴암", keyword04:"불국사", charge:"300,000원(1인)", tourtext:"-석굴암-<br>문화재청에 등록된 정식명칭은 석굴암석굴이며, 《삼국유사》에 나오는 원래 이름은 석불사이다. 임진왜란 이후 불국사에 예속되었고, 1910년경부터 일본인들이 석불사 대신 현재의 석굴암(石窟庵)으로 부르기 시작했다.일연(一然)의 《삼국유사(三國遺事)》를 보면, 석굴암은 8세기 중엽인 통일신라 751년(경덕왕 10)에 대상(大相) 김대성(金大城)이 불국사(佛國寺)를 중창(重刱)할 때, 왕명에 따라 착공한 것으로 되어 있다. 즉, 그는 현세(現世)의 부모를 위하여 불국사를 세우는 한편, 전세(前世)의 부모를 위해서는 석굴암을 세웠다는 것이다.이는 불교의 인과응보(因果應報) 설화를 기반으로 한 요소가 엿보이는 전설적인 유래이지만, 대상 김문량(金文亮)의 집에 환생(還生)하였다는 김대성은 《삼국사기(三國史記)》에 나타나듯이 경덕왕대에 중시(中侍)로 있었던 김문량이 실존인물임에 비추어, 그의 아들인 김대정(金大正)이 신라의 기명(記名) 방식에 의해 대성과 동일인물인 것으로 추정할 수도 있다.<br><br>-불국사-<br>대한불교조계종 11교구본사(敎區本寺)의 하나로 그 경내(境內)는 2009년 12월 21일에 사적 제502호로 지정되었으며 1995년 세계문화유산목록에 등록되었다.불국사 창건에 대하여는 두 가지 설이 전한다. 그 중 하나는 《불국사고금창기(佛國寺古今創記)》로, 여기에 보면 528년(신라 법흥왕 15) 법흥왕의 어머니 영제부인(迎帝夫人)의 발원(發願)으로 불국사를 창건하여 574년 진흥왕(眞興王)의 어머니인 지소부인(只召夫人)이 절을 크게 중건하면서 비로자나불(毘盧遮那佛)과 아미타불(阿彌陀佛)을 주조하게 하여 봉안하였고, 670년(문무왕 10)에는 무설전(無說殿)을 새로 지어 《화엄경(華嚴經)》을 강설(講說)하였고, 그 후 751년(경덕왕 10)에 김대성(金大城)에 의하여 크게 개수되면서 탑과 석교 등도 만들었다고 하였다.<br><br>-대릉원-<br>총면적은 12만 5400평으로, 신라시대의 왕·왕비·귀족 등의 무덤 23기가 모여 있다. 고분은 모두 평지에 자리잡고 있는 신라시대만의 독특한 무덤군(群)으로, 크게 다음과 같은 7개의 지역으로 나뉜다.① 신라미추왕릉(사적 175) ② 경주 황남리 고분군(皇南里古墳群:사적 40) ③ 경주 노서리 고분군(路西里古墳群:사적 39) ④ 신라 오릉(五陵:사적 172) ⑤ 경주 동부사적지대(東部史蹟地帶:사적 161) ⑥ 경주 노동리 고분군(路東里古墳群:사적 38) ⑦ 재매정(財買井:사적 246) 등이다"},
+          {name: "/img/pc/tour_10.jpg", guide:"김범석", tournum:"tour_10", tourY:"2021", tourM:"4", tourD:"12", tourW:"월", tourTs:"07:00", tourTe:"20:00", tourmap:"설악산 국립공원 - 경포대 - 오죽헌", value:"[속초] 강원 설악산 근교 단풍 일일투어", keyword01:"강원", keyword02:"설악산", keyword03:"경포대", keyword04:"오죽헌", charge:"200,000원(1인)", tourtext:"-설악산 국립공원-<br>면적 354.6㎢이다. 1970년 3월 24일 지정되었으나 1972년 10월 13일, 1977년 10월 4일, 1978년 10월 4일 3회에 걸쳐 구역이 변경되었다. 주봉인 대청봉(大靑峰:1,708m)은 태백산맥 중의 한 연봉(連峰)으로 한라산·지리산 다음으로 높은 산이다. 설악산은 유곡(幽谷)·계류(溪流)·신록·단풍이 천하의 절경을 이루는 곳이다.대체로 화강암류로 구성되어 있으나 곳에 따라 흑운모화강암·화강반암·화강편마암·홍색화강암 등도 분포하며 부분적으로 섬록암, 반암(斑岩)이 노출되기도 한다. 서쪽의 인제군 쪽을 내설악, 동쪽의 속초시와 고성군·양양군 쪽을 외설악이라고 하며, 이를 다시 북내설악·남내설악, 북외설악·남외설악으로 구분한다.<br><br>-경포대-<br>강원도지방유형문화재 제6호였으나 2019년 12월 30일 보물 제2046호로 승격 지정됐다. 정면 6칸, 측면 5칸, 기둥 32주(柱)의 팔작지붕 겹처마기와집의 누대(樓臺)로, 강릉 오죽헌(烏竹軒)에 있던 율곡(栗谷)이 10세 때에 지었다고 하는 《경포대부(鏡浦臺賦)》를 판각(板刻)하여 걸었다.또한 숙종의 어제시(御製詩)를 비롯하여 여러 명사들의 기문(記文) ·시판(詩板)이 걸려 있다. 특히 누대의 전자액(篆字額)은 유한지(兪漢芝), 정자액(正字額)은 이익회(李翊會), 제일강산(第一江山)은 주지번(朱之蕃)의 글씨라고 하는데, ‘江山’ 두 자를 잃어버려 후세인이 써 넣었다고 한다. <br><br>-오죽헌-<br>1963년 1월 21일 보물 제165호로 지정되었다. 정면 3칸, 측면 2칸의 단층 팔작지붕 양식이다. 신사임당과 율곡(栗谷) 이이(李珥)가 태어난 집으로 조선 중종 때 건축되었다. 한국 주택건축 중에서 가장 오래된 건물에 속한다. 4면을 굵은 댓돌로 한 층 높이고 그 위에 자연석의 초석을 배치하여 네모기둥을 세웠다.건물을 향하여 왼쪽 2칸은 대청이며 오른쪽 1칸에 온돌방을 들였으며, 대청 앞면에는 각각 띠살문의 분합(分閤)을, 옆면과 뒷면에는 2짝 씩의 판문(板門)을 달고, 그 아래 벽면에 머름을 댔다. 온돌방은 뒤쪽 반 칸을 줄여 툇마루를 만들고, 앞벽과 뒷벽에 두짝열개의 띠살문을 단 것 이외는 모두 외짝문이다. 천장은 온돌방이 종이천장이고 대청은 연등천장으로 꾸몄다. 대들보는 앞뒤 기둥에 걸쳤으나, 온돌방과의 경계에 있는 대량(大樑)은 그 아래 중앙에 세운 기둥으로 받쳤다"}
+        ],
+        callback: function (data, pagination) {
+          var dataHtml = '<ul>';
+          /* pagination 콘텐츠 설정 */
+          $.each(data, function (index, item) {
+            dataHtml += 
+            '<li class="card_wrap">'+
+              '<div class="card_box tour">'+
+                '<div class="c_t_none">'+
+                  '<div class=" g_name">'+ item.guide +'</div>'+
+                  '<div class="t_info">'+'<span>'+ item.tourY +'</span>'+'<span>'+ item.tourM +'</span>'+'<span>'+ item.tourD +'</span>'+'<span>'+ item.tourW +'</span>'+'<span>'+ item.tourTs +'</span>'+'<span>'+ item.tourTe +'</span>'+'</div>'+
+                  '<div class="t_map">'+ item.tourmap +'</div>'+
+                  '<div class="t_price">'+ item.charge +'</div>'+
+                  '<div class="t_txt">'+ item.tourtext +'</div>'+
+                  '<div class="t_num">'+ item.tournum +'</div>'+
+                '</div>'+
+                '<div class="guide_img_wrap"><div class="guide_img" style="background: url('+item.name+')center center no-repeat;background-size:cover;" >'+ item.value +'</div></div>'+
+                '<div class="c_key"><span>#'+ item.keyword01 + '</span>' + '<span>#'+ item.keyword02 + '</span>' + '<span>#'+ item.keyword03 + '</span>' + '<span>#'+ item.keyword04 + ' </span>' + '</div>' +
+                '<p class="c_name">'+ item.value +'</p>'+
+                '<p>'+ item.charge +'</p>'+
+                '<button class="detail">추천투어 상세보기</button>'+
+              '</div>'+ 
+            '</li>';
+          });
+          dataHtml += '</ul>';
+          $("#data-container").html(dataHtml);
+          button_event();
+                
+        $(".detail").on("click",function(){
+          // 투어명
+          var c_name = $(this).siblings(".c_name").text()          
+          // 가이드명
+          var g_name = $(this).siblings(".c_t_none").children(".g_name").text()
+          // 투어일자
+          var t_year = $(this).siblings(".c_t_none").children(".t_info").children('span').eq(0).text()
+          var t_month = $(this).siblings(".c_t_none").children(".t_info").children('span').eq(1).text()
+          var t_date = $(this).siblings(".c_t_none").children(".t_info").children('span').eq(2).text()
+          var t_week = $(this).siblings(".c_t_none").children(".t_info").children('span').eq(3).text()
+          var t_time_s = $(this).siblings(".c_t_none").children(".t_info").children('span').eq(4).text()
+          var t_time_e = $(this).siblings(".c_t_none").children(".t_info").children('span').eq(5).text()
+          // 투어코스
+          var t_course = $(this).siblings(".c_t_none").children(".t_map").text()
+          // 가격
+          var t_pay = $(this).siblings(".c_t_none").children(".t_price").text()
+          var t_course = $(this).siblings(".c_t_none").children(".t_map").text()
+          // 투어졍보
+          var t_txtarea = $(this).siblings(".c_t_none").children(".t_txt").html()
+          var t_imgnum = $(this).siblings(".c_t_none").children(".t_num").text()
+
+          console.log(t_pay)
+          $(".p_name").text(c_name)
+          $(".g_name").text(g_name)
+          $(".t_days").text(t_year+"년 "+t_month+"월 "+t_date+"일("+t_week+") "+t_time_s+"~"+t_time_e)
+          $(".t_course").text(t_course)
+          $(".t_pay").text(t_pay)
+          $(".p_textarea").html("<p>" + t_txtarea + "</p>")
+          $(".owl01").children("img").eq(0).attr("src","../../img/"+t_imgnum+"_01.jpg")
+          $(".owl01").children("img").eq(1).attr("src","../../img/"+t_imgnum+"_02.jpg")
+          $(".owl01").children("img").eq(2).attr("src","../../img/"+t_imgnum+"_03.jpg")
+
+          var chile = '<div class="owl-carousel owl-theme owl-loaded owl-drag owl01"><img src="../../img/'+t_imgnum+'_01.jpg" alt="img01"><img src="../../img/'+t_imgnum+'_02.jpg" alt="img02"><img src="../../img/'+t_imgnum+'_03.jpg" alt="img03"></div>'
+          $(".p_left").prepend(chile);
+
+          $('.owl01').owlCarousel({
+            items:1,
+            loop:true,
+            dots:true,
+            autoplay:true,
+          })          
+          $(".close").click(function() {
+            $(".p_left").empty()
+          });
+          $(".back_img").click(function(){
+            $(".p_left").empty()
+          })
+          // 상세텍스트 높이값
+          $("button.detail").on('click',function(){    
+            var p_height = $(".p_body").children("p").eq(0).outerHeight(true)
+            var info_height = $(".tour_info").outerHeight(true)
+            var height = p_height+info_height
+            $(".p_cont_wrap").css({"height":'calc(100% - '+height+'px)'})
+          })
+        });
+        }
+      })
+      $(window).on('load', function(){      
+        // scroll
+        $(".scrollbar-inner").scrollbar();
+        // 다국어페이지 이동
+        $(".lang_box").children('li').children('a').click(function(){
+        var lang = $(this).data('lang');
+        $(this).attr('href', '../'+ lang +'/PC-CO-KWP0002.html')
+        }) 
+        var menu = $(".section01").children(".menu_area").html();
+        $(".hamburger").on('click',function(){
+          $(".nav_slidenav").children(".cont_box").append(menu);
+        })     
+        $(".close_sidenav, .close, .back_img").on('click',function(){
+          $(".nav_slidenav").children(".cont_box").children(".menu_wrap").remove();
+        })
+        // munu box hide
+        $(".nav_slidenav .menu_wrap").first().remove();
+      })  
+      // 상세텍스트 높이값
+      $("button.detail").on('click',function(){    
+        var p_height = $(".p_body").children("p").eq(0).outerHeight(true)
+        var info_height = $(".tour_info").outerHeight(true)
+        var height = p_height+info_height
+        $(".p_cont_wrap").css({"height":'calc(100% - '+height+'px)'})
+      })
+    });
+      // 상세텍스트 높이값 resize
+    $(window).resize(function() { 
+      var p_height = $(".p_body").children("p").eq(0).outerHeight(true)
+      var info_height = $(".tour_info").outerHeight(true)
+      var height = p_height+info_height
+      $(".p_cont_wrap").css({"height":'calc(100% - '+height+'px)'})
+    })
+  </script>
+</head>
+
+<body>
+  <div class="cont_warp sub">
+    {% include "common/pc/common/header.html" %}
+    <div class="sub_cont">
+      <article class="section_wrap">
+        <div class="section01 ">
+          <div class="menu_area">
+            <div class="menu_wrap">
+              <p>카테고리</p>
+              <ul class="gnb">
+                <li ><a href="/intro/guide">가이드</a></li>
+                <li class="active"><a href="#">추천 투어</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="con_area">
+            <div class="con_area_txt">
+              <h1>추천투어</h1>
+            </div> 
+            <div id="pagination">
+              <div id="data-container"></div>
+            </div>
+          </div>
+        </div>
+        {% include "common/pc/common/footer.html" %}
+      </article>      
+      <div class="pop_up tour">
+        <div class="p_close">
+          <span class="close">x</span>
+        </div>
+        <div class="p_body">
+          <p>| 추천투어 상세정보</p>
+          <div class="tour_info">
+            <p class="p_name"></p>
+            <span>/ 가이드 : </span>
+            <span class="g_name"></span>
+            <ul>
+              <li>투어 일자 : <span class="t_days"></span></li>
+              <li>코스 안내 : <span class="t_course"></span></li>
+              <li>투어 가격 : <span class="t_pay"></span></li>
+            </ul>
+          </div>
+          <section class="p_cont_wrap scrollbar-inner">
+            <div class="p_left">
+            </div>
+            <div class="p_right">
+              <div class="p_textarea">
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

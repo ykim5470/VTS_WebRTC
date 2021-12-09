@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <title>Enjoy Street</title>
+    <link rel="stylesheet" href="/resource/mo/owlcarousel/owl.carousel.min.css" />
+    <link rel="stylesheet" href="/resource/mo/owlcarousel/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="/css/mo/contents.css" />
+
+    <script src="/resource/mo/jquery.min.js"></script>
+    <script src="/esource/mo/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/js/mo/script.js"></script>
+    <script>
+      $(function () {
+        var userInfo = sessionStorage.getItem("member");
+        if (userInfo == "guide") {
+          $(".user_info .info").text("가이드");
+          $(".user_info .user .icon").css("background-image", "url(/img/mo/guide02.jpg");
+          $(".user_info .user .txt strong").text("김범석(" + userInfo + ")님");
+          $(".user_info .user .txt p").text("좋은 가이드");
+          $("#descTxt").val("좋은 가이드");
+          $(".my_nav .public").hide();
+        } else {
+          $(".user_info .info").text("사용자");
+          $(".user_info .user .icon").css("background-image", "url(/img/mo/avatar.png");
+          $(".user_info .user .txt strong").text("김지형(" + userInfo + ")님");
+          $(".user_info .user .txt p").text("여행러버");
+          $("#descTxt").val("여행러버");
+          $(".my_nav .guide").hide();
+        }
+
+        var urlName = decodeURI(location.href).substr(decodeURI(location.href).indexOf("?") + 1);
+        urlName = urlName.split("=");
+        if (urlName[1] == "open") {
+          $(".popcont.mypage").addClass("open");
+          $(".popcont.mypage").css({
+            opacity: "1",
+            visibility: "visible",
+          });
+          $(".popcont.mypage .pop_wrap").css({
+            transition: "none",
+            bottom: "0",
+            opacity: "1",
+          });
+        }
+        history.replaceState({}, null, location.pathname);
+
+        $(".logout").on("click", function () {
+          location.href = "/mo/login";
+          sessionStorage.clear();
+        });
+      });
+    </script>
+  </head>
+  <body style="overflow-y: hidden">
+    <header class="header">
+      <h1><a href="/m/home" class="logo">Enjoy Street</a></h1>
+      <div class="btn_group">
+        <a href="html/MO-CO-MYP0001.html" class="mypage"> <span></span><span></span><span></span> </a>
+      </div>
+    </header>
+    <div class="coming_soon">
+      <!-- <div>서비스 준비중입니다.</div> -->
+      <div>
+        {% if user %}
+        <div>
+          {{user.nick}}님, 환영합니다. 현재 서비스 준비으로 빠르게 찾아 뵙겠습니다.
+          <li><a href="/m/auth/logout">로그아웃</a></li>
+        </div>
+
+        {% else %}
+        <div>현재 서비스 준비으로 빠르게 찾아 뵙겠습니다.</div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="main">
+      <section class="main_cont">
+        <article class="top_benner">
+          <div class="main_banner owl-carousel owl-theme">
+            <div class="item">
+              <a href="#" class="slide_cont">
+                <div>
+                  <img src="/img/mo/test.jpg" alt="물티슈 이미지" />
+                </div>
+              </a>
+            </div>
+            <div class="item">
+              <a href="#" class="slide_cont">
+                <div>
+                  <img src="/img/mo/test02.jpg" alt="의자 이미지" />
+                </div>
+              </a>
+            </div>
+            <div class="item">
+              <a href="#" class="slide_cont">
+                <div>
+                  <img src="/img/mo/test03.jpg" alt="화장품 이미지" />
+                </div>
+              </a>
+            </div>
+          </div>
+        </article>
+        <article class="on_air_wrap bg_white">
+          <div class="title_box">
+            <h2>LIVE NOW</h2>
+          </div>
+          <div class="on_air_box">
+            <ul style="min-width: 720px">
+              <!-- <li class="card">
+              <a href="html/MO-SB-LIVL001.html?prev=MO-MN-MNP0001">
+                <span class="card_title">
+                  <span class="live">LIVE</span>
+                  <span>1,080명 시청중</span>
+                </span>
+                <img src="/img/mo/live_item01.jpg" alt="감자이미지">
+                <div class="item">
+                  <img src="/img/mo/live_item01.jpg" alt="작은감자이미지">
+                  <span class="item_name">강원도 햇 감자 10kg</span>
+                  <span class="item_price">18,000원</span>
+                </div>
+              </a>
+            </li> -->
+              <li class="card">
+                <a href="html/MO-SB-LIVL001.html?prev=MO-MN-MNP0001">
+                  <span class="card_title">
+                    <span class="live">LIVE</span>
+                    <span>5명 접속중</span>
+                  </span>
+                  <img src="/img/mo/live_item02.jpg" alt="서울 이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_travel01_min.jpg" alt="작은 서울 이미지" />
+                    <span class="item_name">[首爾] 韩国的新世界百货 介绍</span>
+                    <span class="item_price">17,800원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="card">
+                <a href="html/MO-SB-LIVL001-0.html?prev=MO-MN-MNP0001">
+                  <span class="card_title">
+                    <span class="live">LIVE</span>
+                    <span>5명 시청중</span>
+                  </span>
+                  <img src="/img/mo/live_item26.jpg" alt="[서울] 찬란한 600년의 역사 경복궁 투어" />
+                  <div class="item">
+                    <img src="/img/mo/live_item26_min.jpg" alt="[서울] 찬란한 600년의 역사 경복궁 투어" />
+                    <span class="item_name">[서울] 찬란한 600년의 역사 경복궁 투어</span>
+                    <span class="item_price">99,000원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="card">
+                <a href="#">
+                  <span class="card_title">
+                    <span class="live">LIVE</span>
+                    <span>44명 시청중</span>
+                  </span>
+                  <img src="/img/mo/live_item04.jpg" alt="한샘소파이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_item04.jpg" alt="작은한샘소파이미지" />
+                    <span class="item_name">[한림] [단독할인] 생맥주 테이스팅부터 전용잔 만들기까지! 제주맥주 클래스</span>
+                    <span class="item_price">955,000원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="card">
+                <a href="#">
+                  <span class="card_title">
+                    <span class="live">LIVE</span>
+                    <span>97명 시청중</span>
+                  </span>
+                  <img src="/img/mo/live_item05.jpg" alt="중문이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_item05.jpg" alt="작은중문이미지" />
+                    <span class="item_name">[부산/해운대] 더베이101 요트클럽 : 요트투어</span>
+                    <span class="item_price">49,900원</span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </article>
+        <article class="on_air_wrap bg_white">
+          <div class="title_box">
+            <h2>LIVE 예고</h2>
+          </div>
+          <div class="on_air_box vertical">
+            <ul>
+              <li class="card">
+                <a href="#">
+                  <img src="/img/mo/live_item06.jpg" alt="옷이미지" />
+                  <div class="cover">
+                    <div class="cover_txt">
+                      <p>10월 21일</p>
+                      <p>11:00</p>
+                    </div>
+                  </div>
+                </a>
+                <a href="#">
+                  <strong>[휴식형 템플스테이] 코로나19 탈출!!! 템플 '콕' 봉선사 (대한민국/남양주)</strong>
+                  <div class="item">
+                    <span class="item_name">사찰에서 즐기는 이색체험 템플스테이 바쁜 일상의 템포를 늦추고</span>
+                    <span class="item_price">139,000</span>
+                  </div>
+                  <button class="alarm_btn"><i class="far fa-bell"></i>알림받기</button>
+                </a>
+              </li>
+              <li class="card">
+                <a href="#">
+                  <img src="/img/mo/live_item07.jpg" alt="물티슈이미지" />
+                  <div class="cover">
+                    <div class="cover_txt">
+                      <p>10월 21일</p>
+                      <p>13:00</p>
+                    </div>
+                  </div>
+                </a>
+                <a href="#">
+                  <strong>[투어] 수원화성 어디까지 가봤니? 대한민국/수원</strong>
+                  <div class="item">
+                    <span class="item_name">정조와 수원화성에 대한 재미있는 이야기를 듣는 일정입니다.</span>
+                    <span class="item_price">12,200</span>
+                  </div>
+                  <button class="alarm_btn"><i class="far fa-bell"></i>알림받기</button>
+                </a>
+              </li>
+              <li class="card">
+                <a href="#">
+                  <img src="/img/mo/live_item08.jpg" alt="그래픽카드이미지" />
+                  <div class="cover">
+                    <div class="cover_txt">
+                      <p>10월 21일</p>
+                      <p>16:00</p>
+                    </div>
+                  </div>
+                </a>
+                <a href="#">
+                  <strong>[투어] 속초여행 2탄!! 바다향기로 당일 버스여행 (대한민국/속초)</strong>
+                  <div class="item">
+                    <span class="item_name">65년만의 개방! 바다를 걷다! 외옹치항 바다향기로</span>
+                    <span class="item_price">939,000</span>
+                  </div>
+                  <button class="alarm_btn"><i class="far fa-bell"></i>알림받기</button>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </article>
+        <article class="on_air_wrap bg_white top_rank">
+          <div class="title_box">
+            <h2>LIVE TOP5</h2>
+            <select class="sort_ele">
+              <option value="0">시청순</option>
+              <option value="2">거리순</option>
+              <option value="1">좋아요순</option>
+            </select>
+          </div>
+          <div class="on_air_box">
+            <ul style="min-width: 720px">
+              <!-- <li class="card">
+              <a href="html/`MO-SB-LIVL001.html`?prev=MO-MN-MNP0001">
+                <span class="card_title rank">
+                  <span>1</span>
+                </span>
+                <img src="/img/mo/live_item01.jpg" alt="감자이미지">
+                <div class="item">
+                  <img src="/img/mo/live_item01.jpg" alt="작은감자이미지">
+                  <span class="item_name">강원도 햇 감자 10kg</span>
+                  <span class="item_price">18,000원</span>
+                </div>
+              </a>
+            </li> -->
+              <li class="card">
+                <a href="html/MO-SB-LIVL001.html?prev=MO-MN-MNP0001">
+                  <span class="card_title rank">
+                    <span>1</span>
+                  </span>
+                  <img src="/img/mo/live_item02.jpg" alt="서울 이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_travel01_min.jpg" alt="작은 서울 이미지" />
+                    <span class="item_name">[首爾] 韩国的新世界百货 介绍</span>
+                    <span class="item_price">17,800원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="card">
+                <a href="html/MO-SB-LIVL001-0.html?prev=MO-MN-MNP0001">
+                  <span class="card_title rank">
+                    <span>2</span>
+                  </span>
+                  <img src="/img/mo/live_item26.jpg" alt="[서울] 찬란한 600년의 역사 경복궁 투어" />
+                  <div class="item">
+                    <img src="/img/mo/live_item26_min.jpg" alt="[서울] 찬란한 600년의 역사 경복궁 투어" />
+                    <span class="item_name">[서울] 찬란한 600년의 역사 경복궁 투어</span>
+                    <span class="item_price">99,000원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="card">
+                <a href="#">
+                  <span class="card_title rank">
+                    <span>3</span>
+                  </span>
+                  <img src="/img/mo/live_item04.jpg" alt="한샘소파이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_item04.jpg" alt="작은한샘소파이미지" />
+                    <span class="item_name">[한림] [단독할인] 생맥주 테이스팅부터 전용잔 만들기까지! 제주맥주 클래스</span>
+                    <span class="item_price">955,000원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="card">
+                <a href="#">
+                  <span class="card_title rank">
+                    <span>4</span>
+                  </span>
+                  <img src="/img/mo/live_item05.jpg" alt="중문이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_item05.jpg" alt="작은중문이미지" />
+                    <span class="item_name">[부산/해운대] 더베이101 요트클럽 : 요트투어</span>
+                    <span class="item_price">49,900원</span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </article>
+        <article class="on_air_wrap">
+          <div class="title_box">
+            <h2>가이드가 추천하는 라이브</h2>
+            <select class="sort_ele">
+              <option value="0">김태희 가이드</option>
+              <option value="2">정지훈 가이드</option>
+              <option value="1">이효리 가이드</option>
+            </select>
+          </div>
+          <div class="on_air_box">
+            <ul style="min-width: 900px">
+              <li class="card">
+                <a href="#">
+                  <img src="/img/mo/live_item10.jpg" alt="CPU이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_item10.jpg" alt="작은CPU이미지" />
+                    <span class="item_name">[제주/동쪽] 제주도 버스투어 원데이/패키지 뚜벅이 동부코스 여행</span>
+                    <span class="item_price">110,000원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="card">
+                <a href="#">
+                  <img src="/img/mo/live_item11.jpg" alt="메인보드이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_item11.jpg" alt="작은메인보드이미지" />
+                    <span class="item_name">[제주/서귀포] 윈드카트 1947 이용권</span>
+                    <span class="item_price">497,500원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="card">
+                <a href="#">
+                  <img src="/img/mo/live_item12.jpg" alt="그래픽카드이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_item12.jpg" alt="작은그래픽카드이미지" />
+                    <span class="item_name">[제주/성산] '빛의벙커 반 고흐' 미디어아트 전시회 입장권</span>
+                    <span class="item_price">임시품절</span>
+                  </div>
+                </a>
+              </li>
+              <li class="card">
+                <a href="#">
+                  <img src="/img/mo/live_item13.jpg" alt="본체이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_item13.jpg" alt="작은본체이미지" />
+                    <span class="item_name">[제주/안덕] 뽀로로&타요 테마파크 자유이용권</span>
+                    <span class="item_price">261,000원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="card">
+                <a href="#">
+                  <img src="/img/mo/live_item14.jpg" alt="크로커다일레이디이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_item14.jpg" alt="작은크로커다일레이디이미지" />
+                    <span class="item_name">[제주/서쪽] 제주도 버스투어 원데이/패키지 뚜벅이 서부코스 여행</span>
+                    <span class="item_price">12,300원</span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="btn_group ta_c">
+            <a href="html/MO-SB-CST0001.html" class="btn_r tl_btn">나만의 맞춤투어 라이브 신청가기</a>
+          </div>
+        </article>
+        <article class="on_air_wrap bg_white">
+          <div class="title_box">
+            <h2>테마별 LIVE</h2>
+            <select class="sort_ele">
+              <option value="0">감성여행</option>
+              <option value="1">먹방여행</option>
+              <option value="2">쇼핑여행</option>
+              <option value="3">역사여행</option>
+            </select>
+          </div>
+          <div class="on_air_box record">
+            <ul style="min-width: 1067px">
+              <li class="card">
+                <a href="#">
+                  <span class="card_title">
+                    <span class="live">LIVE</span>
+                  </span>
+                  <img src="/img/mo/live_item03.jpg" alt="CPU이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_item03.jpg" alt="작은CPU이미지" />
+                    <span class="item_name">[제주/한림] 제주감성 나만의 자개모빌 만들기</span>
+                    <span class="item_price">99,000원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="card">
+                <a href="#">
+                  <span class="card_title">
+                    <span class="live">LIVE</span>
+                  </span>
+                  <img src="/img/mo/live_item05.jpg" alt="중문이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_item05.jpg" alt="작은중문이미지" />
+                    <span class="item_name">[부산/해운대] 더베이101 요트클럽 : 요트투어</span>
+                    <span class="item_price">49,900원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="card">
+                <a href="#">
+                  <span class="card_title"> </span>
+                  <img src="/img/mo/live_item12.jpg" alt="그래픽카드이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_item12.jpg" alt="작은그래픽카드이미지" />
+                    <span class="item_name">[제주/성산] '빛의벙커 반 고흐' 미디어아트 전시회 입장권</span>
+                    <span class="item_price">임시품절</span>
+                  </div>
+                </a>
+              </li>
+              <li class="card">
+                <a href="#">
+                  <span class="card_title">
+                    <span class="live">LIVE</span>
+                  </span>
+                  <img src="/img/mo/live_item04.jpg" alt="한샘소파이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_item04.jpg" alt="작은한샘소파이미지" />
+                    <span class="item_name">[한림] [단독할인] 생맥주 테이스팅부터 전용잔 만들기까지! 제주맥주 클래스</span>
+                    <span class="item_price">955,000원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="card">
+                <a href="#">
+                  <span class="card_title">
+                    <span class="coming">방송예정</span>
+                    <button class="alarm_btn"><i class="far fa-bell"></i>알림받기</button>
+                  </span>
+                  <img src="/img/mo/live_item10.jpg" alt="물티슈이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_item10.jpg" alt="작은CPU이미지" />
+                    <span class="item_name">[제주/동쪽] 제주도 버스투어 원데이/패키지 뚜벅이 동부코스 여행</span>
+                    <span class="item_price">110,000원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="card">
+                <a href="#">
+                  <span class="card_title"> </span>
+                  <img src="/img/mo/live_item14.jpg" alt="디카페인라떼이미지" />
+                  <div class="item">
+                    <img src="/img/mo/live_item14.jpg" alt="작은크로커다일레이디이미지" />
+                    <span class="item_name">[제주/서쪽] 제주도 버스투어 원데이/패키지 뚜벅이 서부코스 여행</span>
+                    <span class="item_price">12,300원</span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </article>
+      </section>
+    </div>
+    <footer class="footer">
+      <div class="f_logo">Enjoy Street</div>
+      <div class="f_menu">
+        <ul>
+          <li><a href="html/MO-CO-MEM0003.html?prev=MO-MN-MNP0001">이용약관</a></li>
+          <li><a href="html/MO-CO-MYP0016.html?prev=MO-MN-MNP0001">판매자 이용약관</a></li>
+          <li><a href="html/MO-CO-MEM0004.html?prev=MO-MN-MNP0001">개인정보처리방침</a></li>
+        </ul>
+      </div>
+      <div class="f_info">
+        <dl>
+          <dt>대표자</dt>
+          <dd>김대표</dd>
+          <dt>주소</dt>
+          <dd>서울특별시 강남구 테헤란로5길 7, 8층 112호</dd>
+          <dt>전화</dt>
+          <dd>070-8221-1839</dd>
+          <dt>이메일</dt>
+          <dd><a href="#">huns@lmat.kr</a></dd>
+          <dt>사업자등록번호</dt>
+          <dd>000-00-00000</dd>
+          <dt>통신판매번호</dt>
+          <dd>2019-서울강남-00000</dd>
+        </dl>
+        <p>Enjoy Street는 통신판매중개자이며 통신판매의 당사자가 아닙니다. 상품, 상품정보 및 거래에 관한 의무와 책임은 판매자에게 있습니다</p>
+      </div>
+      <p class="copy">Copyright : Enjoy Street. All right Reserved</p>
+    </footer>
+  </body>
+</html>

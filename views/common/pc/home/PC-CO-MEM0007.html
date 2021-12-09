@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <title>EnjoyStreet</title>
+
+    <link rel="icon" href="http://www.enjoystreet.com/img/enjoystreet.ico" />
+    <link rel="shortcut icon" href="http://www.enjoystreet.com/img/enjoystreet.ico" />
+    <link rel="stylesheet" href="/css/pc/login.css" />
+    <script src="/resource/pc/jquery.min.js"></script>
+    <script src="/js/pc/script.js"></script>
+    <script>
+      $(window).on("load", function () {
+        $(".login_box li").last().addClass("hide");
+      });
+    </script>
+  </head>
+  <body>
+    <div class="wrap sub step login">
+      {% include "common/pc/common/header.html" %}
+      <div class="sub_cont sign">
+        <div class="sub_header">
+          <img src="/img/pc/enjoystreet_black.svg" alt="EnjoyStreet 로고" />
+          <p><b>판매점</b> 회원가입</p>
+        </div>
+        <div class="sign_end">
+          <p class="email">vredu@vreducation.kr</p>
+          <p>인증 이메일을 보냈습니다. 이메일을 확인하시고, 인증하기 버튼을 클릭하시면 인증이 완료됩니다.</p>
+          <div>인증 이메일을 받지 못하셨나요? <a href="#">인증 이메일 다시 보내기</a></div>
+          <a class="def_btn" href="../../index.html">메인으로</a>
+        </div>
+      </div>
+      {% include "common/pc/common/footer.html" %}
+    </div>
+  </body>
+</html>

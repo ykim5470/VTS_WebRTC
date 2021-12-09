@@ -1,0 +1,218 @@
+@charset "UTF-8";
+
+/* Spoqa Han Sans Neo */
+@font-face {
+    font-family: 'Spoqa Han Sans';
+    font-weight: 700;
+    src: local('Spoqa Han Sans Bold'),
+    url('webfonts/SpoqaHanSansNeo-Bold.woff2') format('woff2'),
+    url('webfonts/SpoqaHanSansNeo-Bold.woff') format('woff'),
+    url('webfonts/SpoqaHanSansNeo-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Spoqa Han Sans';
+    font-weight: 500;
+    src: local('Spoqa Han Sans Medium'),
+    url('webfonts/SpoqaHanSansNeo-Medium.woff2') format('woff2'),
+    url('webfonts/SpoqaHanSansNeo-Medium.woff') format('woff'),
+    url('webfonts/SpoqaHanSansNeo-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Spoqa Han Sans';
+    font-weight: 400;
+    src: local('Spoqa Han Sans Regular'),
+    url('webfonts/SpoqaHanSansNeo-Regular.woff2') format('woff2'),
+    url('webfonts/SpoqaHanSansNeo-Regular.woff') format('woff'),
+    url('webfonts/SpoqaHanSansNeo-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Spoqa Han Sans';
+    font-weight: 300;
+    src: local('Spoqa Han Sans Light'),
+    url('webfonts/SpoqaHanSansNeo-Light.woff2') format('woff2'),
+    url('webfonts/SpoqaHanSansNeo-Light.woff') format('woff'),
+    url('webfonts/SpoqaHanSansNeo-Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Spoqa Han Sans';
+    font-weight: 100;
+    src: local('Spoqa Han Sans Thin'),
+    url('webfonts/SpoqaHanSansNeo-Thin.woff2') format('woff2'),
+    url('webfonts/SpoqaHanSansNeo-Thin.woff') format('woff'),
+    url('webfonts/SpoqaHanSansNeo-Thin.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Spoqa Han Sans Neo';
+    font-weight: 700;
+    src: local('Spoqa Han Sans Bold'),
+    url('webfonts/SpoqaHanSansNeo-Bold.woff2') format('woff2'),
+    url('webfonts/SpoqaHanSansNeo-Bold.woff') format('woff'),
+    url('webfonts/SpoqaHanSansNeo-Bold.ttf') format('truetype');
+}
+
+
+@font-face {
+    font-family: 'Spoqa Han Sans Neo';
+    font-weight: 500;
+    src: local('Spoqa Han Sans Medium'),
+    url('webfonts/SpoqaHanSansNeo-Medium.woff2') format('woff2'),
+    url('webfonts/SpoqaHanSansNeo-Medium.woff') format('woff'),
+    url('webfonts/SpoqaHanSansNeo-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Spoqa Han Sans Neo';
+    font-weight: 400;
+    src: local('Spoqa Han Sans Regular'),
+    url('webfonts/SpoqaHanSansNeo-Regular.woff2') format('woff2'),
+    url('webfonts/SpoqaHanSansNeo-Regular.woff') format('woff'),
+    url('webfonts/SpoqaHanSansNeo-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Spoqa Han Sans Neo';
+    font-weight: 300;
+    src: local('Spoqa Han Sans Light'),
+    url('webfonts/SpoqaHanSansNeo-Light.woff2') format('woff2'),
+    url('webfonts/SpoqaHanSansNeo-Light.woff') format('woff'),
+    url('webfonts/SpoqaHanSansNeo-Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Spoqa Han Sans Neo';
+    font-weight: 100;
+    src: local('Spoqa Han Sans Thin'),
+    url('webfonts/SpoqaHanSansNeo-Thin.woff2') format('woff2'),
+    url('webfonts/SpoqaHanSansNeo-Thin.woff') format('woff'),
+    url('webfonts/SpoqaHanSansNeo-Thin.ttf') format('truetype');
+}
+
+/* Spoqa Han Sans Neo JP*/
+@font-face {
+    font-family: 'Spoqa Han Sans JP';
+    font-weight: 600;
+    src: local('SpoqaHanSansJP-Bold'),
+    url('webfonts/SpoqaHanSansJPBold.woff2') format('woff2'),
+    url('webfonts/SpoqaHanSansJPBold.woff') format('woff'),
+    url('webfonts/SpoqaHanSansJPBold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Spoqa Han Sans JP';
+    font-weight: 400;
+    src: local('SpoqaHanSansJP-Regular'),
+    url('webfonts/SpoqaHanSansJPRegular.woff2') format('woff2'),
+    url('webfonts/SpoqaHanSansJPRegular.woff') format('woff'),
+    url('webfonts/SpoqaHanSansJPRegular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Spoqa Han Sans JP';
+    font-weight: 300;
+    src: local('SpoqaHanSansJP-Light'),
+    url('webfonts/SpoqaHanSansJPLight.woff2') format('woff2'),
+    url('webfonts/SpoqaHanSansJPLight.woff') format('woff'),
+    url('webfonts/SpoqaHanSansJPLight.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Spoqa Han Sans JP';
+    font-weight: 100;
+    src: local('SpoqaHanSansJP-Thin'),
+    url('webfonts/SpoqaHanSansJPThin.woff2') format('woff2'),
+    url('webfonts/SpoqaHanSansJPThin.woff') format('woff'),
+    url('webfonts/SpoqaHanSansJPThin.ttf') format('truetype');
+}
+
+/* ShigotoMemogaki */
+@font-face {
+    font-family: 'ShigotoMemogaki';
+    font-weight:normal;
+    src: local('ShigotoMemogaki'),
+    url('webfonts/jp/ShigotoMemogaki-Regular.woff2') format('woff2'),
+    url('webfonts/jp/ShigotoMemogaki-Regular.woff') format('woff'),
+    url('webfonts/jp/ShigotoMemogaki-Regular.ttf') format('truetype');
+}
+
+/* azuki */
+@font-face {
+    font-family: 'azuki';
+    font-weight:normal;
+    src: local('azuki_font'),
+    url('webfonts/jp/azuki.woff2') format('woff2'),
+    url('webfonts/jp/azuki.woff') format('woff'),
+    url('webfonts/jp/azuki.ttf') format('truetype');
+}
+
+/* NanumSquare */
+@font-face {
+    font-family: 'NanumSquare';
+    font-weight: 900;
+    font-style: normal;
+    src: url('webfonts/NanumSquareEB.eot');
+    src: url('webfonts/NanumSquareEB.eot?#iefix') format('embedded-opentype'),
+    url('webfonts/NanumSquareEB.woff2') format('woff2'),
+    url('webfonts/NanumSquareEB.woff') format('woff'),
+    url('webfonts/NanumSquareEB.ttf') format('truetype'),
+}
+@font-face {
+    font-family: 'NanumSquare';
+    font-weight: bold;
+    font-style: normal;
+    src: url('webfonts/NanumSquareB.eot');
+    src: url('webfonts/NanumSquareB.eot?#iefix') format('embedded-opentype'),
+    url('webfonts/NanumSquareB.woff2') format('woff2'),
+    url('webfonts/NanumSquareB.woff') format('woff'),
+    url('webfonts/NanumSquareB.ttf') format('truetype'),
+    url('webfonts/NanumSquareB.svg#nanumsquarebold') format('svg');
+}
+@font-face {
+    font-family: 'NanumSquare';
+    font-weight: normal;
+    font-style: normal;
+    src: url('webfonts/NanumSquareR.eot');
+    src: url('webfonts/NanumSquareR.eot?#iefix') format('embedded-opentype'),
+    url('webfonts/NanumSquareR.woff2') format('woff2'),
+    url('webfonts/NanumSquareR.woff') format('woff'),
+    url('webfonts/NanumSquareR.ttf') format('truetype'),
+    url('webfonts/NanumSquareR.svg#nanumsquareregular') format('svg');
+}
+@font-face {
+  font-family: 'NanumSquare';
+  font-weight: 300;
+  font-style: normal;
+  src: url('webfonts/NanumSquareL.eot');
+  src: url('webfonts/NanumSquareL.eot?#iefix') format('embedded-opentype'),
+  url('webfonts/NanumSquareL.woff2') format('woff2'),
+  url('webfonts/NanumSquareL.woff') format('woff'),
+  url('webfonts/NanumSquareL.ttf') format('truetype');
+}
+
+/* NaEuiANaeSonGeurSsi */
+@font-face {
+    font-family: 'My_wife_writing';
+    src: url('webfonts/NaEuiANaeSonGeurSsi.eot');
+    src: url('webfonts/NaEuiANaeSonGeurSsi.eot?#iefix') format('embedded-opentype'),
+    url('webfonts/NaEuiANaeSonGeurSsi.woff') format('woff'),
+    url('webfonts/NaEuiANaeSonGeurSsi.woff2') format('woff2'),
+    url('webfonts/NaEuiANaeSonGeurSsi.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* GojuOn */
+@font-face {
+    font-family: 'LongCang';
+    src: url('webfonts/cn/LongCang-Regular.eot');
+    src: url('webfonts/cn/LongCang-Regular.eot') format('embedded-opentype'),
+    url('webfonts/cn/LongCang-Regular.woff') format('woff'),
+    url('webfonts/cn/LongCang-Regular.woff2') format('woff2'),
+    url('webfonts/cn/LongCang-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

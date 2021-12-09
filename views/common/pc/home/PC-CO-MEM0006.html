@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <title>EnjoyStreet</title>  
+  <link rel="icon" href="http://www.enjoystreet.com/img/enjoystreet.ico">
+  <link rel="shortcut icon" href="http://www.enjoystreet.com/img/enjoystreet.ico">
+  <link rel="stylesheet" href="/css/pc/login.css">  
+  <script src="/resource/pc/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $(".sign_btn").click(function() {
+          var url = 'PC-CO-MEM0007.html'
+          window.open('about:blank', '_self').close();
+          window.opener.document.location.replace(url)
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="wrap login sub">
+    <div class="sub_title_box">이메일 인증</div>
+    <div class="sub_cont find_com">
+      <div>
+        <p class="email">vredu@vreducation.kr</p>
+        <p>가입하시려는 이메일 주소가 맞으면, <br>아래 버튼을 클릭하여 이메일 인증을 진행해주세요.</p>
+        <button class="sign_btn">확인</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

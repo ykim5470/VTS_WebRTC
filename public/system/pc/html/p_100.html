@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Nextor - sample</title>
+
+  <link rel="stylesheet" href="../resource/ax5ui/css/ax5ui.all.css">
+  <!-- 1. 기존 CSS Import ** --><link rel="stylesheet" href="../css/contents.css">
+  <!-- 2. 각 언어별 CSS Import ** <link rel="stylesheet" href="../css/tw/contents.css"> -->
+
+  <script src="../resource/jquery.min.js"></script>
+  <script src="../resource/ax5ui/js/ax5ui.all.min.js"></script>
+  <script src="../js/script.js"></script>
+
+  <!--grid-->
+  <script type="text/javascript">
+      ax5.ui.grid.tmpl.page_status = function(){
+          return '<span>{{{progress}}} {{fromRowIndex}} - {{toRowIndex}} / {{dataRowCount}} {{#dataRealRowCount}}  <strong>현재페이지 </strong>{{.}}{{/dataRealRowCount}} {{#totalElements}} <strong>전체갯수 </strong>{{.}}{{/totalElements}}</span>';
+      };
+
+      var sampleData = [
+          {a: "A", b: "A01", price: 1000, amount: 12, saleDt: "2016-08-29", customer: "김범석", userType: "M"},
+          {a: "A", b: "A02", price: 1100, amount: 11, saleDt: "2016-08-28", customer: "김범석", userType: "D"},
+          {a: "A", b: "A03", price: 1200, amount: 10, saleDt: "2016-08-27", customer: "김범석", userType: "W"},
+          {a: "B", b: "B01", price: 1300, amount: 8, saleDt: "2016-08-25", customer: "김범석", userType: "M"},
+          {a: "B", b: "B02", price: 1400, amount: 5, saleDt: "2016-08-29", customer: "김범석", userType: "S"},
+          {a: "B", b: "B03", price: 1500, amount: 2, saleDt: "2016-08-26", customer: "김범석", userType: "W"}
+      ];
+      var gridView = {
+          initView: function () {
+              this.target = new ax5.ui.grid();
+              this.target.setConfig({
+                  target: $('[data-ax5grid="first-grid"]'),
+                  frozenColumnIndex: 2,
+                  frozenRowIndex: 0,
+                  showLineNumber: true,
+                  showRowSelector: true,
+                  multipleSelect: true,
+                  lineNumberColumnWidth: 40,
+                  rowSelectorColumnWidth: 28,
+                  sortable: true, // 모든 컬럼에 정렬 아이콘 표시
+                  multiSort: false, // 다중 정렬 여부
+                  remoteSort: false, // remoteSort에 함수를 sortable 컬럼이 클릭되었을때 실행 setColumnSort를 직접 구현. (remoteSort를 사용하면 헤더에 정렬 상태만 표시 하고 데이터 정렬은 처리 안함)
+                  header: {
+                      align: "center",
+                      columnHeight: 33
+                  },
+                  body: {
+                      align: "center",
+                      columnHeight: 33,
+                      onClick: function () {
+                          // console.log(this);
+                          this.self.select(this.dindex);
+                      },
+                      grouping: {
+                          by: ["b"],
+                          columns: [
+                              {
+                                  label: function () {
+                                      return this.groupBy.labels.join(", ") + " 합계";
+                                  }, colspan: 2
+                              },
+                              {key: "price", collector: "avg", formatter: "money", align: "right"},
+                              {key: "amount", collector: "sum", formatter: "money", align: "right"},
+                              {
+                                  key: "cost", collector: function () {
+                                      var value = 0;
+                                      this.list.forEach(function (n) {
+                                          if (!n.__isGrouping) value += (n.price * n.amount);
+                                      });
+                                      return ax5.util.number(value, {"money": 1});
+                                  }, align: "right"
+                              },
+                              {label: "~~~", colspan: 3}
+                          ]
+                      }
+                  },
+                  page: {
+                      navigationItemCount: 9,
+                      height: 30,
+                      display: true,
+                      firstIcon: '<i class="fas fa-angle-double-left" aria-hidden="true"></i>',
+                      prevIcon: '<i class="fas fa-angle-left" aria-hidden="true"></i>',
+                      nextIcon: '<i class="fas fa-angle-right" aria-hidden="true"></i>',
+                      lastIcon: '<i class="fas fa-angle-double-right" aria-hidden="true"></i>',
+                      onChange: function () {
+                          gridView.setData(this.page.selectPage);
+                      }
+                  },
+                  columns: [
+                      {
+                          key: "a",
+                          label: "필드A",
+                          width: 80,
+                          styleClass: function () {
+                              return "ABC";
+                          },
+                          enableFilter: true,
+                          align: "center",
+                          editor: {
+                              type: "text", disabled: function () {
+                                  // item, value
+                                  return false;
+                              }
+                          }
+                      },
+                      {key: "b", label: "필드B", align: "center", editor: {type: "text"}},
+                      {
+                          key: undefined,
+                          label: "필드C", columns: [
+                              {key: "price", label: "단가", align: "right", formatter: "money", editor: {type: "money", updateWith: ['cost']}},
+                              {key: "amount", label: "수량", align: "right", formatter: "money", editor: {type: "number", updateWith: ['cost']}},
+                              {
+                                  key: "cost", label: "금액", align: "right", formatter: function () {
+                                      return ax5.util.number(this.item.price * this.item.amount, {"money": true});
+                                  }
+                              }
+                          ]
+                      },
+                      {
+                          key: "saleDt", label: "가입일자", align: "center", editor: {
+                              type: "date", config: {}
+                          }
+                      },
+                      {
+                          key: "isChecked", label: "체크박스", width:80, sortable: false, editor: {
+                              type: "checkbox", config: {height: 17, trueValue: "Y", falseValue: "N"}
+                          }
+                      },
+                      {
+                          key: "customer", label: "이름", editor: {type: "text"}
+                      }
+                  ],
+                  footSum: [
+                      [
+                          {label: "전체 합계", colspan: 2, align: "center"},
+                          {key: "price", collector: "avg", formatter: "money", align: "right"},
+                          {key: "amount", collector: "sum", formatter: "money", align: "right"},
+                          {
+                              key: "cost", collector: function () {
+                                  var value = 0;
+                                  this.list.forEach(function (n) {
+                                      if (!n.__isGrouping) value += (n.price * n.amount);
+                                  });
+                                  return ax5.util.number(value, {"money": 1});
+                              }, align: "right"
+                          }
+                      ]]
+              });
+              return this;
+          },
+          setData: function (_pageNo) {
+
+              var list = [];
+              for (var i = 0, l = 100; i < l; i++) {
+                  list.push($.extend({}, sampleData[(Math.floor(Math.random() * sampleData.length))]));
+              }
+
+              this.target.setData({
+                  list: list,
+                  page: {
+                      currentPage: _pageNo || 0,
+                      pageSize: 50,
+                      totalElements: 500,
+                      totalPages: 100
+                  }
+              });
+
+              return this;
+          }
+      };
+
+      $(document.body).ready(function () {
+          gridView
+              .initView()
+              .setData();
+      });
+  </script>
+</head>
+<body>
+  <div class="content_wrap vtn_cont">    
+    <div class="title_box page_tit">
+      <div class="left_align">
+        <h3>판매점 입점 승인</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="layout col_12">
+        <section class="section">
+            <div class="title_box">
+              <div class="left_align">
+                <h4>승인요청목록 <span class="type">(승인대기 건수 : 4건)</span></h4>
+              </div>
+            </div>            
+          <section class="section">
+            <div class="title_box">
+                <div class="left_align">
+                  <span><strong>상태 : </strong></span>
+                  <div class="select_group">
+                    <select title="조건선택" style="width:120px;">
+                      <option value="option01">전체</option>
+                      <option value="option02">승인</option>
+                      <option value="option03">반려</option>
+                      <option value="option04">대기</option>
+                    </select>
+                  </div>
+                </div>
+            </div>
+            <div class="grid_box">
+              <div id="grid-parent" style="height:300px;">
+                <div data-ax5grid="first-grid" data-ax5grid-config="{
+                showLineNumber: true,
+                showRowSelector: true,
+                sortable: true,
+                header: {align:'center'}
+                }">
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>  
+        <section class="section">
+          <ul class="toggle_cont">
+            <li>
+              <div class="toggle_on">⦁ 상세정보</div>
+              <div class="toggle_box">
+                <div class="textarea_group">
+                  <textarea style="height:300px;" title="텍스트 입력" readonly></textarea>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="input_group chk_custom">
+                <label for="chk1">
+                  <input type="checkbox" id="chk1">⦁ 승인반려
+                  <span class="checkbox"></span>
+                </label>
+              </div>
+            </li>
+            <li>
+              <div class="toggle_on">⦁ 승인 반려 사유</div>
+              <div class="toggle_box">
+                <div class="select_group">
+                  <select title="조건선택" style="width:100%;">
+                    <option value="option01">서류미비(필수정보 누락)</option>
+                    <option value="option02">기타</option>
+                    <option value="option03">option03</option>
+                    <option value="option04">option04</option>
+                  </select>
+                </div>
+                <div class="textarea_group">
+                  <textarea style="height:300px;" title="텍스트 입력"></textarea>
+                </div>  
+              </div>            
+            </li>
+          </ul>
+        </section>      
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function(){
+      $('.toggle_on').click(function(){
+         $('.toggle_box').slideUp();
+         if ($(this).siblings('.toggle_box').is(':hidden')){
+            $(this).siblings('.toggle_box').slideDown();
+         } else{
+            $(this).siblings('.toggle_box').slideUp();
+         }
+      });
+    });
+  </script>
+</body>
+</html>

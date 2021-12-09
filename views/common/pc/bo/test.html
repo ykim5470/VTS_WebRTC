@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ko">
+    
+    <head>
+        <style>
+            table {
+                margin-top: 15px;
+                width: 100%;
+                border: 1px solid #444444;
+                border-collapse: collapse;
+            }
+            th, td {
+                border: 1px solid #444444;
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <body>
+        <div>
+            <form name="sel_table" method="post" action="/admin/checklist">
+                <select name="con" id ="con" onChange="sel_table.submit()">
+                    <option disabled selected> ---- 상태 ---- </option>
+                    <option value="00" name="00">전체</option>
+                    <option value="10" name="10">승인대기</option> 
+                    <option value="99" name="99">승인완료</option>
+                    <option value="44" name="44">반려</option>
+                </select>
+            </form>
+
+            <select name="au" id="au" onchange="au(this.value)">
+                <option disabled selected> ---- 분류 ---- </option>
+                <option value="1">전체</option>
+                <option value="2">가이드</option>
+                <option value="3">판매점 대표</option>
+            </select>
+
+        </div>
+
+            <!-- 전체/전체 리스트 -->
+            <div id="1" style="display:block">
+                <table>
+                    <tr>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>분류</th>
+                        <th>상태 구분</th>
+                        <th>상태 변경</th>
+                    </tr>
+                    {% for user in user %}
+                    <tr>
+                        <td>
+                            {{ user.nick }}
+                        </td>
+                        <td>
+                            {{ user.email }}
+                        </td>
+                        <td>
+                            {% if user.auth === 121 %}
+                            <p> 가이드 </p>
+                            {% elif user.auth === 155 %}
+                            <p> 판매점 대표 </p>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if user.confirm === 10 %}
+                            <p> 승인 대기 중 </p>
+                            {% elif user.confirm === 99 %}
+                            <p> 승인 </p>
+                            {% elif user.confirm === 44 %}
+                            <p> 반려 </p>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="/admin/confirm/{{ user.id }}" class="btn btn-primary" onclick="return confirm('승인하시겠습니까?')">승인</a>
+                            <a href="/admin/return/{{ user.id }}" class="btn btn-danger" onclick="return confirm('반려하시겠습니까?')">반려</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <!-- 전체/가이드 리스트 -->
+            <div id="2" style="display:none">
+                <table>
+                    <tr>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>분류</th>
+                        <th>상태 구분</th>
+                        <th>상태 변경</th>
+                    </tr>
+                    {% for user in user %}
+                        {% if user.auth === 121 %}
+                            <tr>
+                                <td>
+                                    {{ user.nick }}
+                                </td>
+                                <td>
+                                    {{ user.email }}
+                                </td>
+                                <td>
+                                    {% if user.auth === 121 %}
+                                    <p> 가이드 </p>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if user.confirm === 10 %}
+                                    <p> 승인 대기 중 </p>
+                                    {% elif user.confirm === 99 %}
+                                    <p> 승인 </p>
+                                    {% elif user.confirm === 44 %}
+                                    <p> 반려 </p>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="/admin/confirm/{{ user.id }}" class="btn btn-primary" onclick="return confirm('승인하시겠습니까?')">승인</a>
+                                    <a href="/admin/return/{{ user.id }}" class="btn btn-danger" onclick="return confirm('반려하시겠습니까?')">반려</a>
+                                </td>
+                            </tr>
+                        {% endif %} 
+                    {% endfor %}
+                </table>
+            </div>
+
+            <!-- 전체/판매점 대표 리스트 -->
+            <div id="3" style="display:none">
+                <table>
+                    <tr>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>분류</th>
+                        <th>상태 구분</th>
+                        <th>상태 변경</th>
+                    </tr>
+                    {% for user in user %}
+                        {% if user.auth === 155 %}
+                            <tr>
+                                <td>
+                                    {{ user.nick }}
+                                </td>
+                                <td>
+                                    {{ user.email }}
+                                </td>
+                                <td>
+                                    {% if user.auth === 155 %}
+                                    <p> 판매점 </p>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if user.confirm === 10 %}
+                                    <p> 승인 대기 중 </p>
+                                    {% elif user.confirm === 99 %}
+                                    <p> 승인 </p>
+                                    {% elif user.confirm === 44 %}
+                                    <p> 반려 </p>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="/admin/confirm/{{ user.id }}" class="btn btn-primary" onclick="return confirm('승인하시겠습니까?')">승인</a>
+                                    <a href="/admin/return/{{ user.id }}" class="btn btn-danger" onclick="return confirm('반려하시겠습니까?')">반려</a>
+                                </td>
+                            </tr>
+                        {% endif %} 
+                    {% endfor %}
+                </table>
+            </div>
+
+    
+            <div id="listmenu">
+
+                <!-- 대기/판매점 대표 리스트 -->
+                <div id="10_155" style="display:none">
+                    <table>
+                        <tr>
+                            <th>이름</th>
+                            <th>이메일</th>
+                            <th>분류</th>
+                            <th>상태 구분</th>
+                            <th>상태 변경</th>
+                        </tr>
+                        {% for user in user %}
+                            {% if user.auth === 155 %}
+                                {% if user.confirm === 10 %}
+                                    <tr>
+                                        <td>
+                                            {{ user.nick }}
+                                        </td>
+                                        <td>
+                                            {{ user.email }}
+                                        </td>
+                                        <td>
+                                            {% if user.auth === 155 %}
+                                            <p> 판매점 </p>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if user.confirm === 10 %}
+                                            <p> 승인 대기 중 </p>
+                                            {% elif user.confirm === 99 %}
+                                            <p> 승인 </p>
+                                            {% elif user.confirm === 44 %}
+                                            <p> 반려 </p>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="/admin/confirm/{{ user.id }}" class="btn btn-primary" onclick="return confirm('승인하시겠습니까?')">승인</a>
+                                            <a href="/admin/return/{{ user.id }}" class="btn btn-danger" onclick="return confirm('반려하시겠습니까?')">반려</a>
+                                        </td>
+                                    </tr>
+                                {% endif %} 
+                            {% endif %} 
+                        {% endfor %}
+                    </table>
+                </div>
+                <!-- 승인/판매점 대표 리스트 -->
+                <div id="99_155" style="display:none">
+                    <table>
+                        <tr>
+                            <th>이름</th>
+                            <th>이메일</th>
+                            <th>분류</th>
+                            <th>상태 구분</th>
+                            <th>상태 변경</th>
+                        </tr>
+                        {% for user in user %}
+                            {% if user.auth === 155 %}
+                                {% if user.confirm === 99 %}
+                                    <tr>
+                                        <td>
+                                            {{ user.nick }}
+                                        </td>
+                                        <td>
+                                            {{ user.email }}
+                                        </td>
+                                        <td>
+                                            {% if user.auth === 155 %}
+                                            <p> 판매점 </p>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if user.confirm === 10 %}
+                                            <p> 승인 대기 중 </p>
+                                            {% elif user.confirm === 99 %}
+                                            <p> 승인 </p>
+                                            {% elif user.confirm === 44 %}
+                                            <p> 반려 </p>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="/admin/confirm/{{ user.id }}" class="btn btn-primary" onclick="return confirm('승인하시겠습니까?')">승인</a>
+                                            <a href="/admin/return/{{ user.id }}" class="btn btn-danger" onclick="return confirm('반려하시겠습니까?')">반려</a>
+                                        </td>
+                                    </tr>
+                                {% endif %} 
+                            {% endif %} 
+                        {% endfor %}
+                    </table>
+                </div>
+                <!-- 반려/판매점 대표 리스트 -->
+                <div id="44_155" style="display:none">
+                    <table>
+                        <tr>
+                            <th>이름</th>
+                            <th>이메일</th>
+                            <th>분류</th>
+                            <th>상태 구분</th>
+                            <th>상태 변경</th>
+                        </tr>
+                        {% for user in user %}
+                            {% if user.auth === 155 %}
+                                {% if user.confirm === 44 %}
+                                    <tr>
+                                        <td>
+                                            {{ user.nick }}
+                                        </td>
+                                        <td>
+                                            {{ user.email }}
+                                        </td>
+                                        <td>
+                                            {% if user.auth === 155 %}
+                                            <p> 판매점 </p>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if user.confirm === 10 %}
+                                            <p> 승인 대기 중 </p>
+                                            {% elif user.confirm === 99 %}
+                                            <p> 승인 </p>
+                                            {% elif user.confirm === 44 %}
+                                            <p> 반려 </p>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="/admin/confirm/{{ user.id }}" class="btn btn-primary" onclick="return confirm('승인하시겠습니까?')">승인</a>
+                                            <a href="/admin/return/{{ user.id }}" class="btn btn-danger" onclick="return confirm('반려하시겠습니까?')">반려</a>
+                                        </td>
+                                    </tr>
+                                {% endif %} 
+                            {% endif %} 
+                        {% endfor %}
+                    </table>
+                </div>
+    
+                            <!-- 대기/가이드 리스트 -->
+                            <div id="10_121" style="display:none">
+                                <table>
+                                    <tr>
+                                        <th>이름</th>
+                                        <th>이메일</th>
+                                        <th>분류</th>
+                                        <th>상태 구분</th>
+                                        <th>상태 변경</th>
+                                    </tr>
+                                    {% for user in user %}
+                                        {% if user.auth === 121 %}
+                                            {% if user.confirm === 10 %}
+                                                <tr>
+                                                    <td>
+                                                        {{ user.nick }}
+                                                    </td>
+                                                    <td>
+                                                        {{ user.email }}
+                                                    </td>
+                                                    <td>
+                                                        {% if user.auth === 121 %}
+                                                        <p> 가이드 </p>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if user.confirm === 10 %}
+                                                        <p> 승인 대기 중 </p>
+                                                        {% elif user.confirm === 99 %}
+                                                        <p> 승인 </p>
+                                                        {% elif user.confirm === 44 %}
+                                                        <p> 반려 </p>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        <a href="/admin/confirm/{{ user.id }}" class="btn btn-primary" onclick="return confirm('승인하시겠습니까?')">승인</a>
+                                                        <a href="/admin/return/{{ user.id }}" class="btn btn-danger" onclick="return confirm('반려하시겠습니까?')">반려</a>
+                                                    </td>
+                                                </tr>
+                                            {% endif %} 
+                                        {% endif %} 
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            <!-- 승인/가이드 리스트 -->
+                            <div id="99_121" style="display:none">
+                                <table>
+                                    <tr>
+                                        <th>이름</th>
+                                        <th>이메일</th>
+                                        <th>분류</th>
+                                        <th>상태 구분</th>
+                                        <th>상태 변경</th>
+                                    </tr>
+                                    {% for user in user %}
+                                        {% if user.auth === 121 %}
+                                            {% if user.confirm === 99 %}
+                                                <tr>
+                                                    <td>
+                                                        {{ user.nick }}
+                                                    </td>
+                                                    <td>
+                                                        {{ user.email }}
+                                                    </td>
+                                                    <td>
+                                                        {% if user.auth === 121 %}
+                                                        <p> 가이드 </p>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if user.confirm === 10 %}
+                                                        <p> 승인 대기 중 </p>
+                                                        {% elif user.confirm === 99 %}
+                                                        <p> 승인 </p>
+                                                        {% elif user.confirm === 44 %}
+                                                        <p> 반려 </p>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        <a href="/admin/confirm/{{ user.id }}" class="btn btn-primary" onclick="return confirm('승인하시겠습니까?')">승인</a>
+                                                        <a href="/admin/return/{{ user.id }}" class="btn btn-danger" onclick="return confirm('반려하시겠습니까?')">반려</a>
+                                                    </td>
+                                                </tr>
+                                            {% endif %} 
+                                        {% endif %} 
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            <!-- 반려/가이드 리스트 -->
+                            <div id="44_121" style="display:none">
+                                <table>
+                                    <tr>
+                                        <th>이름</th>
+                                        <th>이메일</th>
+                                        <th>분류</th>
+                                        <th>상태 구분</th>
+                                        <th>상태 변경</th>
+                                    </tr>
+                                    {% for user in user %}
+                                        {% if user.auth === 121 %}
+                                            {% if user.confirm === 44 %}
+                                                <tr>
+                                                    <td>
+                                                        {{ user.nick }}
+                                                    </td>
+                                                    <td>
+                                                        {{ user.email }}
+                                                    </td>
+                                                    <td>
+                                                        {% if user.auth === 121 %}
+                                                        <p> 가이드 </p>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if user.confirm === 10 %}
+                                                        <p> 승인 대기 중 </p>
+                                                        {% elif user.confirm === 99 %}
+                                                        <p> 승인 </p>
+                                                        {% elif user.confirm === 44 %}
+                                                        <p> 반려 </p>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        <a href="/admin/confirm/{{ user.id }}" class="btn btn-primary" onclick="return confirm('승인하시겠습니까?')">승인</a>
+                                                        <a href="/admin/return/{{ user.id }}" class="btn btn-danger" onclick="return confirm('반려하시겠습니까?')">반려</a>
+                                                    </td>
+                                                </tr>
+                                            {% endif %} 
+                                        {% endif %} 
+                                    {% endfor %}
+                                </table>
+                            </div>
+    
+                                        <!-- 대기/전체 리스트 -->
+                <div id="10" style="display:none">
+                    <table>
+                        <tr>
+                            <th>이름</th>
+                            <th>이메일</th>
+                            <th>분류</th>
+                            <th>상태 구분</th>
+                            <th>상태 변경</th>
+                        </tr>
+                        {% for user in user %}
+                            {% if user.confirm === 10 %}
+                                <tr>
+                                    <td>
+                                        {{ user.nick }}
+                                    </td>
+                                    <td>
+                                        {{ user.email }}
+                                    </td>
+                                    <td>
+                                        {% if user.auth === 121 %}
+                                        <p> 가이드 </p>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if user.confirm === 10 %}
+                                        <p> 승인 대기 중 </p>
+                                        {% elif user.confirm === 99 %}
+                                        <p> 승인 </p>
+                                        {% elif user.confirm === 44 %}
+                                        <p> 반려 </p>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="/admin/confirm/{{ user.id }}" class="btn btn-primary" onclick="return confirm('승인하시겠습니까?')">승인</a>
+                                        <a href="/admin/return/{{ user.id }}" class="btn btn-danger" onclick="return confirm('반려하시겠습니까?')">반려</a>
+                                    </td>
+                                </tr>
+                            {% endif %} 
+                        {% endfor %}
+                    </table>
+                </div>
+                <!-- 승인/전체 리스트 -->
+                <div id="99" style="display:none">
+                    <table>
+                        <tr>
+                            <th>이름</th>
+                            <th>이메일</th>
+                            <th>분류</th>
+                            <th>상태 구분</th>
+                            <th>상태 변경</th>
+                        </tr>
+                        {% for user in user %}
+                            {% if user.confirm === 99 %}
+                                <tr>
+                                    <td>
+                                        {{ user.nick }}
+                                    </td>
+                                    <td>
+                                        {{ user.email }}
+                                    </td>
+                                    <td>
+                                        {% if user.auth === 121 %}
+                                        <p> 가이드 </p>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if user.confirm === 10 %}
+                                        <p> 승인 대기 중 </p>
+                                        {% elif user.confirm === 99 %}
+                                        <p> 승인 </p>
+                                        {% elif user.confirm === 44 %}
+                                        <p> 반려 </p>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="/admin/confirm/{{ user.id }}" class="btn btn-primary" onclick="return confirm('승인하시겠습니까?')">승인</a>
+                                        <a href="/admin/return/{{ user.id }}" class="btn btn-danger" onclick="return confirm('반려하시겠습니까?')">반려</a>
+                                    </td>
+                                </tr>
+                            {% endif %} 
+                        {% endfor %}
+                    </table>
+                </div>
+                <!-- 반려/전체 리스트 -->
+                <div id="44" style="display:none">
+                    <table>
+                        <tr>
+                            <th>이름</th>
+                            <th>이메일</th>
+                            <th>분류</th>
+                            <th>상태 구분</th>
+                            <th>상태 변경</th>
+                        </tr>
+                        {% for user in user %}
+                            {% if user.confirm === 44 %}
+                                <tr>
+                                    <td>
+                                        {{ user.nick }}
+                                    </td>
+                                    <td>
+                                        {{ user.email }}
+                                    </td>
+                                    <td>
+                                        {% if user.auth === 121 %}
+                                        <p> 가이드 </p>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if user.confirm === 10 %}
+                                        <p> 승인 대기 중 </p>
+                                        {% elif user.confirm === 99 %}
+                                        <p> 승인 </p>
+                                        {% elif user.confirm === 44 %}
+                                        <p> 반려 </p>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="/admin/confirm/{{ user.id }}" class="btn btn-primary" onclick="return confirm('승인하시겠습니까?')">승인</a>
+                                        <a href="/admin/return/{{ user.id }}" class="btn btn-danger" onclick="return confirm('반려하시겠습니까?')">반려</a>
+                                    </td>
+                                </tr>
+                            {% endif %} 
+                        {% endfor %}
+                    </table>
+                </div>
+                
+                
+    
+            </div>
+            
+
+    </body>
+    
+    <script>
+    function au(value){
+        for(i=1; i<=3 ;i++){
+            document.getElementById(i).style.display="none";
+        }
+        document.getElementById(value).style.display="block";
+    }
+
+    // function con(value){
+    //     const i = !document.getElementById(value);
+    //     console.log(i);
+    //     document.getElementById(i).style.display="none";
+    //     document.getElementById(value).style.display="block";
+    // }
+
+    // function con(value){
+    //     data = document.getElementById(value)
+    //     $.ajax({
+    //         type: "get",
+    //         url: `/admin/checklist/${value}`,
+    //         data: data,
+    //         success: function(response) {
+    //             $("#listmenu").html(response);
+    //         },
+    //         error: function(){
+    //             alert("문제가 발생");
+    //         }
+    //     })
+    // }
+
+    // function cons(value){
+    //     fetch(`/admin/checklist/${value}`)
+    //     .then((res)=> res.json())
+    //     .then((data)=> {
+    //         if(c)
+    //     })
+    // }
+
+    
+    </script>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <title>EnjoyStreet</title>  
+  <link rel="icon" href="http://www.enjoystreet.com/img/enjoystreet.ico">
+  <link rel="shortcut icon" href="http://www.enjoystreet.com/img/enjoystreet.ico">
+  <link rel="stylesheet" href="/css/pc/login.css">  
+  <script src="/resource/pc/jquery.min.js"></script>
+</head>
+<body>
+  <div class="wrap login sub">
+    <div class="sub_title_box">비밀번호 재설정</div>
+    <div class="sub_cont find_com">
+        <form id="p_changeFrm" class="form" action="PC-CO-LIN0008.html">
+          <div class="sign_cont pwd">
+            <label for="pw">비밀번호 입력</label>
+            <input type="password" id="pw" placeholder="영문자, 숫자, 특수문자 3가지 이상 8~12자리" maxlength="12">
+            <p class="err_msg"></p>
+          </div>
+          <div class="sign_cont re_pwd">
+            <label for="rePw">비밀번호 재입력</label>
+            <input type="password" id="rePw" placeholder="비밀번호를 다시한번 입력하세요." maxlength="12">
+            <p class="err_msg"></p>
+          </div>
+          <button type="submit" class="sign_btn">비밀번호 재설정</button>
+        </form>
+    </div>
+  </div>
+    
+  <script>
+    $(function(){
+      $('#p_changeFrm').on('submit', function(){
+        var pw = $("#pw").val();
+        var rePw = $("#rePw").val();
+        var getNumb = pw.search(/[0-9]/g);
+        var getText = pw.search(/[a-z]/ig); 
+        var getRlap = /(\w)\1\1\1/     
+        var getSpec = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+
+        if(pw == ""){
+          $("#pw").val('');
+          $("#pw").focus();
+          $(".pwd .err_msg").text("필수 입력 입니다.").show();
+          return false;
+        }else if(pw.length < 8 || pw.length > 12){
+          $("#pw").val('');
+          $("#pw").focus();
+          $(".pwd .err_msg").text("8자리~12자리로 입력해 주세요.").show();
+          return false;
+        }else if(getNumb <0 || getText <0){
+          $("#pw").val('');
+          $("#pw").focus();
+          $(".pwd .err_msg").text("숫자와 영문자를 혼용하여야 합니다.").show();
+          return false;
+        }else if(getRlap.test(pw)){
+          $("#pw").val('');
+          $("#pw").focus();
+          $(".pwd .err_msg").text("같은 문자를 4번 이상 사용하실 수 없습니다.").show();
+          return false;
+        }else if(!getSpec.test(pw)){
+          $("#pw").val('');
+          $("#pw").focus();
+          $(".pwd .err_msg").text("영문,숫자,특수문자 중 2가지 이상을 혼합하여 입력해주세요.").show();
+          return false;
+        }        
+        $(".pwd .err_msg").hide();
+
+        if(rePw == ''){          
+          $("#rePw").val('');
+          $("#rePw").focus();
+          $(".re_pwd .err_msg").text("필수 입력 입니다.").show();
+          return false;
+        }else if(rePw != pw){          
+          $("#rePw").val('');
+          $("#rePw").focus();
+          $(".re_pwd .err_msg").text("비밀번호가 일치하지 않습니다.").show();
+          return false;
+        }        
+        $(".re_pwd .err_msg").hide();
+      })
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{% block content -%}
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <title>{{title}}</title>
+    <link rel="icon" href="http://www.enjoystreet.com/img/enjoystreet.ico" />
+    <link rel="shortcut icon" href="http://www.enjoystreet.com/img/enjoystreet.ico" />
+    <link rel="stylesheet" href="/css/pc/login.css" />
+    <script src="/resource/pc/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        setTimeout(function () {
+          window.open("about:blank", "_self").close();
+        }, 15000);
+        var time = setInterval(num, 1000);
+        var count = 15;
+        function num() {
+          if (count >= 1) {
+            count--;
+          }
+          $("span.num").text(count);
+        }
+        $(".sign_btn").click(function () {
+          window.open("about:blank", "_self").close();
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="wrap login sub">
+      <div class="sub_title_box">{{auth_title}}</div>
+      <div class="sub_cont find_com">
+        <div>
+          <p class="email">{{email}}</p>
+          <p>{{auth_chack}}<br />닫기을 클릭하시고 로그인을 진행해주세요.<br /><br />(15초가 지나면 자동으로 닫힙니다)</p>
+          <!-- <p class="email">vredu@vreducation.kr</p>
+          <p>이메일 인증이 완료되었습니다 <br />닫기을 클릭하시고 로그인을 진행해주세요.<br /><br />(15초가 지나면 자동으로 닫힙니다)</p> -->
+          <div>남은시간 <span class="num">15</span><span>초</span></div>
+          <button class="sign_btn">닫기</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+{% endblock %}
