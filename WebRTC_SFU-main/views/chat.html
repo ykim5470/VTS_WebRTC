@@ -1,0 +1,43 @@
+{% block content -%}
+<html>
+  <head>
+    <script lang="text/javascript" src="/socket.io/socket.io.js"></script>
+  </head>
+
+  <body>
+    <!-- 채팅 -->
+    <div class="wrapper">
+
+        <div class="display-container">
+
+            <ul>
+
+            </ul>
+            <ul class="chatting-list">
+              {% for chat in chats %}
+              <li>[ {{chat.name}} ] : {{chat.content}} </li>
+              {% endfor %}
+            </ul>
+        </div>
+
+        <div class="user-container">
+          <label for="nickname">이름 : </label>
+          <input type="text" id="nickname">
+        </div>
+
+        <div class="input-container">
+            <span>
+                <input type="text" class="chatting-input">
+                <button class="send-button">전송</button>
+            </span>
+        </div>
+
+    </div>
+  </body>
+  <footer>
+    <script src="chat.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+  </footer>
+</html>
+
+{% endblock %} 

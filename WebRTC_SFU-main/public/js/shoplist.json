@@ -1,0 +1,42 @@
+{
+    "shopList": [
+      {
+       "shop_title":"ラインフレンズ",
+       "shop_phone_number":"82-010-1234-5678",
+       "url":"../img/shop_img01.png","alt":"shop01",
+       "shop_info":"本菊どゅま問正項トユモコ倍教ぜむべ属長シチサ声上ぱち総広す代連ヨクケメ大未リだ発圧べンル迎変式ょ真武ちだぞじ雄護ノ績9防リレヲ択7稿ずゅ。続む時覧スヨ強要ムテナ会以はをびも自断ネツ記民つ国財界権調うず日文ヘ芸務ホ速換ぜ部学ふき月71順ムヲ約応ごそきっ止知ヲケタ申丁侵暗柄ん。 谷画ル権揮ソツヤ後生さンど防給ヌモナス備4正の社子ひ加回ロ上49部オヱイ質境よぎ金吉枚ンでーお。探まをほ獲今ニ転抜王よ鈴月ちおがん長尾宅キロ表存組てフ載応ニセモト族無クイヱア理棋クリヌ作止ぎ逃平隆伸換頼く。17芸趣2対くお央設ム知金ルげド非権ぎやむい来大ゃぽやか農65万得大ーつとび百内エシニム本者サイ委役フょ秒採クぎ相抜ア編竜稿断社ろ。",
+       "trademark":"インジョイストリート",
+       "ceo":"キム·ジェホン",
+       "mail_order_number":"2019-ソウル麻浦-0670",
+       "company_number":"123-45-67890",
+       "address":"ソウル特別市 麻浦区 西橋洞 1番地 インジョイストリート 旅行社 (〒 022110)",
+       "mail":"EnjoyStreet@vreducation.kr"
+      }
+    ],
+    "shopItem": [
+      {
+        "option":"https://enjoystreet.com/ec/html/user_data/assets/img/common/rihgt_option_logo.svg",
+        "img":"https://enjoystreet.com/ec/html/user_data/assets/img/common/main_img_01.jpg",
+        "title":"[innisfree]水分クリーム",
+        "name":"水分クリーム",
+        "view":"https://enjoystreet.com/ec/products/detail/1",
+        "point":"point01"
+      },
+      {
+        "option":"https://enjoystreet.com/ec/html/user_data/assets/img/common/rihgt_option_logo.svg",
+        "img":"https://enjoystreet.com/ec/html/user_data/assets/img/common/main_img_02.jpg",
+        "title":"[innisfree]スキンローション",
+        "name":"スキンローション",
+        "view":"https://enjoystreet.com/ec/products/detail/2",
+        "point":"point02"
+      },
+      {
+        "option":"https://enjoystreet.com/ec/html/user_data/assets/img/common/rihgt_option_logo.svg",
+        "img":"https://enjoystreet.com/ec/html/user_data/assets/img/common/main_img_03.jpg",
+        "title":"[innisfree]美白クリーム",
+        "name":"美白クリーム",
+        "view":"https://enjoystreet.com/ec/products/detail/3",
+        "point":"point03"
+      }
+    ]
+}

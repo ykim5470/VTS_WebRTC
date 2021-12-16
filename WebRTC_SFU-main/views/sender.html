@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamer</title>
+    <script src="all.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        window.onload = start();
+    </script>
+</head>
+<body>
+    <div>
+        <video autoplay id="video" muted playsinline="true"></video>
+    </div>
+    <div>
+        {% include "chat.html" %}
+    </div>
+</body>
+</html>
