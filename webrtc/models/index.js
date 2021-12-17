@@ -1,7 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
-const config = require("./config")[env];
+const config = require("./config")["development"
+];
 const ChatLog = require("./db/chatlog");
 
 

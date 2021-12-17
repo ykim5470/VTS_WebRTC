@@ -9,7 +9,7 @@ const indexRouter = require("./routes/index");
 
 const httpolyglot = require("httpolyglot");
 const https = require("https");
-const port = 19081;
+const port = process.env.PORT;
 
 const { sequelize } = require("./models");
 const Models = require("./models");
@@ -50,7 +50,9 @@ app.use(express.static('public'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
+
 app.use("/", indexRouter);
+
 
 // socket 생성 시 DB에 sequelize를 통한 새로운 컬럼 생성 (room)
 async function chatLogUpdate(chatData){
@@ -72,6 +74,12 @@ io.on("connection", (socketChat) => {
     chatLogUpdate(chatData);
       io.emit("chatting", chatData);
     });
+
+
+    // socketChat.on('blobSave', async(blob)=>{
+    //   fs.writeFile('path.webm', new Buffer(encoder.compile(true)),
+    //   'base64')
+    // })
   });
 
 // 서버 on
