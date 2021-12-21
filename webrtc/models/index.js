@@ -4,6 +4,7 @@ const Sequelize = require("sequelize");
 const config = require("./config")["development"
 ];
 const ChatLog = require("./db/chatlog");
+const Record = require('./db/record')
 
 
 const db = {};
@@ -26,7 +27,9 @@ Object.keys(db).forEach((modelName) => {
 
 db.sequelize = sequelize;
 db.ChatLog = ChatLog;
+db.Record = Record;
 
 ChatLog.init(sequelize);
+Record.init(sequelize)
 
 module.exports = db;

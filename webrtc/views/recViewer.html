@@ -4,15 +4,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <title>EnjoyStreet - Live</title>
+    <title>EnjoyStreet - Rec</title>
     <link rel="stylesheet" href="/css/contents.css">
     <script src="/resource/jquery.min.js"></script>
     <script src="/resource/jquery-ui/jquery-ui.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="streamer.js"></script>
-    <script src="viewer.js"></script>
-    <script src="all.js"></script>
+    <!-- <script src="streamer.js"></script> -->
+    <!-- <script src="viewer.js"></script> -->
+    <!-- <script src="recAll.js"></script> -->
     <script src="/js/script.js"></script>
 </head>
 
@@ -40,7 +40,7 @@
             <span class="img">
               <img src="/img/live_travel01_min.jpg" alt="guide_img">
             </span>
-            <span class="live">LIVE</span>
+            <span class="live">Rec</span>
           </div>
           <div class="live_info">
             <div class="title">
@@ -56,9 +56,9 @@
         </div>   
     </article>
     <article class="on_main"> 
-      <!-- <video id="videos" autoplay muted playsinline="true"></video>       -->
-      <video id="videos"  autoplay muted playsInline></video>    
-      <!-- <video id="videos" src="../resource/video/demo_clip02.mp4" autoplay muted playsinline="true"></video>       -->
+      <!-- <video id="videos" autoplay muted inline="true"></video>       -->
+      <video id="videos" src='{{recordedSource}}' controls autoplay muted palysInline type='video/webm'></video>    
+      <!-- <video id="videos" src="../resource/video/demo_clip02.mp4" autoplay muted inline="true"></video>       -->
       <div class="chat display-container" id="div_chat">
         <ul class="chatting-list">
           {% for chat in chats %}
@@ -199,12 +199,12 @@
         }
       }); 
 
-      view();      
+    //   view();      
       chat_scroll()
     })
   </script>
   
-  <script src="chat.js"></script>
+  <!-- <script src="chat.js"></script> -->
   <script src="/socket.io/socket.io.js"></script>
 </body>
 
