@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <title>EnjoyStreet - Live</title>
+  <link rel="stylesheet" href="/css/contents.css">
+  <script src='adapter.js'></script>
+  <script src="/resource/jquery.min.js"></script>
+  <script src="/resource/jquery-ui/jquery-ui.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="streamer.js"></script>
+  <script src="viewer.js"></script>
+  <script src="all.js"></script>
+  <script src="/js/script.js"></script>
+</head>
+
+<body class="on_air_in travel">
+  <input type="text" class="copy_url" id="curURL">
+  <section>
+    <article class="on_header">
+      <nav>
+        <ul>
+          <li>
+            <a href="https://enjoystreet.com/ec/" class="logo"><img
+                src="https://enjoystreet.com/ec/html/user_data/assets/img/common/main_logo_w.svg"
+                alt="enjoystreet logo"></a>
+          </li>
+          <li>
+            <button type="button" class="alram" data-navpopOpen="notification"><i class="fas fa-bell"></i></button>
+            <button type="button" class="link" id="copyUrl"><i class="fas fa-share-alt"></i></button>
+            <button type="button" class="prev_btn" onclick="location.href='https://enjoystreet.com/ec/'"><i
+                class="fas fa-times"></i></button>
+          </li>
+        </ul>
+      </nav>
+      <div class="popcont noti_pop" data-navpopcont="notification">
+        <div data-navpopclose="notification"></div>
+      </div>
+      <div class="item">
+        <div class="icon">
+          <span class="img">
+            <img src="/img/live_travel01_min.jpg" alt="guide_img">
+          </span>
+          <span class="live">LIVE</span>
+        </div>
+        <div class="live_info">
+          <div class="title">
+            <h2 class="live_tit">カリナと旅立つ札幌雪祭り</h2>
+          </div>
+          <a href="#">カリーナガイド</a>
+          <span class="view_num"><i class="far fa-user"></i> <span>4.5k</span></span>
+          <span class="like_num"><i class="far fa-heart"></i> <span class="cnt">1510</span></span>
+        </div>
+      </div>
+      <div class="sound_set">
+        <button id="muteOff"><i class="fas fa-volume-mute"></i></button>
+      </div>
+    </article>
+    <article class="on_main">
+      <!-- <video id="videos" autoplay muted playsinline="true"></video>       -->
+      <video id="videos" autoplay muted playsInline></video>
+      <!-- <video id="videos" src="../resource/video/demo_clip02.mp4" autoplay muted playsinline="true"></video>       -->
+      <div class="chat display-container" id="div_chat">
+        <ul class="chatting-list">
+          {% for chat in chats %}
+          <li><b>{{chat.name}}</b>{{chat.content}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="travel_shop">
+        <ul id="ul_shop">
+        </ul>
+      </div>
+    </article>
+    <article class="on_bottom">
+      <div class="bottom_item_wrap">
+        <ul>
+          <li><button type="button" class="chat"><i class="fas fa-comment-dots"></i></button></li>
+          <li><button type="button" class="map"><i class="fas fa-map-marked-alt"></i></button></li>
+          <li><button type="button" class="cart"
+              onclick="location.href='https://enjoystreet.com/ec/products/list?category_id=4'"><i
+                class="fas fa-shopping-bag"></i><span class="cnt"></span></button></li>
+          <li><button type="button" class="like"> <i class="far fa-heart"></i></button></li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <div class="popcont chatting">
+    <div class="wrapper">
+      <div class="input-container">
+        <span>
+          <input type="text" class="chatting-input" placeholder="リアルタイムチャット参加">
+          <!-- <button class="send-button" disabled><img src="/img/send.svg" alt="send logo"></button> -->
+          <button class="send-button"><img src="/img/send.svg" alt="send logo"></button>
+        </span>
+      </div>
+      <div class="user-container">
+        <label for="nickname">ID</label>
+        <input type="text" id="nickname" placeholder="ニックネーム入力">
+      </div>
+    </div>
+  </div>
+
+  <div class="popcont shoplist">
+    <div class="bg"></div>
+    <ul id="shoplist">
+    </ul>
+  </div>
+
+  <script>
+    $(window).on('load', function () {
+
+      // 채팅창 스크롤 최 하단이동
+      function chat_scroll() {
+        setTimeout(function () {
+          $('.chatting-list').animate({
+            scrollTop: $('.chatting-list').prop('scrollHeight') - $('.chatting-list').innerHeight()
+          }, 100);
+        }, 300)
+      }
+
+      var itemCount = $("#ul_shop").children().length
+      var i = 0;
+      console.log(itemCount);
+      setInterval(function () {
+        i++
+        console.log(i)
+        if (i >= itemCount) {
+          i = 0
+        }
+        $(".travel_shop ul li").eq([i - 1]).addClass("fadein");
+        prd1 = setTimeout(function () {
+          $(".travel_shop ul li").eq([i - 1]).removeClass("fadein");
+        }, 5000);
+      }, 8000)
+
+      $("span.cnt").text(itemCount)
+
+      // video sound mute button
+      $("video").prop('muted');
+      $("#muteOff").click(function () {
+        if ($("video").prop('muted')) {
+          $("video").prop('muted', false);
+          $(this).html('<i class="fas fa-volume-up"></i>')
+        } else {
+          $("video").prop('muted', true);
+          $(this).html('<i class="fas fa-volume-mute"></i>')
+        }
+      });
+
+      // chatting value
+      $(".chatting-input").keyup(function () {
+        if ($(this).val() == "") {
+          //$(".send-button").attr("disabled", true);
+          $(this).removeClass("pass");
+          return false;
+        } else {
+          $(this).addClass("pass");
+        }
+        //  check_submit();
+      });
+
+      $("#nickname").keyup(function () {
+        if ($(this).val() == "") {
+          //$(".send-button").attr("disabled", true);
+          $(this).removeClass("pass");
+          return false;
+        } else {
+          $(this).addClass("pass");
+        }
+        //  check_submit();
+      });
+
+      //     function check_submit() {
+      //       if ($(".chatting-input").hasClass("pass") === true && $("#nickname").hasClass("pass") === true) {
+      //         $(".send-button").attr("disabled", false);   
+      //       } else {
+      //         $(".send-button").attr('disabled', true)
+      //       }
+      //     }
+
+      //$(".send-button").click(function(){
+      //if($(this).attr("disabled") = true){
+      //  console.log(dddd)
+      // }
+      //})
+
+      $(".send-button").click(function () {
+        $(".chatting-input").removeClass("pass")
+        chat_scroll();
+        //setTimeout(function(){
+        //  check_submit()
+        //},200)
+      })
+
+      $(".chatting-input, #nickname").keydown(function (key) {
+        if (key.keyCode == 13) {
+          $(".send-button").trigger("click");
+          chat_scroll()
+        }
+      });
+
+      view();
+      chat_scroll()
+    })
+  </script>
+
+  <script src="chat.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+</body>
+
+</html>

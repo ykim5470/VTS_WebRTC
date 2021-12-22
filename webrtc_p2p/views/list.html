@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>list</title>
   <script lang="text/javascript" src="/socket.io/socket.io.js"></script>
+  <script src='adapter.js'></script>
   <script src="list.js"></script>
 </head>
 
@@ -18,11 +19,11 @@
       <th>
         {{el.id}}
       <td>
-        <a href='https://106.241.28.11:18050/u/rec?resource={{el.filename}}'><video width="300" , height="300" src='https://106.241.28.11:18050/uploads/{{el.filename}}' playsinline
-            muted>
+        <a href='https://106.241.28.11:18050/u/rec?resource={{el.filename}}'><video width="300" , height="300"
+            src='https://106.241.28.11:18050/uploads/{{el.filename}}' playsinline muted>
           </video></a>
       </td>
-    </th>
+      </th>
     </table>
     {% endfor %}
   </div>
