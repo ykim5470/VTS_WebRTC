@@ -8,14 +8,14 @@
     content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
   <title>Streamer</title>
   <link rel="stylesheet" href="/css/contents.css">
-  <script src='adapter.js'></script>
-  <script src="/resource/jquery.min.js"></script>
-  <script src="/resource/jquery-ui/jquery-ui.min.js"></script>
+  <script src='/js/mo/webrtc/adapter.js'></script>
+  <script src="/resource/mo/jquery.min.js"></script>
+  <script src="/resource/mo/jquery-ui/jquery-ui.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="streamer.js"></script>
-  <script src="viewer.js"></script>
+  <script src="/js/mo/webrtc/streamer.js"></script>
+  <script src="/js/mo/webrtc/viewer.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="/js/script.js"></script>
+  <script src="/js/mo/webrtc/script.js"></script>
   <!-- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> test용 더보기 src> -->
 
 </head>
@@ -108,11 +108,11 @@
 
 
 
-  <!-- <div>
-        {% include "sender.html" %}
-        {% include "viewer.html" %}
-    </div> -->
-  <script src="chat.js"></script>
+  <div>
+        {% include "common/mo/calls/sender.html" %}
+        {% include "common/mo/calls/viewer.html" %}
+    </div>
+  <script src="/js/mo/webrtc/chat.js"></script>
   <script src="/socket.io/socket.io.js"></script>
 </body>
 

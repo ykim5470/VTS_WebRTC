@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Streamer</title>
-    <script src='adapter.js'></script>
+    <script src='/js/mo/webrct/adapter.js'></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="all.js"></script>
+    <script src="/js/mo/webrct/all.js"></script>
     <script src="https://bundle.run/buffer@6.0.3"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
@@ -26,7 +26,7 @@
     </div>
     <div> Recording format: <select id='codecPreferences' disabled></select></div>
     <div>
-        {% include "chat.html" %}
+        {% include "common/mo/calls/chat.html" %}
     </div>
 </body>
 

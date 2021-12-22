@@ -13,6 +13,11 @@ const UserToken = require("./auth/usertoken");
 const UserTokenLog = require("./log/usertokenlog");
 const ZLog = require("./log/zlog");
 const UserMemo = require("./users/usermemo");
+
+
+const ChatLog = require("./stream/chatlog");
+const Record = require('./stream/record')
+
 //추가
 const Products = require("./sotre/products");
 const ProductsMemo = require("./sotre/productsmemo");
@@ -50,6 +55,9 @@ db.UserMemo = UserMemo;
 db.Products = Products;
 db.ProductsMemo = ProductsMemo;
 
+db.ChatLog = ChatLog;
+db.Record = Record;
+
 
 
 ZLog.init(sequelize);
@@ -64,6 +72,9 @@ UserTokenLog.init(sequelize);
 UserMemo.init(sequelize);
 Products.init(sequelize);
 ProductsMemo.init(sequelize);
+
+ChatLog.init(sequelize);
+Record.init(sequelize)
 
 // ZLog.associate(db);
 // User.associate(db);
