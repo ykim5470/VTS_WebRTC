@@ -35,9 +35,9 @@ function search_input(){
   var search_var = $("input.search_val").val();
   console.log(search_var);
   if (target == "사업자 번호") {
-    window.location.href = "http://localhost:19082/store/signup/bsnsrc/search?nmb=" + search_var;
+    window.location.href = "/store/signup/bsnsrc/search?nmb=" + search_var;
   } else if (target == "사업체명") {
-    window.location.href = "http://localhost:19082/store/signup/bsnsrc/search?name=" + search_var;
+    window.location.href = "/store/signup/bsnsrc/search?name=" + search_var;
   }
   // ------------------------------------------------------------------------------------------
 

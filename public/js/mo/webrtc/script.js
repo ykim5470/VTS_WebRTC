@@ -50,7 +50,7 @@ $(function(){
   // shop list
   function shopList(){
     $.ajax({
-      url : '../js/shoplist.json',
+      url : '../js/mo/webrtc/shoplist.json',
       type : 'GET',
       dataType : 'json',
       success : function(data) {
@@ -93,7 +93,7 @@ $(function(){
   // shop Item
   function shopItem(){
     $.ajax({
-      url : '../js/shoplist.json',
+      url : '../js/mo/webrtc/shoplist.json',
       type : 'GET',
       dataType : 'json',
       success : function(data) {

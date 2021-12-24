@@ -160,7 +160,7 @@ async function handleNegotiation(peer) {
     sdp: peer.localDescription,
   };
 
-  const { data } = await axios.post("/broadcast", payload);
+  const { data } = await axios.post("/call/broadcast", payload);
   const desc = new RTCSessionDescription(data.sdp);
   peer.setRemoteDescription(desc).catch((e) => console.log(e));
 }
@@ -211,12 +211,14 @@ async function handleNegotiationC(peer) {
     sdp: peer.localDescription,
   };
 
-  const { data } = await axios.post("/consumer", payload);
+  const { data } = await axios.post("/call/consumer", payload);
   const desc = new RTCSessionDescription(data.sdp);
   peer.setRemoteDescription(desc).catch((e) => console.log(e));
 }
 
 //viewer 화면에 streamer의 방송을 보여주는 코드
 function handlerTrack(e) {
+  console.log('------------------------------')
+  console.log(e.streams[0])
   document.getElementById("videos").srcObject = e.streams[0];
 }

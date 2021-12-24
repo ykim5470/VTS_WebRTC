@@ -31,7 +31,7 @@ const output = {
     try {
       const { resource } = req.query;
       res.render("common/mo/calls/recViewer.html", {
-        recordedSource: `https://106.241.28.11:19082/uploads/${resource}`,
+        recordedSource: `/uploads/${resource}`,
       });
     } catch (err) {
       console.log(err);
