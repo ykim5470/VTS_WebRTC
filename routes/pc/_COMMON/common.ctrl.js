@@ -63,6 +63,9 @@ const output = {
   // },
 
   PC_CO_MEM0005: async (req, res) => {
+    const { id } = req.params;
+    
+    console.log("id : " + id);
     res.render("common/pc/home/PC-CO-MEM0005", { user: req.user });
   },
 

@@ -129,7 +129,8 @@ const process = {
           if (status == "704") {
             console.log("704");
             await handle_status.authChack.statusLoginToken(email);
-            return res.redirect("/signup/result/" + email);
+            // return res.redirect("/signup/result/" + email);
+            res.render("common/pc/home/PC-CO-MEM0005", { email: email, use: "여행전문가이드",user: req.user });
           } else {
             console.log("statusCheck : 알 수 없는 문제");
           }
