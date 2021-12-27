@@ -9,8 +9,10 @@ const sequelizeEmail = {
     console.log("mailHash : "+mailHash)
 
     console.log("메일 토큰 등록 시작")
-    const { mail } = await Models.User.findOne({ where: { email } });
-    console.log("mail : "+ mail)
+    // 최초 회원가입, 이메일 인증 기능을 모듈화하다가 중지됨
+    // const { mail } = await Models.User.findOne({ where: { email } });
+    // console.log("mail : "+ mail)
+    const mail = email
 
     console.log("토큰 생성")
     await Models.UserToken.create({

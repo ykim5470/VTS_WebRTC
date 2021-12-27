@@ -10,10 +10,6 @@ const { Op } = require("sequelize");
 const { createCipher } = require("crypto");
 
 const output = {
-  
-
-  
-
   main: async (req, res) => {
     res.render("common/pc/index", { user: req.user });
   },
@@ -29,8 +25,6 @@ const output = {
   PC_CO_LIN0001: async (req, res) => {
     res.render("common/pc/home/PC-CO-LIN0001", { user: req.user });
   },
-
-  
 
   PC_CO_LIN0004: async (req, res) => {
     res.render("common/pc/home/PC-CO-LIN0004", { user: req.user });
@@ -63,10 +57,6 @@ const output = {
   PC_CO_MEM0001: async (req, res) => {
     res.render("common/pc/home/PC-CO-MEM0001", { user: req.user });
   },
-
-  
-
-  
 
   // PC_CO_MEM0004: async (req, res) => {
   //   res.render("common/pc/home/PC-CO-MEM0004");
@@ -200,7 +190,7 @@ const process = {
   //   console.log(name_01);
   //   console.log(password);
   //   const email = email_01 + "@" + email_02;
-    
+
   //   const image = `/uploads/GUIDE/license/${req.file.filename}`;
 
   //   try {
@@ -240,10 +230,6 @@ const process = {
   //     return next(error);
   //   }
   // },
-
-  
-
-  
 
   // guideEmail: async (req, res, next) => {
   //   const Reason = "email";
@@ -320,9 +306,6 @@ const process = {
     }
   },
 
-  
-  
-
   emailAuthChack: async (req, res, next) => {
     const emailFinalChack = await req.param("id");
     console.log("-----------------------------------");
@@ -372,8 +355,6 @@ const process = {
   //     });
   //   })(req, res, next);
   // },
-
-  
 
   idFind: async (req, res, next) => {
     const { email_01, email_02, name_01 } = req.body;

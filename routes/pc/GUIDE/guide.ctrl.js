@@ -20,7 +20,7 @@ const output = {
 
 const process = {
   guideRegister: async (req, res, next) => {
-    const { email_01, email_02, name_01, password , year, month, day, gender, ph_num } = req.body;
+    const { email_01, email_02, name_01, password, year, month, day, gender, ph_num } = req.body;
     const l_birthday = `${year}-${month}-${day}`;
     const email = email_01 + "@" + email_02;
 
@@ -67,73 +67,79 @@ const process = {
   guidelogin: (req, res, next) => {
     passport.authenticate("local", (authError, user, info) => {
       if (authError) {
+        console.log("-------authError------");
         console.error(authError);
         res.send(loginError.message);
       }
       if (!user) {
+        console.log("-------!user------");
         const errorCode = info.message;
         console.log(errorCode);
         return res.render("common/pc/home/PC-CO-LIN0001", { errorCode: errorCode });
       }
       return req.login(user, async (loginError) => {
         if (loginError) {
+          console.log("-------loginError------");
           console.log(loginError.message);
           res.send(loginError.message);
         }
         await handle_status.authChack.loginLog(user.email);
+        console.log("---------------------");
         return next();
       });
     })(req, res, next);
   },
 
-  // statusCheck: async (req, res, next) => {
-  //   const { status, email, confirm, auth } = await req.user;
-  //   const { authKinds } = await Models.UserToken.findOne({ where: { mail: email } });
-  //   const { nick } = await Models.User.findOne({ where: { email: email } });
-  //   console.log("-------------------------------------------------");
-  //   console.log(email);
-  //   console.log(status);
-  //   console.log(nick);
-  //   console.log(authKinds);
-  //   console.log(confirm);
-  //   console.log(auth);
-  //   console.log("-------------------------------------------------");
-  //   try {
-  //     if (auth == 0) {
-  //       if (status == "700") {
-  //         return res.redirect("/");
-  //       } else {
-  //         if (status == "704") {
-  //           console.log("704");
-  //           await handle_status.authChack.statusLoginToken(email);
-  //           return res.redirect("/signup/result/" + email);
-  //         } else {
-  //           console.log("statusCheck : 알 수 없는 문제");
-  //         }
-  //       }
-  //     } else {
-  //       if (status == "700") {
-  //         if (confirm !== 99) {
-  //           // console.log("승인받으세요");
-  //           return res.redirect("/admin/authentication");
-  //         } else {
-  //           return res.redirect("/");
-  //         }
-  //       } else {
-  //         if (status == "704") {
-  //           console.log("704");
-  //           await handle_status.authChack.statusLoginToken(email);
-  //           return res.redirect("/signup/result/" + email);
-  //         } else {
-  //           console.log("statusCheck : 알 수 없는 문제");
-  //         }
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     next(error);
-  //   }
-  // },
+  statusCheck: async (req, res, next) => {
+    const { status, email, confirm, auth } = await req.user;
+    const aa = await Models.UserToken.findAll({});
+    const { authKinds } = await Models.UserToken.findOne({ where: { mail: email } });
+    const { nick } = await Models.User.findOne({ where: { email: email } });
+    console.log("-------------------------------------------------");
+    // console.log(aa)
+    console.log(email);
+    console.log(status);
+    console.log(nick);
+    console.log(authKinds);
+    console.log(confirm);
+    console.log(auth);
+    console.log("-------------------------------------------------");
+    try {
+      if (auth == 0) {
+        if (status == "700") {
+          return res.redirect("/");
+        } else {
+          if (status == "704") {
+            console.log("704");
+            await handle_status.authChack.statusLoginToken(email);
+            return res.redirect("/signup/result/" + email);
+          } else {
+            console.log("statusCheck : 알 수 없는 문제");
+          }
+        }
+      } else {
+        if (status == "700") {
+          if (confirm !== 99) {
+            // console.log("승인받으세요");
+            return res.redirect("/admin/authentication");
+          } else {
+            return res.redirect("/");
+          }
+        } else {
+          if (status == "704") {
+            console.log("704");
+            await handle_status.authChack.statusLoginToken(email);
+            return res.redirect("/signup/result/" + email);
+          } else {
+            console.log("statusCheck : 알 수 없는 문제");
+          }
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  },
 };
 
 module.exports = {
