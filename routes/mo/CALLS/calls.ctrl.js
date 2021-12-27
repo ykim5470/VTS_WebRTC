@@ -74,7 +74,7 @@ const output = {
         return JSON.parse(JSON.stringify(result));
       });
       console.log(recMetaData);
-      res.render("common/mo/calls/userList.html", { sources: recMetaData });
+      res.render("common/mo/calls/userList.html", { sources: recMetaData, user: req.user.nick });
     } catch (err) {
       console.log(err);
     }

@@ -20,7 +20,7 @@ const passportConfig = require("./middle/passport");
 
 const bodyParser = require("body-parser");
 const httpolyglot = require("httpolyglot");
-const adapter = require('webrtc-adapter')
+const adapter = require("webrtc-adapter");
 const uuid = require("node-uuid");
 const webrtc = require("wrtc");
 
@@ -53,8 +53,18 @@ const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 // SSL 설정 적용
 const options = {
-  key: fs.readFileSync(path.join(__dirname, "ssl", "key.pem"), "utf-8"),
-  cert: fs.readFileSync(path.join(__dirname, "ssl", "cert.pem"), "utf-8"),
+  key: fs.readFileSync(
+    path.join(__dirname, "ssl", "enjoystreet.com_20210630C19D.key.pem"),
+    "utf-8"
+  ), // 개인키 지정
+  cert: fs.readFileSync(
+    path.join(__dirname, "ssl", "enjoystreet.com_20210630C19D.crt.pem"),
+    "utf-8"
+  ), // 서버인증서 지정
+  ca: fs.readFileSync(
+    path.join(__dirname, "ssl", "enjoystreet.com_20210630C19D.ca-bundle.pem"),
+    "utf-8"
+  ), // 루트체인 지정
 };
 
 const httpsServer = httpolyglot.createServer(options, app);
@@ -109,14 +119,19 @@ io.on("connection", (socketChat) => {
     console.log("Start save");
     const fileName = uuid.v4() + ".webm";
     // 녹화 파일 저장 /uploads
-    fs.writeFile(`./uploads/${fileName}`, file, { encoding: "utf-8", flag: "w" }, (err) => {
-    // fs.writeFile(`./public/uploads/${fileName}`, file, { encoding: "utf-8", flag: "w" }, (err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("File written successfully!");
+    fs.writeFile(
+      `./uploads/${fileName}`,
+      file,
+      { encoding: "utf-8", flag: "w" },
+      (err) => {
+        // fs.writeFile(`./public/uploads/${fileName}`, file, { encoding: "utf-8", flag: "w" }, (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("File written successfully!");
+        }
       }
-    });
+    );
 
     console.log("--------------------");
     console.log(blob);
@@ -135,7 +150,6 @@ io.on("connection", (socketChat) => {
 });
 
 app.use("/", indexRouter);
-
 
 httpsServer.listen(app.get("port"), () => {
   console.log(`http://${process.env.SERVER_HOST}:${app.get("port")}`);
