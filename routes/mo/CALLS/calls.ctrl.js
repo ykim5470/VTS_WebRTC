@@ -1,5 +1,6 @@
 const Models = require("../../../models");
 const webrtc = require("wrtc");
+const { findOne } = require("../../../models/users/user");
 
 let senderStream;
 
@@ -61,6 +62,23 @@ const output = {
       console.log(err);
     }
   },
+
+  userList: async (req, res) => {
+    try {
+      const recMetaData = await Models.Record.findAll({
+        where: {
+          streamer: "streamer1",
+          uploaded: 1,
+        },
+      }).then((result) => {
+        return JSON.parse(JSON.stringify(result));
+      });
+      console.log(recMetaData);
+      res.render("common/mo/calls/userList.html", { sources: recMetaData });
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };
 
 const process = {
@@ -69,7 +87,13 @@ const process = {
     const peer = new webrtc.RTCPeerConnection({
       iceServers: [
         {
-          urls: ["stun:stun.l.google.com:19302", "stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302", "stun:stun3.l.google.com:19302", "stun:stun4.l.google.com:19302"],
+          urls: [
+            "stun:stun.l.google.com:19302",
+            "stun:stun1.l.google.com:19302",
+            "stun:stun2.l.google.com:19302",
+            "stun:stun3.l.google.com:19302",
+            "stun:stun4.l.google.com:19302",
+          ],
         },
         {
           urls: "turn:106.241.28.11:3478?transport=tcp",
@@ -97,7 +121,13 @@ const process = {
       const peer = new webrtc.RTCPeerConnection({
         iceServers: [
           {
-            urls: ["stun:stun.l.google.com:19302", "stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302", "stun:stun3.l.google.com:19302", "stun:stun4.l.google.com:19302"],
+            urls: [
+              "stun:stun.l.google.com:19302",
+              "stun:stun1.l.google.com:19302",
+              "stun:stun2.l.google.com:19302",
+              "stun:stun3.l.google.com:19302",
+              "stun:stun4.l.google.com:19302",
+            ],
           },
           {
             urls: "turn:106.241.28.11:3478?transport=tcp",
@@ -108,7 +138,9 @@ const process = {
       });
       const desc = new webrtc.RTCSessionDescription(body.sdp);
       await peer.setRemoteDescription(desc);
-      senderStream.getTracks().forEach((track) => peer.addTrack(track, senderStream));
+      senderStream
+        .getTracks()
+        .forEach((track) => peer.addTrack(track, senderStream));
       const answer = await peer.createAnswer();
       await peer.setLocalDescription(answer);
       const payload = {
@@ -116,6 +148,22 @@ const process = {
       };
 
       res.json(payload);
+    } catch (err) {
+      console.log(err);
+    }
+  },
+
+  recUploads: async (req, res) => {
+    try {
+      // 녹화 활성화 및 방제목 업데이트
+      const { recTitle, source } = req.body;
+      await Models.Record.update(
+        { uploaded: true, title: recTitle },
+        { where: { filename: source } }
+      );
+
+      console.log('녹화 영상 활성화 성공')
+      res.redirect('/call/l')
     } catch (err) {
       console.log(err);
     }

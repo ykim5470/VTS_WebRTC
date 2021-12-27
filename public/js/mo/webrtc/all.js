@@ -16,6 +16,8 @@ async function start() {
       sampleRate: 44100,
     },
   });
+
+  console.log(stream)
   const vid = document.querySelector("#video");
   vid.muted = true;
   vid.srcObject = stream;
@@ -68,6 +70,7 @@ async function handleSuccess(stream) {
       document.querySelector("#codecPreferences").disabled = false;
       document.querySelector("#codecPreferences").appendChild(option);
     });
+
   } catch (error) {
     console.log(error);
   }
