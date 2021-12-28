@@ -1,6 +1,5 @@
 const Models = require("../../../models");
 const webrtc = require("wrtc");
-const { findOne } = require("../../../models/users/user");
 
 let senderStream;
 
@@ -15,8 +14,8 @@ const output = {
         room: "test",
       },
     });
-    res.render("common/mo/calls/sender.html", { chats });
-    // res.render("common/mo/calls/sender.html");
+    const streamer = req.user.nick
+    res.render("common/mo/calls/sender.html", { chats, streamer });
   },
 
   view: async (req, res) => {
@@ -52,7 +51,7 @@ const output = {
     try {
       const recMetaData = await Models.Record.findAll({
         where: {
-          streamer: "streamer1",
+          streamer: req.user.nick,
         },
       }).then((result) => {
         return JSON.parse(JSON.stringify(result));
@@ -67,14 +66,16 @@ const output = {
     try {
       const recMetaData = await Models.Record.findAll({
         where: {
-          streamer: "streamer1",
+          streamer: req.user.nick,
           uploaded: 1,
         },
       }).then((result) => {
         return JSON.parse(JSON.stringify(result));
       });
-      console.log(recMetaData);
-      res.render("common/mo/calls/userList.html", { sources: recMetaData, user: req.user.nick });
+      res.render("common/mo/calls/userList.html", {
+        sources: recMetaData,
+        user: req.user.nick,
+      });
     } catch (err) {
       console.log(err);
     }
@@ -155,15 +156,15 @@ const process = {
 
   recUploads: async (req, res) => {
     try {
-      // 녹화 활성화 및 방제목 업데이트
-      const { recTitle, source } = req.body;
+      // 녹화 활성화 및 방제목, 스케쥴 시간 업데이트
+      const { recTitle, schedule, source } = req.body;
       await Models.Record.update(
-        { uploaded: true, title: recTitle },
+        { uploaded: true, title: recTitle, schedule: schedule },
         { where: { filename: source } }
       );
 
-      console.log('녹화 영상 활성화 성공')
-      res.redirect('/call/l')
+      console.log("녹화 영상 활성화 성공");
+      res.redirect("/call/l");
     } catch (err) {
       console.log(err);
     }

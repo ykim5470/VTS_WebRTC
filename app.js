@@ -96,6 +96,23 @@ app.use((req, res, next) => {
   next();
 });
 
+// Upcoming 스트리밍 상태 체크 및 업데이트
+app.use("/call/u/l", async (req, res, next) => {
+  const currentTime = Date.now();
+  await Models.Record.findAll({
+    where: { status: 0 },
+    attributes: ["id", "schedule"],
+  }).then((results) => {
+    results.map(async (el) => {
+      const { id, schedule } = el;
+      if (schedule < currentTime && schedule != null) {
+        await Models.Record.update({ status: 1 }, { where: { id: id } });
+      }
+    });
+  });
+  next();
+});
+
 // socket 생성 시 DB에 sequelize를 통한 새로운 컬럼 생성 (room)
 async function chatLogUpdate(chatData) {
   const name = chatData.name;
@@ -115,7 +132,7 @@ io.on("connection", (socketChat) => {
   });
 
   socketChat.on("sendFile", async (blob) => {
-    const { file, fileSize } = blob;
+    const { file, fileSize, streamer } = blob;
     console.log("Start save");
     const fileName = uuid.v4() + ".webm";
     // 녹화 파일 저장 /uploads
@@ -140,7 +157,7 @@ io.on("connection", (socketChat) => {
     try {
       await Models.Record.create({
         filename: fileName,
-        streamer: "streamer1",
+        streamer: streamer,
         fileSize: fileSize,
       });
     } catch (err) {
@@ -154,7 +171,3 @@ app.use("/", indexRouter);
 httpsServer.listen(app.get("port"), () => {
   console.log(`http://${process.env.SERVER_HOST}:${app.get("port")}`);
 });
-
-// app.listen(app.get("port"), () => {
-//   console.log(`http://${process.env.SERVER_HOST }:${app.get("port")}`);
-// });

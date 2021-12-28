@@ -15,9 +15,17 @@
     {% for recSources in sources %}
     <section class='recItems'> 
       <span>제목: {{recSources.title}}</span>
+      {% if recSources.status %}
+      <span>영상 카테고리: 스트림 중 </span>
       <a href='/call/u/rec?resource={{recSources.filename}}'><video width="300" , height="300"
         src='/uploads/{{recSources.filename}}' playsinline muted>
       </video></a>
+      {%else%}
+      <span>영상 카테고리: 스트림 예정 </span>
+      <video width="300" , height="300"
+        src='/uploads/{{recSources.filename}}' playsinline muted >
+      </video>
+      {% endif %}
     </section>
     {% endfor %}
     <section class='preItems'>

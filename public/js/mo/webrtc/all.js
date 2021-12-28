@@ -46,8 +46,11 @@ async function start() {
     var file = new File([blob], "testOne");
     console.log(file);
     console.log(file.size);
-    // 녹화 파일 정보 서버에 SEND
-    socket.emit("sendFile", { file: file, fileSize: file.size });
+    var streamer = document.getElementsByTagName('title')[0].innerHTML.split(' ')[0]
+    // console.log('--------------')
+    // console.log(streamer)
+    // 녹화 파일 정보 및 스트리머 이름 서버에 SEND
+    socket.emit("sendFile", { file: file, fileSize: file.size, streamer: streamer });
   });
 
   //신규 peer 생성 후 스트림 진행

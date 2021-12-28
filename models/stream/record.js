@@ -31,6 +31,15 @@ module.exports = class Record extends Sequelize.Model {
           type: Sequelize.STRING,
           allowNull: true
         },
+        schedule: {
+          type: Sequelize.STRING,
+          allowNull: true
+        },
+        status: {
+          type: Sequelize.BOOLEAN, 
+          defaultValue: false,
+          allowNull: false
+        }
       },
       {
         sequelize,
