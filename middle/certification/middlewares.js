@@ -64,3 +64,19 @@ exports.isNotLoggedIn = (req, res, next) => {
     res.redirect(`/?error=${message}`);
   }
 };
+
+// 디바이스 체크
+exports.diviceCheck = (req, res, next) => {
+  const osName = userDevice.os.name;
+  const PC = ["Windows", "Mac OS"];
+  if (osName == PC[0] || osName == PC[1]) {
+    console.log("PC");
+    console.log(PC[0]);
+    console.log(PC[1]);
+    console.log(osName);
+    res.redirect("/device");
+  } else {
+    console.log("Mobile");
+    next();
+  }
+};
