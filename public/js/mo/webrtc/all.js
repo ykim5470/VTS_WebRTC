@@ -154,7 +154,6 @@ function createPeer() {
     ],
   });
   peer.onnegotiationneeded = () => handleNegotiation(peer);
-
   return peer;
 }
 

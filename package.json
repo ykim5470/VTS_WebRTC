@@ -47,6 +47,7 @@
     "sequelize-cli": "^6.2.0",
     "socket.io": "^4.4.0",
     "ua-parser-js": "^0.7.28",
+    "uuid": "^8.3.2",
     "webrtc-adapter": "^8.1.0",
     "wrtc": "^0.4.7"
   },

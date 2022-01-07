@@ -1,5 +1,6 @@
 const Models = require("../../../models");
 const webrtc = require("wrtc");
+const {v4} = require('uuid')
 
 let senderStream;
 
@@ -24,7 +25,8 @@ const output = {
         room: "test",
       },
     });
-    res.render("common/mo/calls/viewer.html", { chats });
+    const default_name = v4().slice(0,5)
+    res.render("common/mo/calls/viewer.html", { chats,default_name });
   },
 
   recView: async (req, res) => {

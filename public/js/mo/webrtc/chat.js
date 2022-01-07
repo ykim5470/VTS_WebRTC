@@ -13,16 +13,33 @@ sendButton.addEventListener("click", () => {
     name: nickname.value,
     msg: chatInput.value,
   };
-  socketChat.emit("chatting", param);
+
+  // 채팅 Name, Text 빈칸 체크
+  const isEmptyText = (text) => {
+    if (text !== undefined) {
+      if (text.replace(" ", "").length === 0) {
+        return true;
+      } else return false;
+    } else {
+      true;
+    }
+  };
+
+  if (isEmptyText(nickname.value) || isEmptyText(chatInput.value)) {
+    console.log("유저 이름 입력 혹은 텍스트를 입력해야 합니다");
+  }
+  else{
+    socketChat.emit("chatting", param)
+  }
 });
 
 //사용자가 채팅 전송 시 화면에 추가될 수 있도록 하는 코드
 socketChat.on("chatting", (chatData) => {
   const li = document.createElement("li");
   // li.innerText = ` ${chatData.name}  ${chatData.msg}`
-  li.innerHTML = `<b>` + `${chatData.name}`+ `</b>` + `${chatData.msg}`
-  chatList.appendChild(li)
-  chatInput.value=""; //채팅 전송 후 기존 작성 내용 초기화 하는 코드
+  li.innerHTML = `<b>` + `${chatData.name}` + `</b>` + `${chatData.msg}`;
+  chatList.appendChild(li);
+  chatInput.value = ""; //채팅 전송 후 기존 작성 내용 초기화 하는 코드
   console.log(chatData);
 });
 
