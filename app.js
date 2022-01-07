@@ -117,10 +117,13 @@ app.use("/call/u/l", async (req, res, next) => {
 async function chatLogUpdate(chatData) {
   const name = chatData.name;
   const msg = chatData.msg;
+  const prefix = chatData.prefix
 
   await Models.ChatLog.create({
     name: name,
     content: msg,
+    prefix,
+    userIp
   });
 }
 

@@ -9,6 +9,15 @@ module.exports = class ChatLog extends Sequelize.Model {
 		      autoIncrement: true,
 			    primaryKey: true
         },
+        userIp: {
+          type: Sequelize.STRING(40),
+          allowNull: true,
+
+        },
+        prefix: {
+          type: Sequelize.STRING(40),
+          allowNull: true,
+        },
         room: {
           type: Sequelize.STRING(10),
           defaultValue: "test",

@@ -25,7 +25,9 @@ const output = {
         room: "test",
       },
     });
-    const default_name = v4().slice(0,5)
+    const default_name = v4().slice(0,3)
+
+
     res.render("common/mo/calls/viewer.html", { chats,default_name });
   },
 

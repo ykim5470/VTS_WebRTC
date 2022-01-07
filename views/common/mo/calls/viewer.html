@@ -68,7 +68,7 @@
       <div class="chat display-container" id="div_chat">
         <ul class="chatting-list">
           {% for chat in chats %}
-          <li><b>{{chat.name}}</b>{{chat.content}}</li>
+          <li><b>{{chat.prefix}}</b><b>{{chat.name}}</b>{{chat.content}}</li>
           {% endfor %}
         </ul>
       </div>
@@ -103,7 +103,8 @@
       </div>
       <div class="user-container">
         <label for="nickname">ID</label>
-        <input type="text" id="nickname" placeholder="ニックネーム入力" value='{{default_name}}'>
+        <input type='text' id="prefixNickname" value='{{default_name}}' hidden>
+        <input type="text" id="nickname" placeholder="ニックネーム入力" >
       </div>
     </div>
   </div>
