@@ -25,10 +25,17 @@ const output = {
         room: "test",
       },
     });
+
+    const likeCount = await Models.UserActivityLog.findAll({
+      attributes:['likeAction']
+    }).then(result =>{ 
+      return result.length
+    })
+
     const default_name = v4().slice(0,3)
 
 
-    res.render("common/mo/calls/viewer.html", { chats,default_name });
+    res.render("common/mo/calls/viewer.html", { chats,default_name, likeCount });
   },
 
   recView: async (req, res) => {

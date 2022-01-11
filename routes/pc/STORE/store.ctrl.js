@@ -1,4 +1,12 @@
+const secret = require("../../../middle/encryption/secret");
+const passport = require("passport");
+const bcrypt = require("bcrypt");
 const Models = require("../../../models");
+const handle_status = require("../../../middle/certification/status");
+const handle_email = require("../../../middle/mail/mail");
+const { sequelize } = require("../../../models");
+const Form = require("../../../middle/mail/form");
+
 const output = {
   PC_CO_LIN0002: async (req, res) => {
     res.render("common/pc/home/PC-CO-LIN0002", { user: req.user });

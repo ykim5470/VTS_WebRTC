@@ -22,6 +22,7 @@ const Stream = require('./stream/stream')
 //추가
 const Products = require("./sotre/products");
 const ProductsMemo = require("./sotre/productsmemo");
+const UserActivityLog = require("./log/useractivitylog");
 
 
 const db = {};
@@ -59,7 +60,7 @@ db.ProductsMemo = ProductsMemo;
 db.ChatLog = ChatLog;
 db.Record = Record;
 db.Stream = Stream;
-
+db.UserActivityLog = UserActivityLog;
 
 
 ZLog.init(sequelize);
@@ -78,6 +79,7 @@ ProductsMemo.init(sequelize);
 ChatLog.init(sequelize);
 Record.init(sequelize)
 Stream.init(sequelize)
+UserActivityLog.init(sequelize);
 
 // ZLog.associate(db);
 // User.associate(db);

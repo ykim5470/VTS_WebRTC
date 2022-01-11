@@ -1,3 +1,4 @@
+
 $(function(){
   // $(window).on('load', function(){
   //   $('#liveVideo').get(0).play();
@@ -9,10 +10,12 @@ $(function(){
     $("section").toggleClass("only_video")
   })
   $(".like").on('click',function(){
-    var likeCnt = $(".like_num .cnt").text();
-    likeCnt = Number(likeCnt);
-    likeCnt = likeCnt + 1;
-    $(".like_num .cnt").text(likeCnt);
+    socket.emit('like-clicked')
+  })
+  socketChat.on('like-count-total', async(data)=>{
+    const likeCount = data
+    // $(".like_num .cnt").text(likeCount); // 더한 것 다시 Node에 replace
+    document.querySelector('#like-cnt').innerText = likeCount
     $(".like").html("<span>Liked!</span><i class='fas fa-heart'></i>");
     $(".like span").addClass("press");
     $('#div_chat').prepend('<strong class="like_txt"><span>ウギさん</span> が好きですを押しました。</strong>')
@@ -21,6 +24,7 @@ $(function(){
       $('#div_chat strong.like_txt').remove();
     },5000);
   })
+
   $("button.chat").on('click',function(){
     $(".chatting").addClass('act');
   });

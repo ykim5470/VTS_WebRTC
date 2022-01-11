@@ -54,7 +54,7 @@
           </div>
           <a href="#">カリーナガイド</a>
           <span class="view_num"><i class="far fa-user"></i> <span>4.5k</span></span>
-          <span class="like_num"><i class="far fa-heart"></i> <span class="cnt">1510</span></span>
+          <span class="like_num"><i class="far fa-heart"></i> <span id='like-cnt'class="cnt">{{likeCount}}</span></span>
         </div>
       </div>
       <div class="sound_set">
@@ -127,22 +127,22 @@
         }, 300)
       }
 
-      var itemCount = $("#ul_shop").children().length
-      var i = 0;
-      console.log(itemCount);
-      setInterval(function () {
-        i++
-        console.log(i)
-        if (i >= itemCount) {
-          i = 0
-        }
-        $(".travel_shop ul li").eq([i - 1]).addClass("fadein");
-        prd1 = setTimeout(function () {
-          $(".travel_shop ul li").eq([i - 1]).removeClass("fadein");
-        }, 5000);
-      }, 8000)
+      // var itemCount = $("#ul_shop").children().length
+      // var i = 0;
+      // console.log(itemCount);
+      // setInterval(function () {
+      //   i++
+      //   console.log(i)
+      //   if (i >= itemCount) {
+      //     i = 0
+      //   }
+      //   $(".travel_shop ul li").eq([i - 1]).addClass("fadein");
+      //   prd1 = setTimeout(function () {
+      //     $(".travel_shop ul li").eq([i - 1]).removeClass("fadein");
+      //   }, 5000);
+      // }, 8000)
 
-      $("span.cnt").text(itemCount)
+      // $("span.cnt").text(itemCount)
 
       // video sound mute button
       $("video").prop('muted');
@@ -216,5 +216,4 @@
   <script src="/js/mo/webrtc/chat.js"></script>
   <script src="/socket.io/socket.io.js"></script>
 </body>
-
 </html>

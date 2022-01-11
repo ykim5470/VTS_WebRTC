@@ -129,11 +129,30 @@ async function chatLogUpdate(chatData) {
 
 // socket.io
 io.on("connection", (socketChat) => {
+  // 채팅 로그 업데이트 및 채팅 정보 Client emit
   socketChat.on("chatting", (chatData) => {
     chatLogUpdate(chatData);
     io.emit("chatting", chatData);
   });
 
+  // 영상 스트리밍 좋아요 버튼 클릭 로그 처리
+  socketChat.on('like-clicked', async() =>{
+    await Models.UserActivityLog.create({
+      roomId: 'test',
+      likeAction: 1,
+      connectIp: userIp
+    }).then(async()=>{
+      await Models.UserActivityLog.findAll({
+        attributes: ['likeAction']
+      }).then(likeCount => {
+        io.emit('like-count-total', likeCount.length)
+      })
+    })  
+
+  })
+
+
+  // 녹화 blob 객체 GET 및 비디오 파일 Write & 녹화 파일 저장
   socketChat.on("sendFile", async (blob) => {
     const { file, fileSize, streamer } = blob;
     console.log("Start save");
