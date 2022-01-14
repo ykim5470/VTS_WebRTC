@@ -26,7 +26,7 @@ const webrtc = require("wrtc");
 
 const app = express();
 passportConfig(); // 패스포트 설정
-app.set("port", process.env.SERVER_PORT || 19082);
+app.set("port", process.env.SERVER_PORT || 18088);
 app.set("view engine", "html");
 nunjucks.configure("views", {
   express: app,
