@@ -4,7 +4,9 @@ const {v4} = require('uuid')
 
 let senderStream;
 
+// sender에서 rtpPeerConnection에 track을 add한 이후에 이 함수를 실행시켜야 한다. 아니면, 당연히 e는 없다.
 function handleTrackEvent(e, peer) {
+  console.log(e)
   senderStream = e.streams[0];
 }
 
@@ -67,7 +69,7 @@ const output = {
       }).then((result) => {
         return JSON.parse(JSON.stringify(result));
       });
-      res.render("common/mo/calls/list.html", { sources: recMetaData });
+      res.render("common/mo/calls/list.html", { sources: recMetaData, nickname: req.user.nick });
     } catch (err) {
       console.log(err);
     }
@@ -109,17 +111,21 @@ const process = {
         },
         {
           urls: "turn:106.241.28.11:3478?transport=tcp",
-          credential: "1118",
-          username: "vredu",
+          credential: "vredu1118",
+          username: "webrtc",
         },
       ],
     });
 
+    console.log('영상 정보가 담긴 sdp를 가지고 peer 연결')
+    console.log(peer)
     peer.ontrack = (e) => handleTrackEvent(e, peer);
     const desc = new webrtc.RTCSessionDescription(body.sdp);
     await peer.setRemoteDescription(desc);
     const answer = await peer.createAnswer();
     await peer.setLocalDescription(answer);
+    console.log('peer에 SDP를 저장 완료')
+    console.log(peer.localDescription)
     const payload = {
       sdp: peer.localDescription,
     };
@@ -143,16 +149,21 @@ const process = {
           },
           {
             urls: "turn:106.241.28.11:3478?transport=tcp",
-            credential: "1118",
-            username: "vredu",
+            credential: "vredu1118",
+            username: "webrtc",
           },
         ],
       });
       const desc = new webrtc.RTCSessionDescription(body.sdp);
       await peer.setRemoteDescription(desc);
-      senderStream
+      // console.log(senderStream)
+      if(senderStream !== undefined){
+        senderStream
         .getTracks()
         .forEach((track) => peer.addTrack(track, senderStream));
+      }else{
+        console.log('현재 스트림 방송 peer 연결 불가능. 보통은 view 페이지만 따로 새로고침 한 경우')
+      }
       const answer = await peer.createAnswer();
       await peer.setLocalDescription(answer);
       const payload = {

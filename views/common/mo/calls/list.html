@@ -11,7 +11,49 @@
 </head>
 
 <body>
-  녹화 영상 업로드
+  Enjoy Street Live
+  <br>
+  <span>{{nickname}} 가이드</span>
+  <br>
+  <button id='liveStreamStartBtn'>Live Stream 방송 시작</button>
+
+  <!-- 라이브 방송설정 모달 시작-->
+  <div style='border-color: red; border-style: solid; size: 2px;' class='liveStreamSettingModal'>
+    라이브 방송설정
+    <div>--------------------------</div>
+    <div class='thumNailInput'>
+      방송 사진(썸네일) <input type='file' />
+    </div>
+    <br>
+    <div class='streamTitle'>
+      방송 제목 <input type='text' />
+    </div>
+    <br>
+
+    <div class='streamHostNickName'>
+      방송 진행자 <input type='text' />
+    </div>
+    <br>
+
+    <div class='broadcastOptionCheck'>
+      <input type='checkbox'>방송종류 후 즉시 공개하기
+    </div>
+    <br>
+
+    <div>------- 방송공개일 설정 -------</div>
+    등록일
+    예정시간
+    <input class='schedule' />
+    <div>
+      <br>
+      <button>취소</button>
+      <button>시작</button>
+    </div>
+  </div>
+
+  <!-- 라이브 방송설정 모달 끝-->
+
+
 
   <div>
     {% for el in sources %}
@@ -25,19 +67,19 @@
       </td>
       <td>
         {% if el.uploaded == 1 %}
-          <input type='checkbox' class='activeOnContents' checked />
-          <input name='recTitle' placeholder ='방제목' value ='{{el.title}}' disabled  />
-          <input class ='schedule' name='schedule' placeholder ='스트림 예정 시간' value='{{el.schedule}}' disabled />
-          <input name='source' value='{{el.filename}}' hidden  />
-          </th>
-          <button disabled>
-            업로드 및 활성화
-          </button>
+        <input type='checkbox' class='activeOnContents' checked />
+        <input name='recTitle' placeholder='방제목' value='{{el.title}}' disabled />
+        <input class='schedule' name='schedule' placeholder='스트림 예정 시간' value='{{el.schedule}}' disabled />
+        <input name='source' value='{{el.filename}}' hidden />
+        </th>
+        <button disabled>
+          업로드 및 활성화
+        </button>
         {% else %}
         <form action='/call/l/activeOn' method='POST' id='activeOn'>
-          <input type='checkbox'  class='activeOnContents' />
-          <input name='recTitle' placeholder ='방제목' />
-          <input class= 'schedule' name='schedule' placeholder ='스트림 예정 시간' />
+          <input type='checkbox' class='activeOnContents' />
+          <input name='recTitle' placeholder='방제목' />
+          <input class='schedule' name='schedule' placeholder='스트림 예정 시간' />
           <input name='source' value='{{el.filename}}' hidden />
           </th>
           <button>
