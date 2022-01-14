@@ -1,7 +1,7 @@
 const fs = require("fs");
 const https = require("https");
 const parser = require("ua-parser-js");
-
+const http = require("http");
 const express = require("express");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
@@ -52,22 +52,23 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 // SSL 설정 적용
-const options = {
-  key: fs.readFileSync(
-    path.join(__dirname, "ssl", "enjoystreet.com_20210630C19D.key.pem"),
-    "utf-8"
-  ), // 개인키 지정
-  cert: fs.readFileSync(
-    path.join(__dirname, "ssl", "enjoystreet.com_20210630C19D.crt.pem"),
-    "utf-8"
-  ), // 서버인증서 지정
-  ca: fs.readFileSync(
-    path.join(__dirname, "ssl", "enjoystreet.com_20210630C19D.ca-bundle.pem"),
-    "utf-8"
-  ), // 루트체인 지정
-};
+// const options = {
+//   key: fs.readFileSync(
+//     path.join(__dirname, "ssl", "enjoystreet.com_20210630C19D.key.pem"),
+//     "utf-8"
+//   ), // 개인키 지정
+//   cert: fs.readFileSync(
+//     path.join(__dirname, "ssl", "enjoystreet.com_20210630C19D.crt.pem"),
+//     "utf-8"
+//   ), // 서버인증서 지정
+//   ca: fs.readFileSync(
+//     path.join(__dirname, "ssl", "enjoystreet.com_20210630C19D.ca-bundle.pem"),
+//     "utf-8"
+//   ), // 루트체인 지정
+// };
 
-const httpsServer = httpolyglot.createServer(options, app);
+// const httpsServer = httpolyglot.createServer(options, app);
+const httpsServer = http.createServer(app);
 const io = require("socket.io")(httpsServer);
 
 app.use(
@@ -193,3 +194,4 @@ app.use("/", indexRouter);
 httpsServer.listen(app.get("port"), () => {
   console.log(`http://${process.env.SERVER_HOST}:${app.get("port")}`);
 });
+
