@@ -1,9 +1,11 @@
-// 로그인 체크 (임시)
+const e = require("express");
+
+// 로그인 체크
 exports.isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
   } else {
-    res.render("auth/login");
+    res.redirect("/guide/login");
   }
 };
 
@@ -19,15 +21,22 @@ exports.isLoggedInUser = (req, res, next) => {
   }
 };
 
-// 가이드 체크
+// 가이드 권한 체크
 exports.isLoggedInGuide = (req, res, next) => {
+
+  console.log("-------------------------------")
+  console.log("isLoggedInGuide : ")
+  console.log("-------------------------------")
   if (req.isAuthenticated()) {
-    if (req.user.auth != "125") {
-      res.redirect("/error");
+    if (req.user.auth == "121" || req.user.auth == "125") {
+      console.log("good");
+      return next();
+    } else {
+      console.log("auth : "+req.user.auth)
+      return res.redirect("/");
     }
-    return next();
   } else {
-    res.render("auth/login");
+    return res.redirect("/");
   }
 };
 
@@ -65,8 +74,62 @@ exports.isNotLoggedIn = (req, res, next) => {
   }
 };
 
+// 이메일 체크
+exports.isStatusCheck = (req, res, next) => {
+  const { email, auth, confirm, status, nick } =  req.user;
+  console.log("-------------------------------")
+  console.log("isStatusCheck : ")
+  console.log("-------------------------------")
+  console.log(email);
+  console.log(auth);
+  console.log(confirm);
+  console.log(status);
+  console.log(nick);
+  try {
+    if (status == "700") {
+      console.log("good");
+      next();
+    } else {
+      console.log("status : " + status);
+      return res.redirect("/signup/result/" + email);
+    }
+  } catch (error) {
+    console.log("error : " + error);
+    return res.redirect("/");
+  }
+};
+
+// 승인 체크
+exports.isConfirmCheck = (req, res, next) => {
+  console.log("-------------------------------")
+  console.log("isConfirmCheck : ")
+  console.log("-------------------------------")
+  const { email, auth, confirm, status, nick } =  req.user;
+  console.log(email);
+  console.log(auth);
+  console.log(confirm);
+  console.log(status);
+  console.log(nick);
+  try {
+    if (confirm == 99) {
+      console.log("good");
+      next();
+    } else {
+      console.log("confirm : " + confirm);
+      console.log("승인받으세요");
+      return res.redirect("/admin/authentication");
+    }
+  } catch (error) {
+    console.log("error : " + error);
+    return res.redirect("/");
+  }
+};
+
 // 디바이스 체크
 exports.diviceCheck = (req, res, next) => {
+  console.log("-------------------------------")
+  console.log("diviceCheck : ")
+  console.log("-------------------------------")
   const osName = userDevice.os.name;
   const PC = ["Windows", "Mac OS"];
   if (osName == PC[0] || osName == PC[1]) {
