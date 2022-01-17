@@ -49,7 +49,9 @@ const authChack = {
       console.log("authKinds : " + authKinds);
       console.log("emailemailemailemailemailemailemailemailemail");
       await Models.UserToken.update({ emailAuth: 399 }, { where: { emailToken: emailFinalChack } });
+      console.log("UserToken update END");
       await Models.User.update({ status: 700 }, { where: { email: email } });
+      console.log("User update END");
     } catch (error) {
       console.error();
       return error;

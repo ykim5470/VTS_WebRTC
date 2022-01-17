@@ -318,12 +318,13 @@ const process = {
     console.log("-----------------------------------");
     try {
       const { mail, authKinds } = await Models.UserToken.findOne({ where: { emailToken: emailFinalChack } });
-      const { email } = await Models.UserMy.findOne({ where: { mail: mail } });
+      console.log("mail : "+mail)
+      console.log("authKinds : "+authKinds)
 
       // 유효기간 체크 후 에러처리도 해야함.
       if (mail) {
-        console.log(email);
-        console.log(authKinds);
+        const { email } = await Models.UserMy.findOne({ where: { mail: mail } });
+        console.log("email : "+email);
         if (authKinds == "email") {
           // email
           await handle_status.authChack.mailIsTure(email, authKinds, emailFinalChack);
