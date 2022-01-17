@@ -328,7 +328,8 @@ const process = {
         if (authKinds == "email") {
           // email
           await handle_status.authChack.mailIsTure(email, authKinds, emailFinalChack);
-          return res.redirect("/");
+          // return res.redirect("/");
+          console.log("확인확인확인확인확인확인확인확인확인")
         } else {
           console.log(error.message);
           res.send(error.message);
