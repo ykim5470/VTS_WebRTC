@@ -27,9 +27,9 @@ function createPeer(){
                   ],
             },
             {
-                'urls': 'turn:106.241.28.11:3478?transport=tcp',
-                'credential': '1118',
-                'username': 'vredu'
+                urls: "turn:106.241.28.11:3478?transport=tcp",
+                credential: "vredu1118",
+                username: "webrtc",
             }
         ]
     })

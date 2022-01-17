@@ -54,8 +54,10 @@ async function start() {
   });
 
   //신규 peer 생성 후 스트림 진행
-  const peer = createPeer();
-  stream.getTracks().forEach((track) => peer.addTrack(track, stream));
+  const peer = await createPeer().then(result => {return result});
+  console.log('-----------1')
+  console.log(peer)
+  stream.getTracks().forEach((track) => peer.addTrack(track, stream)); 
 }
 
 // 녹화 옵션 추가
@@ -134,7 +136,7 @@ function stopRecording() {
 }
 
 // peer 생성 및 연결
-function createPeer() {
+async function createPeer() {
   const peer = new RTCPeerConnection({
     iceServers: [
       {
@@ -153,7 +155,7 @@ function createPeer() {
       },
     ],
   });
-  peer.onnegotiationneeded = () => handleNegotiation(peer);
+  peer.onnegotiationneeded = async() => await handleNegotiation(peer);
   return peer;
 }
 
@@ -167,7 +169,9 @@ async function handleNegotiation(peer) {
 
   const { data } = await axios.post("/call/broadcast", payload);
   const desc = new RTCSessionDescription(data.sdp);
-  peer.setRemoteDescription(desc).catch((e) => console.log(e));
+  console.log('이건 Peer에 sdp 저장한 후 세션에 저장할 sdp 상세 정보')
+  console.log(desc)
+  await peer.setRemoteDescription(desc).catch((e) => console.log(e));
 }
 
 /*
@@ -177,13 +181,13 @@ async function handleNegotiation(peer) {
 //view 시작 시 viewer의 미디어기기 접근 후 peer 생성
 //zoom 방식이 아닌 peer 연결 후 recive only로 진행
 async function view() {
-  const peer = createPeerC();
+  const peer = await createPeerC().then(result => {return result});
   peer.addTransceiver("video", { direction: "recvonly" });
   peer.addTransceiver("audio", { direction: "recvonly" });
 }
 
 // peer 생성 및 연결
-function createPeerC() {
+async function createPeerC() {
   const peer = new RTCPeerConnection({
     iceServers: [
       {
@@ -197,13 +201,17 @@ function createPeerC() {
       },
       {
         urls: "turn:106.241.28.11:3478?transport=tcp",
-        credential: "1118",
-        username: "vredu",
+        credential: "vredu1118",
+        username: "webrtc",
       },
     ],
   });
-  peer.ontrack = handlerTrack; //peer 연결 후 track이 발생하면 hadlerTrack function 호출
-  peer.onnegotiationneeded = () => handleNegotiationC(peer);
+  console.log('사용자가 보는 peer는 스트리머가 보는 생성한 peer랑 같은 걸까?') // 다르다
+  console.log(peer) 
+  peer.ontrack = handlerTrack; // rtp peer connection에 track이 추가 되었을 경우 실행할 것 정함. 즉, track에 추가 되면 hanlderTrack을 실행시킬 것
+  // peer.ontrack = (e) => console.log(e)
+  
+  peer.onnegotiationneeded = async() => await handleNegotiationC(peer); // rtp peer connection instance에 뭔가 event가 생기면 발생. 보통은 track이 추가되는 이벤트면 실행.
 
   return peer;
 }
@@ -218,7 +226,7 @@ async function handleNegotiationC(peer) {
 
   const { data } = await axios.post("/call/consumer", payload);
   const desc = new RTCSessionDescription(data.sdp);
-  peer.setRemoteDescription(desc).catch((e) => console.log(e));
+  await peer.setRemoteDescription(desc).catch((e) => console.log(e));
 }
 
 //viewer 화면에 streamer의 방송을 보여주는 코드

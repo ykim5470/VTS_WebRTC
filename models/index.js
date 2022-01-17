@@ -3,7 +3,7 @@ const path = require("path");
 const Sequelize = require("sequelize");
 const env = process.env.NODE_ENV || "development";
 const config = require("./config")[env];
-const moment = require('moment');
+const moment = require("moment");
 const User = require("./users/user");
 const UserMy = require("./users/usermy");
 const UserPw = require("./auth/userpw");
@@ -14,19 +14,23 @@ const UserTokenLog = require("./log/usertokenlog");
 const ZLog = require("./log/zlog");
 const UserMemo = require("./users/usermemo");
 
-
-const ChatLog = require("./stream/chatlog");
-const Record = require('./stream/record')
-const Stream = require('./stream/stream')
+const ChatLog = require("./log/chatlog");
+const Record = require("./stream/record_stream");
+const Stream = require("./stream/stream");
+const LiveStreamSetting = require("./stream/stream_setting");
 
 //추가
 const Products = require("./sotre/products");
 const ProductsMemo = require("./sotre/productsmemo");
 const UserActivityLog = require("./log/useractivitylog");
 
-
 const db = {};
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
+const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  config
+);
 
 fs.readdirSync(__dirname).forEach((model) => {
   if (["index.js", "_migrations"].indexOf(model) !== -1) return;
@@ -61,7 +65,7 @@ db.ChatLog = ChatLog;
 db.Record = Record;
 db.Stream = Stream;
 db.UserActivityLog = UserActivityLog;
-
+db.LiveStreamSetting = LiveStreamSetting;
 
 ZLog.init(sequelize);
 User.init(sequelize);
@@ -77,9 +81,10 @@ Products.init(sequelize);
 ProductsMemo.init(sequelize);
 
 ChatLog.init(sequelize);
-Record.init(sequelize)
-Stream.init(sequelize)
+Record.init(sequelize);
+Stream.init(sequelize);
 UserActivityLog.init(sequelize);
+LiveStreamSetting.init(sequelize);
 
 // ZLog.associate(db);
 // User.associate(db);
@@ -90,27 +95,26 @@ UserActivityLog.init(sequelize);
 // UserToken.associate(db);
 // UserTokenLog.associate(db);
 
-
 // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 // 추가
 Products.hasMany(ProductsMemo, {
-  as: 'Memo',
-  foreignKey: 'product_id',
-  sourceKey: 'id',
-  onDelete: 'CASCADE'
-})
+  as: "Memo",
+  foreignKey: "product_id",
+  sourceKey: "id",
+  onDelete: "CASCADE",
+});
 
 User.hasOne(UserMy, {
-  as: 'usermy',
-  onDelete: 'CASCADE'
-})
+  as: "usermy",
+  onDelete: "CASCADE",
+});
 
 User.hasMany(UserMemo, {
-  as: 'usermemo',
-  foreignKey: 'user_id',
-  sourceKey: 'id',
-  onDelete: 'CASCADE'
-})
+  as: "usermemo",
+  foreignKey: "user_id",
+  sourceKey: "id",
+  onDelete: "CASCADE",
+});
 
 User.hasMany(UserPw);
 User.hasMany(UserPwCh);
@@ -118,18 +122,21 @@ User.hasMany(UserPwLog);
 User.hasMany(UserToken);
 User.hasMany(UserTokenLog);
 
+Stream.hasMany(LiveStreamSetting, {
+  foreignKey: "room_id",
+  sourceKey: 'room_id'
+});
+Stream.hasMany(Record,{
+  foreignKey: "room_id",
+  sourceKey: 'room_id'
+});
 
-Products.prototype.dateFormat = (date) => (
-  moment(date).format('YY/MM/DD HH:mm')
-);
+Products.prototype.dateFormat = (date) => moment(date).format("YY/MM/DD HH:mm");
 
-User.prototype.dateFormat = (date) => (
-  moment(date).format('YYYY-MM-DD')
-);
+User.prototype.dateFormat = (date) => moment(date).format("YYYY-MM-DD");
 
-UserMemo.prototype.dateFormat = (date) => (
-  moment(date).format('YYYY.MM.DD HH:mm')
-);
+UserMemo.prototype.dateFormat = (date) =>
+  moment(date).format("YYYY.MM.DD HH:mm");
 
 // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 

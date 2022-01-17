@@ -3,6 +3,8 @@ const express = require("express");
 const router = express.Router();
 const calls = require("./calls.ctrl");
 const { diviceCheck } = require("../../../middle/certification/middlewares");
+const multerLiveThumb = require('../../../middle/multer/multer_live_thumbnail');
+
 
 // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
@@ -17,6 +19,7 @@ router.get('/u/l', calls.output.userList)
 router.post("/broadcast", calls.process.streamer);
 router.post("/consumer", calls.process.viewer);
 router.post('/l/activeOn', calls.process.recUploads)
+router.post('/l/liveStreamSetup',multerLiveThumb.single('thumbNailImg'), calls.process.liveStreamSetup )
 
 // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 

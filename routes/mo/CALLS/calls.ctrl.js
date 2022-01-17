@@ -2,7 +2,8 @@ const Models = require("../../../models");
 const webrtc = require("wrtc");
 const {v4} = require('uuid')
 
-let senderStream;
+
+let senderStream; 
 
 // sender에서 rtpPeerConnection에 track을 add한 이후에 이 함수를 실행시켜야 한다. 아니면, 당연히 e는 없다.
 function handleTrackEvent(e, peer) {
@@ -191,6 +192,22 @@ const process = {
       console.log(err);
     }
   },
+
+  // 라이브 방송설정 정보 DB 저장
+  liveStreamSetup: async(req,res,next)=>{
+    const {filename, path } = req.file
+    const { title, hostName, shceduleOption, scheduleTime} = req.body
+
+    Models.Stream.create({
+      // streamer: ,
+      // thumbnailOrigin:,
+      // thumbnailPath : ,
+      // broadcaster : ,
+      // schedule:,
+
+    })
+    next()
+  }
 };
 
 module.exports = {
