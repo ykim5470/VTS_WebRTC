@@ -3,7 +3,7 @@
   <div class="top_nav" id="cont_hd">
     <div class="top_left">
       <div class="logo_box">
-        <a href="/main"><img src="/img/pc/vts_logo.svg" alt="EnjoyStreet로고" /></a>
+        <a href="/"><img src="/img/pc/vts_logo.svg" alt="EnjoyStreet로고" /></a>
       </div>
       <div class="menu_box">
         <ul>
@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="nav_lnb top_right">
-      <ul class="lang_box">
+      <!-- <ul class="lang_box">
         <li>
           <a href="/main" data-lang="ko"><img src="/img/pc/kr.svg" alt="korean" /></a>
         </li>
@@ -26,9 +26,10 @@
         <li>
           <a href="/main" data-lang="jp"><img src="/img/pc/jpn.svg" alt="japanese" /></a>
         </li>
-      </ul>
+      </ul> -->
       <ul class="login_box">
         {% if user %}
+        <li><a href="/call/g">라이브 관리</a></li>
         <li><a href="/auth/logout">로그아웃</a></li>
         {% else %}
         <li><a href="/guide/login">가이드 로그인</a></li>
@@ -41,7 +42,7 @@
       <span class="close_sidenav"><i class="fas fa-times"></i></span>
       <div class="cont_box">
         <p>LANGUAGE</p>
-        <ul class="lang_box">
+        <!-- <ul class="lang_box">
           <li>
             <a href="/main" data-lang="ko"><img src="/img/pc/kr.svg" alt="korean" />KOREAN</a>
           </li>
@@ -54,9 +55,10 @@
           <li>
             <a href="/main" data-lang="jp"><img src="/img/pc/jpn.svg" alt="japanese" />JAPANESE</a>
           </li>
-        </ul>
+        </ul> -->
         <ul class="login_box">
           {% if user %}
+          <li><a href="/call/g">라이브 관리</a></li>
           <li><a href="/auth/logout">로그아웃</a></li>
           {% else %}
           <li><a href="/guide/login">가이드 로그인</a></li>
