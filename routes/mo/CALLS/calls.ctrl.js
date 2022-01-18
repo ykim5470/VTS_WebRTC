@@ -1,44 +1,51 @@
 const Models = require("../../../models");
 const webrtc = require("wrtc");
-const {v4} = require('uuid')
+const { v4 } = require("uuid");
 
-
-let senderStream; 
+let senderStream;
 
 // sender에서 rtpPeerConnection에 track을 add한 이후에 이 함수를 실행시켜야 한다. 아니면, 당연히 e는 없다.
 function handleTrackEvent(e, peer) {
-  console.log(e)
+  console.log(e);
   senderStream = e.streams[0];
 }
 
 const output = {
-  stream: async (req, res) => {
+  stream: async (req, res, next) => {
+
+    // 스트림 방 아이디
+    const {room_id} = req.query
     const chats = await Models.ChatLog.findAll({
       where: {
-        room: "test",
-      },
-    });
-    const streamer = req.user.nick
-    res.render("common/mo/calls/sender.html", { chats, streamer });
+        room: room_id
+      }
+    })
+
+    await res.render("common/mo/calls/sender.html", {chats});
   },
 
   view: async (req, res) => {
+    // 스트림 방 아이디
+    const {room_id} = req.query
     const chats = await Models.ChatLog.findAll({
       where: {
-        room: "test",
-      },
-    });
-
-    const likeCount = await Models.UserActivityLog.findAll({
-      attributes:['likeAction']
-    }).then(result =>{ 
-      return result.length
+        room: room_id
+      }
     })
 
-    const default_name = v4().slice(0,3)
+    const likeCount = await Models.UserActivityLog.findAll({
+      attributes: ["likeAction"],
+    }).then((result) => {
+      return result.length;
+    });
 
+    const default_name = v4().slice(0, 3);
 
-    res.render("common/mo/calls/viewer.html", { chats,default_name, likeCount });
+    res.render("common/mo/calls/viewer.html", {
+      chats,
+      default_name,
+      likeCount,
+    });
   },
 
   recView: async (req, res) => {
@@ -64,13 +71,10 @@ const output = {
   list: async (req, res) => {
     try {
       const recMetaData = await Models.Record.findAll({
-        where: {
-          streamer: req.user.nick,
-        },
       }).then((result) => {
         return JSON.parse(JSON.stringify(result));
       });
-      res.render("common/mo/calls/list.html", { sources: recMetaData, nickname: req.user.nick });
+      res.render("common/mo/calls/list.html", {sources: recMetaData, nickname: req.user.nick });
     } catch (err) {
       console.log(err);
     }
@@ -78,18 +82,23 @@ const output = {
 
   userList: async (req, res) => {
     try {
-      const recMetaData = await Models.Record.findAll({
-        where: {
-          streamer: req.user.nick,
-          uploaded: 1,
-        },
-      }).then((result) => {
-        return JSON.parse(JSON.stringify(result));
-      });
-      res.render("common/mo/calls/userList.html", {
-        sources: recMetaData,
-        user: req.user.nick,
-      });
+      // 라이브 방송 정보
+      const streamMetaData = await Models.Stream.findOne({
+        order: [['createdAt', "DESC"]]
+      }).then(
+        async(result) => {
+         return await Models.LiveStreamSetting.findOne({
+            where: {room_id : result.room_id}
+          }).then(settingData =>{
+            return settingData
+          })  
+        }
+      )
+
+      // const {thumb_nail_origin, host_nickname, category, title } = streamMetaData
+      
+      console.log(streamMetaData.thumb_nail_origin)
+      res.render("common/mo/calls/userList.html", {streamMetaData: streamMetaData});
     } catch (err) {
       console.log(err);
     }
@@ -118,15 +127,15 @@ const process = {
       ],
     });
 
-    console.log('영상 정보가 담긴 sdp를 가지고 peer 연결')
-    console.log(peer)
+    console.log("영상 정보가 담긴 sdp를 가지고 peer 연결");
+    // console.log(peer);
     peer.ontrack = (e) => handleTrackEvent(e, peer);
     const desc = new webrtc.RTCSessionDescription(body.sdp);
     await peer.setRemoteDescription(desc);
     const answer = await peer.createAnswer();
     await peer.setLocalDescription(answer);
-    console.log('peer에 SDP를 저장 완료')
-    console.log(peer.localDescription)
+    console.log("peer에 SDP를 저장 완료");
+    console.log(peer.localDescription);
     const payload = {
       sdp: peer.localDescription,
     };
@@ -158,12 +167,14 @@ const process = {
       const desc = new webrtc.RTCSessionDescription(body.sdp);
       await peer.setRemoteDescription(desc);
       // console.log(senderStream)
-      if(senderStream !== undefined){
+      if (senderStream !== undefined) {
         senderStream
-        .getTracks()
-        .forEach((track) => peer.addTrack(track, senderStream));
-      }else{
-        console.log('현재 스트림 방송 peer 연결 불가능. 보통은 view 페이지만 따로 새로고침 한 경우')
+          .getTracks()
+          .forEach((track) => peer.addTrack(track, senderStream));
+      } else {
+        console.log(
+          "현재 스트림 방송 peer 연결 불가능. 보통은 view 페이지만 따로 새로고침 한 경우"
+        );
       }
       const answer = await peer.createAnswer();
       await peer.setLocalDescription(answer);
@@ -193,21 +204,31 @@ const process = {
     }
   },
 
-  // 라이브 방송설정 정보 DB 저장
-  liveStreamSetup: async(req,res,next)=>{
-    const {filename, path } = req.file
-    const { title, hostName, shceduleOption, scheduleTime} = req.body
+  // 라이브 방송설정 정보 DB 저장 후 라이브 방송 페이지 이동
+  liveStreamSetup: async (req, res, next) => {
+    console.log(req.file);
+    console.log("=================");
+    console.log(req.body);
+    const { filename, path } = req.file;
+    const { title, room_id, host_nickname, broad_schedule, category } =
+      req.body;
 
-    Models.Stream.create({
-      // streamer: ,
-      // thumbnailOrigin:,
-      // thumbnailPath : ,
-      // broadcaster : ,
-      // schedule:,
+    await Models.LiveStreamSetting.create({
+      room_id: room_id,
+      thumb_nail_origin: filename,
+      thumb_nail_path: path,
+      host_nickname: host_nickname,
+      broad_schedule: broad_schedule,
+      category: category,
+      title: title,
+    });
+    var status = {
+      status: 200,
+      message : 'success'
+    }
 
-    })
-    next()
-  }
+    return res.end(JSON.stringify(status))
+  },
 };
 
 module.exports = {

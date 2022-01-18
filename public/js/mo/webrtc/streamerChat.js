@@ -2,7 +2,7 @@
 const socketChat = io();
 
 const nickname = document.querySelector("#nickname");
-const prefixNickname = document.querySelector('#prefixNickname')
+// const prefixNickname = document.querySelector('#prefixNickname')
 const chatList = document.querySelector(".chatting-list");
 const chatInput = document.querySelector(".chatting-input");
 const sendButton = document.querySelector(".send-button");
@@ -18,7 +18,6 @@ sendButton.addEventListener("click", () => {
   const param = {
     name:  nickname.value,
     msg: chatInput.value,
-    prefix:  prefixNickname.value,
     room: room_id  
   };
 
@@ -45,13 +44,13 @@ sendButton.addEventListener("click", () => {
 socketChat.on("chatting", (chatData) => {
   const li = document.createElement("li");
   // li.innerText = ` ${chatData.name}  ${chatData.msg}`
-  if (chatData.prefix === undefined){
+//   li.innerHTML =`<b>` + `${chatData.name}` + `</b>` + `${chatData.msg}`;
+if (chatData.prefix === undefined){
     
     li.innerHTML =`<b>` + `${chatData.name}` + `</b>` + `${chatData.msg}`;
   }else{
     li.innerHTML =`<b>` + `${chatData.prefix}` + `</b>` + `<b>` + `${chatData.name}` + `</b>` + `${chatData.msg}`;
   }
-
   chatList.appendChild(li);
   chatInput.value = ""; //채팅 전송 후 기존 작성 내용 초기화 하는 코드
   console.log(chatData);

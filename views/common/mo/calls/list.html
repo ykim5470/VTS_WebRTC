@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>list</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script lang="text/javascript" src="/socket.io/socket.io.js"></script>
   <script src='/js/mo/webrtc/adapter.js'></script>
 </head>
@@ -13,59 +14,58 @@
 <body>
   Enjoy Street Live
   <br>
+  <input id='hostName' value={{nickname}} hidden />
   <span>{{nickname}} 가이드</span>
   <br>
   <button id='liveStreamStartBtn'>Live Stream 방송 시작</button>
 
   <!-- 라이브 방송설정 모달 시작-->
-  <form class='liveSetupModal' action='/call/l/liveStreamSetup' method='post'  enctype="multipart/form-data">
-    <div style='border-color: red; border-style: solid; size: 2px;' class='liveStreamSettingModal'>
-      라이브 방송설정
-      <div>--------------------------</div>
-      <div class='thumNailInput'>
-        방송 사진(썸네일) <input type='file' name='thumbNailImg' />
-      </div>
-      <br>
-      <div class='streamTitle'>
-        방송 제목 <input type='text' name='title' />
-      </div>
-      <br>
-
-      <div class='streamHostNickName'>
-        방송 진행자 <input type='text' name='hostName' />
-      </div>
-      <br>
-
-      <div class='broadcastOptionCheck'>
-        <input type='checkbox' name='scheduleOption'>방송종류 후 즉시 공개하기
-      </div>
-      <br>
-
-      <div>------- 방송공개일 설정 -------</div>
-      등록일
-      예정시간
-      <input class='schedule' name='scheduleTime' />
-      <div>
-        <br>
-        <button class='setupCancel'>취소</button>
-        <button class='setupDone'>시작</button>
-      </div>
+  <!-- <form class='liveSetupModal' action='/call/l/liveStreamSetup' method='post'  enctype="multipart/form-data"> -->
+  <div style='border-color: red; border-style: solid; size: 2px;' class='liveStreamSettingModal'>
+    라이브 방송설정
+    <div>--------------------------</div>
+    <div class='thumNailInput'>
+      방송 사진(썸네일) <input type='file' id='thumbNailImg' name='thumbNailImg' />
     </div>
-  </form>
+    <br>
+    <div class='streamTitle'>
+      방송 제목 <input type='text' id='title' name='title' />
+    </div>
+    <br>
+
+    <div class='streamHostNickName'>
+      방송 진행자 <input type='text' id='hostNickName' name='hostNickName' />
+    </div>
+    <br>
+
+    <div class='broadcastOptionCheck'>
+      <input type='checkbox' id='scheduleOption' name='scheduleOption'>방송종류 후 즉시 공개하기
+    </div>
+    <br>
+
+    <div>------- 방송공개일 설정 -------</div>
+    등록일
+    예정시간
+    <input class='schedule' id='scheduleTime' name='scheduleTime' />
+    <div>
+      <br>
+      <button class='setupCancel'>취소</button>
+      <button class='setupDone'>시작</button>
+    </div>
+  </div>
+  <!-- </form> -->
 
   <!-- 라이브 방송설정 모달 끝-->
 
 
 
-  <div>
+  <!-- <div>
     {% for el in sources %}
     <table>
       <th>
         {{el.id}}
       <td>
-        <a href='/call/u/rec?resource={{el.filename}}'><video width="300" , height="300" src='/uploads/{{el.filename}}'
-            playsinline muted>
-          </video></a>
+        <img width="300"  height="300" src='/uploads/GUIDE/streaming/record/thumbnailSource/{{el.thumb_nail_origin}}'/>
       </td>
       <td>
         {% if el.uploaded == 1 %}
@@ -92,8 +92,37 @@
 
     </table>
     {% endfor %}
+  </div> -->
+
+
+  <div>
+    {% for el in sources%}
+    {% if el.upload_status === '0' %}
+    <!-- 비활성화  콘텐츠 -->
+    <div class='wrapper' style=" border-style: solid; size: 2px;  border-color: blue;">
+      {{el.id}}
+      <input class='recSourceCheckbox' type='checkbox' />
+      <img width='200' height='200' src='/uploads/GUIDE/streaming/record/thumbnailSource/{{el.thumb_nail_origin}}' />
+      <div class='recSourceTitle'>방송제목: {{el.title}}</div>
+      <div class='recSourceCreatedAt'>등록일자: {{el.createdAt}}</div>
+      <div class='recSourceScheduled'>예정시간: {{el.broad_schedule}}</div>
+      <button>현재 비활성화 상태임</button>
+      <button>수정</button>
+    </div>
+    {% else %}
+    <!-- 활성화  콘텐츠 -->
+    <div class='wrapper' style=" border-style: solid; size: 2px;  border-color: blue;">
+      {{el.id}}
+      <input class='recSourceCheckbox' type='checkbox' />
+      <img width='200' height='200' src='/uploads/GUIDE/streaming/record/thumbnailSource/{{el.thumb_nail_origin}}' />
+      <div class='recSourceTitle'>방송제목: {{el.title}}</div>
+      <div class='recSourceCreatedAt'>등록일자: {{el.createdAt}}</div>
+      <div class='recSourceScheduled'>예정시간: {{el.broad_schedule}}</div>
+      <button>수정</button>
+    </div>
+    {% endif %}
+    {% endfor %}
   </div>
-  <div id="demo"></div>
   <script src="/js/mo/webrtc/list.js"></script>
 </body>
 

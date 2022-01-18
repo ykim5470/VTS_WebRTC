@@ -9,8 +9,9 @@ $(function(){
   $(".on_main video").on('click',function(){
     $("section").toggleClass("only_video")
   })
-  $(".like").on('click',function(){
-    socket.emit('like-clicked')
+  $(".like").on('click',()=>{
+    const { room_id } = getUrlParams();
+    socket.emit('like-clicked', room_id)
   })
   socketChat.on('like-count-total', async(data)=>{
     const likeCount = data

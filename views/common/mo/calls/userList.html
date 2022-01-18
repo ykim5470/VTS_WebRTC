@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{user}}사용자 방 참여 페이지</title>
-  </head>
-  <body>
-    {{user}} 사용자 방 참여 페이지 
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>사용자 방 참여 페이지</title>
+</head>
+
+<body>
+
+  <section class='liveItems'>
+    <a href='https://localhost:4000/call/u?room_id={{streamMetaData.room_id}}'>
+      <img width='300' height='300'
+        src='../../../../uploads/GUIDE/streaming/live/thumbnailSource/{{streamMetaData.thumb_nail_origin}}' />
+    </a>
+    <div>
+      {{streamMetaData.title}}
+    </div>
+  </section>
+
+
+  <!-- {{user}} 사용자 방 참여 페이지 
     
     <section class='liveItems'> 
         <div>https://localhost:4000/call/u</div>
@@ -30,6 +44,7 @@
     {% endfor %}
     <section class='preItems'>
 
-    </section>
-  </body>
+    </section> -->
+</body>
+
 </html>

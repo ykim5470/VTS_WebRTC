@@ -6,6 +6,20 @@ const socket = io();
 let mediaRecorder;
 let recordedBlobs;
 
+// 페이지 고유 room_id query string GET
+const getUrlParams = () => {
+  var params = {};
+
+  window.location.search.replace(
+    /[?&]+([^=&]+)=([^&]*)/gi,
+    function (str, key, value) {
+      params[key] = value;
+    }
+  );
+
+  return params;
+};
+
 //stream 시작 시 streamer의 미디어기기 접근 후 peer 생성
 async function start() {
   const stream = await navigator.mediaDevices.getUserMedia({
@@ -17,7 +31,7 @@ async function start() {
     },
   });
 
-  console.log(stream)
+  console.log(stream);
   const vid = document.querySelector("#video");
   vid.muted = true;
   vid.srcObject = stream;
@@ -46,18 +60,27 @@ async function start() {
     var file = new File([blob], "testOne");
     console.log(file);
     console.log(file.size);
-    var streamer = document.getElementsByTagName('title')[0].innerHTML.split(' ')[0]
+    var streamer = document
+      .getElementsByTagName("title")[0]
+      .innerHTML.split(" ")[0];
+    const { room_id } = getUrlParams();
     // console.log('--------------')
     // console.log(streamer)
     // 녹화 파일 정보 및 스트리머 이름 서버에 SEND
-    socket.emit("sendFile", { file: file, fileSize: file.size, streamer: streamer });
+    socket.emit("sendFile", {
+      file: file,
+      fileSize: file.size,
+      roomId: room_id
+    });
   });
 
   //신규 peer 생성 후 스트림 진행
-  const peer = await createPeer().then(result => {return result});
-  console.log('-----------1')
-  console.log(peer)
-  stream.getTracks().forEach((track) => peer.addTrack(track, stream)); 
+  const peer = await createPeer().then((result) => {
+    return result;
+  });
+  console.log("-----------1");
+  console.log(peer);
+  stream.getTracks().forEach((track) => peer.addTrack(track, stream));
 }
 
 // 녹화 옵션 추가
@@ -75,7 +98,6 @@ async function handleSuccess(stream) {
       document.querySelector("#codecPreferences").disabled = false;
       document.querySelector("#codecPreferences").appendChild(option);
     });
-
   } catch (error) {
     console.log(error);
   }
@@ -155,7 +177,7 @@ async function createPeer() {
       },
     ],
   });
-  peer.onnegotiationneeded = async() => await handleNegotiation(peer);
+  peer.onnegotiationneeded = async () => await handleNegotiation(peer);
   return peer;
 }
 
@@ -168,9 +190,10 @@ async function handleNegotiation(peer) {
   };
 
   const { data } = await axios.post("/call/broadcast", payload);
+  console.log(data.sdp)
   const desc = new RTCSessionDescription(data.sdp);
-  console.log('이건 Peer에 sdp 저장한 후 세션에 저장할 sdp 상세 정보')
-  console.log(desc)
+  console.log("이건 Peer에 sdp 저장한 후 세션에 저장할 sdp 상세 정보");
+  // console.log(desc);
   await peer.setRemoteDescription(desc).catch((e) => console.log(e));
 }
 
@@ -181,7 +204,9 @@ async function handleNegotiation(peer) {
 //view 시작 시 viewer의 미디어기기 접근 후 peer 생성
 //zoom 방식이 아닌 peer 연결 후 recive only로 진행
 async function view() {
-  const peer = await createPeerC().then(result => {return result});
+  const peer = await createPeerC().then((result) => {
+    return result;
+  });
   peer.addTransceiver("video", { direction: "recvonly" });
   peer.addTransceiver("audio", { direction: "recvonly" });
 }
@@ -206,12 +231,12 @@ async function createPeerC() {
       },
     ],
   });
-  console.log('사용자가 보는 peer는 스트리머가 보는 생성한 peer랑 같은 걸까?') // 다르다
-  console.log(peer) 
+  console.log("사용자가 보는 peer는 스트리머가 보는 생성한 peer랑 같은 걸까?"); // 다르다
+  console.log(peer);
   peer.ontrack = handlerTrack; // rtp peer connection에 track이 추가 되었을 경우 실행할 것 정함. 즉, track에 추가 되면 hanlderTrack을 실행시킬 것
   // peer.ontrack = (e) => console.log(e)
-  
-  peer.onnegotiationneeded = async() => await handleNegotiationC(peer); // rtp peer connection instance에 뭔가 event가 생기면 발생. 보통은 track이 추가되는 이벤트면 실행.
+
+  peer.onnegotiationneeded = async () => await handleNegotiationC(peer); // rtp peer connection instance에 뭔가 event가 생기면 발생. 보통은 track이 추가되는 이벤트면 실행.
 
   return peer;
 }
@@ -231,7 +256,7 @@ async function handleNegotiationC(peer) {
 
 //viewer 화면에 streamer의 방송을 보여주는 코드
 function handlerTrack(e) {
-  console.log('------------------------------')
-  console.log(e.streams[0])
+  console.log("------------------------------");
+  console.log(e.streams[0]);
   document.getElementById("videos").srcObject = e.streams[0];
 }

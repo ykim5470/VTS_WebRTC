@@ -1,3 +1,4 @@
+const { UUIDV4 } = require("sequelize");
 const Sequelize = require("sequelize");
 
 module.exports = class Stream extends Sequelize.Model {
@@ -5,8 +6,9 @@ module.exports = class Stream extends Sequelize.Model {
     return super.init(
       {
         id: {
-          type: Sequelize.INTEGER,
-          allowNull: true
+          type: Sequelize.STRING,
+          allowNull: false,
+          defaultValue: UUIDV4
         },
         room_id: {
           type: Sequelize.STRING,

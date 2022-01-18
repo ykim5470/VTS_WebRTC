@@ -19,8 +19,8 @@ module.exports = class ChatLog extends Sequelize.Model {
           allowNull: true,
         },
         room: {
-          type: Sequelize.STRING(10),
-          defaultValue: "test",
+          type: Sequelize.STRING,
+          allowNull: false
         },
         name: {
           type: Sequelize.STRING(40),
