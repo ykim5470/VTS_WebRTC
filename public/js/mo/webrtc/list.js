@@ -131,7 +131,7 @@ recSourceDeleteBoxList.map((el, idx) => {
 
 /* ================= 녹화 콘텐츠 정보 셋업 =================*/
 const recStreamSettingModal = document.querySelector('#recStreamSettingModal')
-
+  
 
 
 

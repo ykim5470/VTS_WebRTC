@@ -136,7 +136,7 @@ const process = {
     const answer = await peer.createAnswer();
     await peer.setLocalDescription(answer);
     console.log("peer에 SDP를 저장 완료");
-    console.log(peer.localDescription);
+    // console.log(peer.localDescription);
     const payload = {
       sdp: peer.localDescription,
     };

@@ -60,12 +60,9 @@ async function start() {
     var file = new File([blob], "testOne");
     console.log(file);
     console.log(file.size);
-    var streamer = document
-      .getElementsByTagName("title")[0]
-      .innerHTML.split(" ")[0];
+
     const { room_id } = getUrlParams();
-    // console.log('--------------')
-    // console.log(streamer)
+
     // 녹화 파일 정보 및 스트리머 이름 서버에 SEND
     socket.emit("sendFile", {
       file: file,
@@ -233,8 +230,18 @@ async function createPeerC() {
   });
   console.log("사용자가 보는 peer는 스트리머가 보는 생성한 peer랑 같은 걸까?"); // 다르다
   console.log(peer);
+
   peer.ontrack = handlerTrack; // rtp peer connection에 track이 추가 되었을 경우 실행할 것 정함. 즉, track에 추가 되면 hanlderTrack을 실행시킬 것
   // peer.ontrack = (e) => console.log(e)
+
+ 
+
+
+  peer.oniceconnectionstatechange = (e)=>{
+    console.log(e)
+    console.log('ICE connection 상태가 변화했습니다.')
+    // console.log('Disconnection')
+  }
 
   peer.onnegotiationneeded = async () => await handleNegotiationC(peer); // rtp peer connection instance에 뭔가 event가 생기면 발생. 보통은 track이 추가되는 이벤트면 실행.
 
@@ -257,6 +264,7 @@ async function handleNegotiationC(peer) {
 //viewer 화면에 streamer의 방송을 보여주는 코드
 function handlerTrack(e) {
   console.log("------------------------------");
+  console.log(e)
   console.log(e.streams[0]);
   document.getElementById("videos").srcObject = e.streams[0];
 }
