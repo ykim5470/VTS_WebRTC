@@ -1,44 +1,14 @@
 
+
+/* ================= 라이브 방 생성 =================*/
 const socket = io();
-const tempScheduleTime = document.querySelectorAll(".schedule");
-const liveStreamStartBtn = document.querySelector("#liveStreamStartBtn");
-const liveStreamSettingModal = document.querySelector(
-  ".liveStreamSettingModal"
-);
-const setupCancel = document.querySelector(".setupCancel");
-
-const currentTime = Date.now();
-
-const scheduleArr = Array.from(tempScheduleTime);
-scheduleArr.map((el) => {
-  el.value = currentTime + 50000; // 50,000 ms = 50 sec
-});
-
-// 라이브방송 설정 모달 Show
-const modalStart = () => {
-  liveStreamSettingModal.hidden = false;
-};
-// 라이브방송 설정 모달 Close
-const modalClose = () => {
-  liveStreamSettingModal.hidden = true;
-};
-
-// 라이브방송 시작 버튼 클릭
-liveStreamStartBtn.addEventListener("click", () => {
-  modalStart();
-  modalClose();
-});
-
-/*========================== */
 const setupDone = document.querySelector(".setupDone");
-
 const hostNickName = document.querySelector("#hostNickName");
 const thumbNailImg = document.querySelector("#thumbNailImg");
 const title = document.querySelector("#title");
 const scheduleOption = document.querySelector("#scheduleOption");
 const scheduleTime = document.querySelector("#scheduleTime");
-
-// 방 생성 요청
+// 라이브 방 생성 요청
 setupDone.addEventListener("click", () => {
   try {
     if (
@@ -58,7 +28,7 @@ setupDone.addEventListener("click", () => {
   }
 });
 
-// 방송 정보 설정 Client 에러 체크
+// 라이브 방송 정보 설정 Client 에러 체크
 const setupInfoCheck = (img, title, name, option, date) => {
   const pass = true;
   // 썸네일 업로드 여부
@@ -85,49 +55,97 @@ const setupInfoCheck = (img, title, name, option, date) => {
   }
 };
 
-// 방송 정보 셋업
+// 라이브 방송 정보 셋업
 socket.on("room setup request", async (data) => {
   try {
     const { room_id } = data;
     console.log(room_id);
 
     var formData = new FormData();
-    formData.append('room_id', room_id)
-    formData.append('thumbNailImg', thumbNailImg.files[0])
-    formData.append('host_nickname',hostNickName.value )
-    formData.append('broad_schedule',scheduleTime.value )
-    formData.append('category', '쇼핑')
-    formData.append('title', title.value)
-
-    // const setupInfo = {
-    //   thumbNailImg: thumbNailImg.files[0],
-    //   room_id: room_id,
-    //   host_nickname: hostNickName.value,
-    //   broad_schedule: scheduleTime.value,
-    //   category: "쇼핑",
-    //   title: title.value,
-    // };
-
-    // formData = {...setupInfo };
-    // console.log(formData);
+    formData.append("room_id", room_id);
+    formData.append("thumbNailImg", thumbNailImg.files[0]);
+    formData.append("host_nickname", hostNickName.value);
+    formData.append("broad_schedule", scheduleTime.value);
+    formData.append("category", "쇼핑");
+    formData.append("title", title.value);
 
     const url = "/call/l/liveStreamSetup";
     const headers = {
       "Content-Type": "multipart/form-data",
     };
 
-    return await axios.post(url, formData, headers).then(
-      res => {
-        const {status} = res.data
-        console.log(status)
-        if(status === 200){
-          window.location.replace(`/call/g?room_id=${room_id}`)
-        }
+    return await axios.post(url, formData, headers).then((res) => {
+      const { status } = res.data;
+      console.log(status);
+      if (status === 200) {
+        window.location.replace(`/call/g?room_id=${room_id}`);
       }
-    );
-   
-  
+    });
   } catch (err) {
     console.log(err);
   }
 });
+
+/* ================= 녹화 콘텐츠 삭제 =================*/
+// 녹화 영상 삭제 기능
+const recSourceDeleteBox = document.querySelectorAll(".recSourceCheckbox");
+
+const recSourceDeleteBoxList = Array.from(recSourceDeleteBox);
+
+const deleteItemList = new Array();
+
+// 녹화 영상 삭제 Request
+const contentDelet = (el) => {
+  el.addEventListener("click", (e) => {
+    const recId = el.value;
+    // 최초 단일 선택
+    if (e.target.checked && deleteItemList.length === 0) {
+      deleteItemList.push(recId);
+    }
+    // 다른 아이템 선택 replace
+    else if (e.target.checked && deleteItemList.length !== 0) {
+      deleteItemList.shift();
+      deleteItemList.push(recId);
+    }
+
+    // 콘텐츠 삭제 및 새로고침
+    document
+      .querySelector("#deleteContentBtn")
+      .addEventListener("click", () => {
+        if (deleteItemList.length !== 0) {
+          fetch(`/call/rec/delete/${deleteItemList[0]}`, {
+            method: "DELETE",
+          }).then((res) => {
+            if (res.status === 200) {
+              window.location.replace("/call/l");
+            }
+          });
+        }
+      });
+  });
+};
+
+recSourceDeleteBoxList.map((el, idx) => {
+  contentDelet(el);
+});
+
+/* ================= 녹화 콘텐츠 정보 셋업 =================*/
+const recStreamSettingModal = document.querySelector('#recStreamSettingModal')
+
+
+
+
+/* ================= 녹화 콘텐츠 정보 업데이트 =================*/
+const updateContentBtn = document.querySelectorAll('.updateContentBtn')
+
+const updateContentBtnList = Array.from(updateContentBtn)
+
+// 녹화 콘텐츠 정보 수정
+updateContentBtnList.map(el =>{
+  el.addEventListener('click', (e)=>{
+    const updateContentId = e.target.value
+    console.log(updateContentId)
+
+  })
+})
+

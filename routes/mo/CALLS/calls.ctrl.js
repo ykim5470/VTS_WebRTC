@@ -12,26 +12,25 @@ function handleTrackEvent(e, peer) {
 
 const output = {
   stream: async (req, res, next) => {
-
     // 스트림 방 아이디
-    const {room_id} = req.query
+    const { room_id } = req.query;
     const chats = await Models.ChatLog.findAll({
       where: {
-        room: room_id
-      }
-    })
+        room: room_id,
+      },
+    });
 
-    await res.render("common/mo/calls/sender.html", {chats});
+    await res.render("common/mo/calls/sender.html", { chats });
   },
 
   view: async (req, res) => {
     // 스트림 방 아이디
-    const {room_id} = req.query
+    const { room_id } = req.query;
     const chats = await Models.ChatLog.findAll({
       where: {
-        room: room_id
-      }
-    })
+        room: room_id,
+      },
+    });
 
     const likeCount = await Models.UserActivityLog.findAll({
       attributes: ["likeAction"],
@@ -70,11 +69,13 @@ const output = {
 
   list: async (req, res) => {
     try {
-      const recMetaData = await Models.Record.findAll({
-      }).then((result) => {
+      const recMetaData = await Models.Record.findAll({}).then((result) => {
         return JSON.parse(JSON.stringify(result));
       });
-      res.render("common/mo/calls/list.html", {sources: recMetaData, nickname: req.user.nick });
+      res.render("common/mo/calls/list.html", {
+        sources: recMetaData,
+        nickname: req.user.nick,
+      });
     } catch (err) {
       console.log(err);
     }
@@ -84,21 +85,21 @@ const output = {
     try {
       // 라이브 방송 정보
       const streamMetaData = await Models.Stream.findOne({
-        order: [['createdAt', "DESC"]]
-      }).then(
-        async(result) => {
-         return await Models.LiveStreamSetting.findOne({
-            where: {room_id : result.room_id}
-          }).then(settingData =>{
-            return settingData
-          })  
-        }
-      )
+        order: [["createdAt", "DESC"]],
+      }).then(async (result) => {
+        return await Models.LiveStreamSetting.findOne({
+          where: { room_id: result.room_id },
+        }).then((settingData) => {
+          return settingData;
+        });
+      });
 
       // const {thumb_nail_origin, host_nickname, category, title } = streamMetaData
-      
-      console.log(streamMetaData.thumb_nail_origin)
-      res.render("common/mo/calls/userList.html", {streamMetaData: streamMetaData});
+
+      console.log(streamMetaData.thumb_nail_origin);
+      res.render("common/mo/calls/userList.html", {
+        streamMetaData: streamMetaData,
+      });
     } catch (err) {
       console.log(err);
     }
@@ -224,10 +225,26 @@ const process = {
     });
     var status = {
       status: 200,
-      message : 'success'
-    }
+      message: "success",
+    };
 
-    return res.end(JSON.stringify(status))
+    return res.end(JSON.stringify(status));
+  },
+
+  // 가이드 관리 페이지 녹화 콘텐츠 단일 삭제 
+  recMediaDelete: async (req, res) => {
+    const recId = req.params.id;
+    await Models.Record.destroy({
+      where: { id: recId },
+    }).then(() => {
+      console.log(`${recId} 삭제 성공`);
+      return res.end(
+        JSON.stringify({
+          status: 200,
+          message: "Delete success",
+        })
+      );
+    });
   },
 };
 
