@@ -11,6 +11,7 @@ const scheduleTime = document.querySelector("#scheduleTime");
 // 라이브 방 생성 요청
 setupDone.addEventListener("click", () => {
   try {
+    // 방 설정 이상 체크
     if (
       setupInfoCheck(
         thumbNailImg.value,

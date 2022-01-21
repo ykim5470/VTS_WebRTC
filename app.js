@@ -11,7 +11,7 @@ const nunjucks = require("nunjucks");
 const passport = require("passport");
 const path = require("path");
 var requestIp = require("request-ip");
-const axios = require('axios')
+const axios = require("axios");
 
 dotenv.config();
 const indexRouter = require("./routes/index");
@@ -119,19 +119,18 @@ app.use((req, res, next) => {
 async function chatLogUpdate(chatData) {
   const name = chatData.name;
   const msg = chatData.msg;
-  const prefix = chatData.prefix
-  const room_id = chatData.room
-  console.log('이건?')
+  const prefix = chatData.prefix;
+  const room_id = chatData.room;
+  console.log("이건?");
 
-  console.log(room_id)
-
+  console.log(room_id);
 
   await Models.ChatLog.create({
     name: name,
     content: msg,
     prefix: prefix,
-    room : room_id,
-    userIp
+    room: room_id,
+    userIp,
   });
 }
 
@@ -139,27 +138,24 @@ async function chatLogUpdate(chatData) {
 io.on("connection", (socketChat) => {
   // 채팅 로그 업데이트 및 채팅 정보 Client emit
   socketChat.on("chatting", (chatData) => {
-
     chatLogUpdate(chatData);
     io.emit("chatting", chatData);
   });
 
   // 영상 스트리밍 좋아요 버튼 클릭 로그 처리
-  socketChat.on('like-clicked', async(room_id) =>{
+  socketChat.on("like-clicked", async (room_id) => {
     await Models.UserActivityLog.create({
       roomId: room_id,
       likeAction: 1,
-      connectIp: userIp
-    }).then(async()=>{
+      connectIp: userIp,
+    }).then(async () => {
       await Models.UserActivityLog.findAll({
-        attributes: ['likeAction']
-      }).then(likeCount => {
-        io.emit('like-count-total', likeCount.length)
-      })
-    })  
-
-  })
-
+        attributes: ["likeAction"],
+      }).then((likeCount) => {
+        io.emit("like-count-total", likeCount.length);
+      });
+    });
+  });
 
   // 녹화 blob 객체 GET 및 비디오 파일 Write & 녹화 파일 저장
   socketChat.on("sendFile", async (blob) => {
@@ -187,32 +183,41 @@ io.on("connection", (socketChat) => {
     // 녹화 파일 metadata DB 저장.
     try {
       await Models.Record.create({
-        room_id : roomId,
+        room_id: roomId,
         record_file_name: fileName,
-        file_size : fileSize,
-        upload_status: 0
-        
+        file_size: fileSize,
+        upload_status: 0,
       });
     } catch (err) {
       console.log(err);
     }
   });
 
-
   // 방 생성 요청
-  socketChat.on('room create', async(data)=>{
-    console.log('방 생성 요청')
-    console.log(socketChat.id) // 임시 소켓 ID
-    const {hostName} = data
-    console.log(hostName)
+  socketChat.on("room create", async (data) => {
+    console.log("방 생성 요청");
+    console.log(socketChat.id); // 임시 소켓 ID
+    const { hostName } = data;
+    console.log(hostName);
     await Models.Stream.create({
-      room_id : socketChat.id,
-      host_name : hostName
-    }).then(async()=>{
-      console.log('방 생성 완료')
-      await socketChat.emit('room setup request', {room_id: socketChat.id})
-    })
-  })
+      room_id: socketChat.id,
+      host_name: hostName,
+    }).then(async () => {
+      console.log("방 생성 완료");
+      await socketChat.emit('content refresh')
+      await socketChat.emit("room setup request", { room_id: socketChat.id });
+    });
+  });
+
+  // 방 종료 DB 업데이트
+  socketChat.on("room exit", async (data) => {
+    await Models.Stream.update({
+      active_status: 0,
+      where: { room_id: data.roomId },
+    }).then(() => {
+      console.log("방 종료 상태 DB 업데이트 완료");
+    });
+  });
 });
 
 app.use("/", indexRouter);
@@ -220,4 +225,3 @@ app.use("/", indexRouter);
 httpsServer.listen(app.get("port"), () => {
   console.log(`http://${process.env.SERVER_HOST}:${app.get("port")}`);
 });
-

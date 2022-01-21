@@ -44,31 +44,7 @@ async function start() {
   // 녹화 시작
   document.querySelector("#record").addEventListener("click", () => {
     const codecPreferences = document.querySelector("#codecPreferences");
-    if (document.querySelector("#record").textContent === "녹화 시작") {
-      startRecording(codecPreferences);
-    } else {
-      stopRecording();
-      document.querySelector("#record").textContent = "녹화 시작";
-      document.querySelector("#download").disabled = false;
-      codecPreferences.disabled = false;
-    }
-  });
-  // 녹화본 다운로드
-  document.querySelector("#download").addEventListener("click", () => {
-    const blob = new Blob(recordedBlobs, { type: "video/webm" });
-    // 사용자 녹화 다운 권한 확인 후, Blob -> File 변환 시작
-    var file = new File([blob], "testOne");
-    console.log(file);
-    console.log(file.size);
-
-    const { room_id } = getUrlParams();
-
-    // 녹화 파일 정보 및 스트리머 이름 서버에 SEND
-    socket.emit("sendFile", {
-      file: file,
-      fileSize: file.size,
-      roomId: room_id
-    });
+    startRecording(codecPreferences);
   });
 
   //신규 peer 생성 후 스트림 진행
@@ -78,7 +54,49 @@ async function start() {
   console.log("-----------1");
   console.log(peer);
   stream.getTracks().forEach((track) => peer.addTrack(track, stream));
+
+  exitStream();
 }
+
+// 녹화본 다운로드
+const mediaDownload = () => {
+  const blob = new Blob(recordedBlobs, { type: "video/webm" });
+  // 사용자 녹화 다운 권한 확인 후, Blob -> File 변환 시작
+  var file = new File([blob], "testOne");
+  console.log(file);
+  console.log(file.size);
+
+  const { room_id } = getUrlParams();
+
+  // 녹화 파일 정보 및 스트리머 이름 서버에 SEND
+  socket.emit("sendFile", {
+    file: file,
+    fileSize: file.size,
+    roomId: room_id,
+  });
+  return;
+};
+
+// 방송 종료
+const exitStream = async () => {
+  const exitBtn = document.querySelector("#exitBtn");
+  const { room_id } = getUrlParams();
+  exitBtn.addEventListener("click", (e) => {
+    if (mediaRecorder === undefined) {
+      console.log('영상 녹화 파일 없이 방송을 종료합니다.')
+      return;
+    } else {
+      // 자동 녹화 종료 및 다운로드
+      stopRecording();
+      codecPreferences.disabled = false;
+      mediaDownload();
+    }
+    // 방송 종료 socket event emit 및 사용자 페이지 라이브 콘텐츠 비활성화
+    socket.emit('room exit',{roomId: room_id} )
+    // 가이드 관리 페이지 이동
+    // window.location.replace('/call/l')
+  });
+};
 
 // 녹화 옵션 추가
 async function handleSuccess(stream) {
@@ -137,7 +155,7 @@ function startRecording(codecPreferences) {
 
   console.log("Created MediaRecorder", mediaRecorder, "with options", options);
   document.querySelector("#record").textContent = "녹화 중지";
-  document.querySelector("#download").disabled = true;
+  document.querySelector("#record").disabled = true;
   document.querySelector("#codecPreferences").disabled = true;
 
   mediaRecorder.onstop = (e) => {
@@ -187,7 +205,7 @@ async function handleNegotiation(peer) {
   };
 
   const { data } = await axios.post("/call/broadcast", payload);
-  console.log(data.sdp)
+  console.log(data.sdp);
   const desc = new RTCSessionDescription(data.sdp);
   console.log("이건 Peer에 sdp 저장한 후 세션에 저장할 sdp 상세 정보");
   // console.log(desc);
@@ -234,14 +252,11 @@ async function createPeerC() {
   peer.ontrack = handlerTrack; // rtp peer connection에 track이 추가 되었을 경우 실행할 것 정함. 즉, track에 추가 되면 hanlderTrack을 실행시킬 것
   // peer.ontrack = (e) => console.log(e)
 
- 
-
-
-  peer.oniceconnectionstatechange = (e)=>{
-    console.log(e)
-    console.log('ICE connection 상태가 변화했습니다.')
+  peer.oniceconnectionstatechange = (e) => {
+    console.log(e);
+    console.log("ICE connection 상태가 변화했습니다.");
     // console.log('Disconnection')
-  }
+  };
 
   peer.onnegotiationneeded = async () => await handleNegotiationC(peer); // rtp peer connection instance에 뭔가 event가 생기면 발생. 보통은 track이 추가되는 이벤트면 실행.
 
@@ -264,7 +279,7 @@ async function handleNegotiationC(peer) {
 //viewer 화면에 streamer의 방송을 보여주는 코드
 function handlerTrack(e) {
   console.log("------------------------------");
-  console.log(e)
+  console.log(e);
   console.log(e.streams[0]);
   document.getElementById("videos").srcObject = e.streams[0];
 }

@@ -18,6 +18,11 @@ module.exports = class Stream extends Sequelize.Model {
         host_name: {
           type: Sequelize.STRING,
           allowNull: false
+        },
+        active_status: {
+          type: Sequelize.ENUM('0','1'),
+          allowNull: false,
+          defaultValue: 1
         }
       },
       {

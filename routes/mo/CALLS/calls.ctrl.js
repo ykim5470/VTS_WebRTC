@@ -85,18 +85,20 @@ const output = {
     try {
       // 라이브 방송 정보
       const streamMetaData = await Models.Stream.findOne({
+        where: { active_status: 1 },
         order: [["createdAt", "DESC"]],
       }).then(async (result) => {
-        return await Models.LiveStreamSetting.findOne({
-          where: { room_id: result.room_id },
-        }).then((settingData) => {
-          return settingData;
-        });
+        if (result !== null) {
+          return await Models.LiveStreamSetting.findOne({
+            where: { room_id: result.room_id },
+          }).then((settingData) => {
+            return settingData;
+          });
+        } else {
+          return;
+        }
       });
 
-      // const {thumb_nail_origin, host_nickname, category, title } = streamMetaData
-
-      console.log(streamMetaData.thumb_nail_origin);
       res.render("common/mo/calls/userList.html", {
         streamMetaData: streamMetaData,
       });
@@ -231,7 +233,7 @@ const process = {
     return res.end(JSON.stringify(status));
   },
 
-  // 가이드 관리 페이지 녹화 콘텐츠 단일 삭제 
+  // 가이드 관리 페이지 녹화 콘텐츠 단일 삭제
   recMediaDelete: async (req, res) => {
     const recId = req.params.id;
     await Models.Record.destroy({

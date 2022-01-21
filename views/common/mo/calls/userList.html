@@ -6,10 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>사용자 방 참여 페이지</title>
+  <script lang="text/javascript" src="/socket.io/socket.io.js"></script>
+  <script src="/js/mo/webrtc/userList.js"></script>
 </head>
 
 <body>
 
+  {%if streamMetaData != undefined %}
   <section class='liveItems'>
     <a href='https://localhost:4000/call/u?room_id={{streamMetaData.room_id}}'>
       <img width='300' height='300'
@@ -19,6 +22,7 @@
       {{streamMetaData.title}}
     </div>
   </section>
+  {%endif%}
 
 
   <!-- {{user}} 사용자 방 참여 페이지 
