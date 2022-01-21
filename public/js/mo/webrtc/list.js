@@ -4,11 +4,13 @@
 const socket = io();
 const setupDone = document.querySelector(".setupDone");
 const hostNickName = document.querySelector("#hostNickName");
-const thumbNailImg = document.querySelector("#thumbNailImg");
+const thumbNailImg = document.querySelector("#photo");
 const title = document.querySelector("#title");
-const scheduleOption = document.querySelector("#scheduleOption");
-const scheduleTime = document.querySelector("#scheduleTime");
+// const scheduleOption = document.querySelector("#scheduleOption");
+// const scheduleTime = document.querySelector("#scheduleTime");
 // 라이브 방 생성 요청
+
+
 setupDone.addEventListener("click", () => {
   try {
     // 방 설정 이상 체크
@@ -17,12 +19,12 @@ setupDone.addEventListener("click", () => {
         thumbNailImg.value,
         title.value,
         hostNickName.value,
-        scheduleOption.checked,
-        scheduleTime.value
+        // scheduleOption.checked,
+        // scheduleTime.value
       )
     ) {
       console.log("다 통과");
-      socket.emit("room create", { hostName: hostName.value });
+      socket.emit("room create", { hostName: hostNickName.value });
     }
   } catch (err) {
     console.log(err);
@@ -42,18 +44,19 @@ const setupInfoCheck = (img, title, name, option, date) => {
   if (name === "") {
     throw "방송 진행자를 입력해주세요";
   }
-  if (option) {
-    console.log("체크");
-    scheduleTime.setAttribute("disabled", true);
-    return pass;
-  } else {
-    console.log("체크 안 됨");
-    scheduleTime.removeAttribute("disabled");
-    if (date.value === "") {
-      throw "등록일 예정시간을 선택해주세요";
-    }
-    return pass;
-  }
+  return pass
+  // if (option) {
+  //   console.log("체크");
+  //   scheduleTime.setAttribute("disabled", true);
+  //   return pass;
+  // } else {
+  //   console.log("체크 안 됨");
+  //   scheduleTime.removeAttribute("disabled");
+  //   if (date.value === "") {
+  //     throw "등록일 예정시간을 선택해주세요";
+  //   }
+  //   return pass;
+  // }
 };
 
 // 라이브 방송 정보 셋업
