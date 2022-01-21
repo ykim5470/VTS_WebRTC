@@ -14,7 +14,7 @@
 
   {%if streamMetaData != undefined %}
   <section class='liveItems'>
-    <a href='https://localhost:4000/call/u?room_id={{streamMetaData.room_id}}'>
+    <a href='/call/u?room_id={{streamMetaData.room_id}}'>
       <img width='300' height='300'
         src='../../../../uploads/GUIDE/streaming/live/thumbnailSource/{{streamMetaData.thumb_nail_origin}}' />
     </a>
@@ -25,30 +25,6 @@
   {%endif%}
 
 
-  <!-- {{user}} 사용자 방 참여 페이지 
-    
-    <section class='liveItems'> 
-        <div>https://localhost:4000/call/u</div>
-    </section>
-    {% for recSources in sources %}
-    <section class='recItems'> 
-      <span>제목: {{recSources.title}}</span>
-      {% if recSources.status %}
-      <span>영상 카테고리: 스트림 중 </span>
-      <a href='/call/u/rec?resource={{recSources.filename}}'><video width="300" , height="300"
-        src='/uploads/{{recSources.filename}}' playsinline muted>
-      </video></a>
-      {%else%}
-      <span>영상 카테고리: 스트림 예정 </span>
-      <video width="300" , height="300"
-        src='/uploads/{{recSources.filename}}' playsinline muted >
-      </video>
-      {% endif %}
-    </section>
-    {% endfor %}
-    <section class='preItems'>
-
-    </section> -->
 </body>
 
 </html>
