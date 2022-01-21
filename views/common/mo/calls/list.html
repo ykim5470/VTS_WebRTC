@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +8,9 @@
   <link rel="stylesheet" href="/css/mo/contents.css" />
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script lang="text/javascript" src="/socket.io/socket.io.js"></script>
+  <script src='/resource/mo/jquery.min.js'></script>
   <script src='/js/mo/webrtc/adapter.js'></script>
+  <script src='/js/mo/script.js'></script>
 </head>
 
 <body>
@@ -33,28 +34,34 @@
         {% for el in sources%}
         {% if el.upload_status === '0' %}
         <!-- 비활성화  콘텐츠 -->
-        <div class='wrapper' style=" border-style: solid; size: 2px;  border-color: blue;">
-          {{el.id}}
-          <input class='recSourceCheckbox' type='checkbox' value='{{el.id}}' />
-          <img width='200' height='200' src='/uploads/GUIDE/streaming/record/thumbnailSource/{{el.thumb_nail_origin}}' />
-          <div class='recSourceTitle'>방송제목: {{el.title}}</div>
-          <div class='recSourceCreatedAt'>등록일자: {{el.createdAt}}</div>
-          <div class='recSourceScheduled'>예정시간: {{el.broad_schedule}}</div>
-          <button>현재 비활성화 상태임</button>
-          <button class='updateContentBtn' value='{{el.id}}'>수정</button>
-
+        <div class='wrapper disable'>
+          <div class="list_box_l">
+            <span>{{el.id}}</span>
+            <input class='recSourceCheckbox' type='checkbox' value='{{el.id}}' />
+            <img src='/uploads/GUIDE/streaming/record/thumbnailSource/{{el.thumb_nail_origin}}' />
+          </div>
+          <div class="list_box_r">
+            <div class='recSourceTitle'>방송제목: {{el.title}}</div>
+            <div class='recSourceCreatedAt'>등록일자: {{el.createdAt}}</div>
+            <div class='recSourceScheduled'>예정시간: {{el.broad_schedule}}</div>
+            <p>현재 비활성화 상태임</p>
+            <button class='updateContentBtn' value='{{el.id}}'>수정</button>
+          </div>
         </div>
         {% else %}
         <!-- 활성화  콘텐츠 -->
-        <div class='wrapper' style=" border-style: solid; size: 2px;  border-color: blue;">
-          {{el.id}}
-          <input class='recSourceCheckbox' type='checkbox' />
-          <img width='200' height='200' src='/uploads/GUIDE/streaming/record/thumbnailSource/{{el.thumb_nail_origin}}' />
-          <div class='recSourceTitle'>방송제목: {{el.title}}</div>
-          <div class='recSourceCreatedAt'>등록일자: {{el.createdAt}}</div>
-          <div class='recSourceScheduled'>예정시간: {{el.broad_schedule}}</div>
-          <button class='updateContentBtn' value='{{el.id}}'>수정</button>
-
+        <div class='wrapper'>
+          <div class="list_box_l">
+            <span>{{el.id}}</span>
+            <input class='recSourceCheckbox' type='checkbox' />
+            <img src='/uploads/GUIDE/streaming/record/thumbnailSource/{{el.thumb_nail_origin}}' />
+          </div>
+          <div class="list_box_r">
+            <div class='recSourceTitle'>방송제목: {{el.title}}</div>
+            <div class='recSourceCreatedAt'>등록일자: {{el.createdAt}}</div>
+            <div class='recSourceScheduled'>예정시간: {{el.broad_schedule}}</div>
+            <button class='updateContentBtn' value='{{el.id}}'>수정</button>
+          </div>
         </div>
         {% endif %}
         {% endfor %}
@@ -62,68 +69,78 @@
     </article>
 
     <!-- 라이브 방송설정 모달 시작-->
-    <section class="modal_box modal_live">
-      <div style='border-color: red; border-style: solid; size: 2px;' class='liveStreamSettingModal'>
+    <div class="modal_box modal_live">
+      <div class='liveStreamSettingModal'>
         <h2>라이브 방송설정</h2>
-        <table class="tg">
+        <table>
           <colgroup>
-            <col style="width:50px;">
-            <col style="width:50px;">
-            <col style="width:50px;">
+            <col style="width:120px;">
+            <col style="width:calc(100% - 120px)">
           </colgroup>
-          <thead>
-            <tr>
-              <th class="tg-0pky"></th>
-              <th class="tg-0pky"></th>
-              <th class="tg-0pky"></th>
-            </tr>
-          </thead>
           <tbody>
-            <tr>
-              <td class="tg-0pky"></td>
-              <td class="tg-0pky"></td>
-              <td class="tg-0pky"></td>
+            <tr class='thumbNailInput'>
+              <td>방송 사진(썸네일)</td>
+              <td>
+                <!-- <input type='file' id='thumbNailImg' name='thumbNailImg' /> -->
+                <div class="file_box">
+                  <label for="photo">
+                    <span class="txt_hidden">사진업로드</span>
+                    <i class="fas fa-camera"></i>
+                  </label>
+                  <i class="fas fa-plus-circle"></i>
+                  <input type="file" id="photo" accept="image/*">
+                </div>
+              </td>
             </tr>
-            <tr>
-              <td class="tg-0pky"></td>
-              <td class="tg-0pky"></td>
-              <td class="tg-0pky"></td>
+            <tr class='streamTitle'>
+              <td>방송 제목</td>
+              <td><input type='text' id='title' name='title' /></td>
+            </tr>
+            <tr class='streamTitle'>
+              <td>방송 제목</td>
+              <td><input type='text' id='title' name='title' /></td>
+            </tr>
+            <tr class='streamHostNickName'>
+              <td>방송 진행자</td>
+              <td><input type='text' id='hostNickName' name='hostNickName' /></td>
             </tr>
           </tbody>
         </table>
-        <div class='thumbNailInput'>
-          방송 사진(썸네일) <input type='file' id='thumbNailImg' name='thumbNailImg' />
-        </div>
-        <br />
-        <div class='streamTitle'>
-          방송 제목 <input type='text' id='title' name='title' />
-        </div>
-        <br />
-  
-        <div class='streamHostNickName'>
-          방송 진행자 <input type='text' id='hostNickName' name='hostNickName' />
-        </div>
-        <br>
-  
-        <div class='broadcastOptionCheck'>
-          <input type='checkbox' id='scheduleOption' name='scheduleOption'>방송종류 후 즉시 공개하기
-        </div>
-        <br>
-  
-        <div>------- 방송공개일 설정 -------</div>
-        등록일
-        예정시간
-        <input class='schedule' id='scheduleTime' name='scheduleTime' />
-        <div>
-          <br>
+        <p class="warning">※ 방송제목과 방송 진행자는 일본어로 입력해 주세요.</p>
+        <table>
+          <colgroup>
+            <col style="width:120px;">
+            <col style="width:calc(100% - 120px)">
+          </colgroup>
+          <tbody>
+            <tr>
+              <td>상품카테고리</td>
+              <td>
+                <select name="itemCategory" id="itemCategory">
+                  <option value="리빙">리빙</option>
+                  <option value="뷰티">뷰티</option>
+                  <option value="식품">식품</option>
+                  <option value="패션">패션</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="modal_btn_group">
           <button class='setupCancel'>취소</button>
           <button class='setupDone'>시작</button>
         </div>
+        <!-- 확인필요 -->
+        <!-- <div class='broadcastOptionCheck'>
+          <input type='checkbox' id='scheduleOption' name='scheduleOption'>방송종류 후 즉시 공개하기
+        </div>
+        <div>------- 방송공개일 설정 -------</div>
+        등록일
+        예정시간
+        <input class='schedule' id='scheduleTime' name='scheduleTime' /> -->
       </div>
-      <div class="modal_bg"></div>
-    </section>
-  
-    <!-- <section class="modal_box modal_rec">
+    </div>
+    <div class="modal_box modal_rec">
       <div style='border-color: Yellow; border-style: solid; size: 2px;' class='recStreamSettingModal'>
         녹화 방송설정
         <div>--------------------------</div>
@@ -159,8 +176,9 @@
           <button class='setupDone'>시작</button>
         </div>
       </div>
-    </section> -->
-  </section>
+    </div>
+  </section>  
+  <div class="modal_bg"></div>
   <script src="/js/mo/webrtc/list.js"></script>
 </body>
 

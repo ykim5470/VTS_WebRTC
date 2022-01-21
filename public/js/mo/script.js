@@ -208,4 +208,26 @@ $(document).ready(function(){
     $('.st_date').text($('#stDate').val());
     $('.end_date').text($('#endDate').val());
   });
+
+  // Enjoystreet BO
+  // live stream setup
+  $("#liveStreamStartBtn").click(function(){
+    $(".modal_live, .bo_wrap").addClass("active_modal")
+  })
+  $(".modal_bg, .setupCancel, .setupDone").click(function(){
+    $(".modal_live, .bo_wrap").removeClass("active_modal")  
+  })
+  // photo
+  $('#photo').on('change', function(e){
+    var fileNameChk = e.target.files[0].name,
+        fileNameChk = fileNameChk.split('.');
+    if (fileNameChk[1] != 'heic') {
+      $('.file_box label').css('background-image','url("'+URL.createObjectURL(e.target.files[0])+'")');
+      $('.file_box label i').hide();
+      $('.item .img').css('background-image','url('+URL.createObjectURL(e.target.files[0])+')">');
+    } else {
+      alert('heic 파일은 첨부할수 없습니다');
+    }
+  });
+
 });

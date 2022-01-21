@@ -1,4 +1,4 @@
-@import "base.css";/* cooming soon */
+@charset "utf-8"; @import "base.css"; /* cooming soon */
 .coming_soon { width:100%; height: 100%; bottom: 0; position:fixed; background:rgba(0,0,0, 0.4); z-index: 9999; } 
 .coming_soon div { position: absolute; transform: translate(-50%, -50%); top: 50%; left: 50%; width: calc(100% - 40px); border-radius: 10px; font-weight: 600; line-height: 180px; background:#fff; font-size:20px; text-align:center; } 
 
@@ -876,10 +876,22 @@ span.price { display: flex; justify-content: space-between; }
 .ex_step_wrap .ex_step dd { line-height: 1.5 } 
 
 /* BO page setup */
-.bo_wrap { width: 100%; height: 100%; padding: 10px; position:relative;} 
+.bo_wrap { width: 100%; height: 100%; min-height: 550px; padding: 10px; position:relative; } 
 .bo_wrap .top_header { margin-bottom: 10px; } 
 .bo_wrap .conts_box { } 
-.bo_wrap .modal_box {position:sticky;z-index:99999999999;top:50%;left:50%;transform: translateY(-50%);margin: 50px 0;} 
+.modal_box { width: calc(100% - 40px); opacity: 0; position: absolute; z-index:-9999; top: calc(50% - 170px); left:50%; transform: translate(-50%, -50%); margin: 80px 0; transition: all .3s cubic-bezier(0.46, 0.03, 0.52, 0.96); background: #fff; padding: 15px; border-radius: 5px; } 
+.modal_box h2 { font-size: 16px; padding-bottom: 8px; border-bottom: 1px solid #ddd; margin-bottom: 8px; } 
+.modal_box p {margin-bottom:10px;}
+.modal_box table {margin-bottom: 5px;width: 100%;border-collapse: separate;border-spacing: 0px 5px;} 
+.modal_box table tr td:first-child {margin-bottom: 5px;} 
+.modal_box table tr:last-child td:first-child {margin-bottom:0px; } 
+.modal_box table input,
+.modal_box table select{line-height: 20px;width: 100%;padding: 0 5px;border: 1px solid #bbb;font-size: 13px;} 
+.modal_box table select{
+    height: 22px;
+}
+.modal_bg {display: inline-block;width:100%;height:100%;background: #000;position: fixed;top: 0;left: 0;opacity:0;z-index:-9999;} 
+.bo_wrap.active_modal + .modal_bg { opacity:.7; z-index:1; } 
 
 /* live setup list page */
 .list_header { overflow: hidden; margin-bottom: 13px; } 
@@ -887,10 +899,47 @@ span.price { display: flex; justify-content: space-between; }
 .list_header span { float: right; background: #ffcccc; font-size: 15px; font-weight: 600; line-height: 25px; padding: 0 8px; } 
 .live_btn { text-align: center; } 
 .live_btn button { border: 1px solid #fd0000; width: 100%; padding: 10px; font-size: 15px; color: #fd0000; font-weight: 600; border-radius: 5px; } 
+
+.list_conts { width: 100%; } 
 .list_conts .conts_box.de_box { text-align: right; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; } 
 .list_conts .conts_box.de_box button { background: #fd0000; color: #fff; padding: 5px 19px; border-radius: 5px; } 
-.list_conts { } 
+.list_conts .conts_box .wrapper { overflow: hidden; } 
+.list_conts .conts_box .wrapper.disable { overflow: hidden; background: #f5f5f5; } 
+.list_conts .conts_box .wrapper > div { padding: 5px; position: relative; } 
+.list_conts .conts_box .list_box_l { float: left; width: 160px; } 
+.list_conts .conts_box .list_box_l > span { display: none; } 
+.list_conts .conts_box .list_box_l > input[type="checkbox"] { position: absolute; left: 0px; top: 0px; } 
+.list_conts .conts_box .list_box_l > img { width: 150px; height: 200px; } 
+.list_conts .conts_box .list_box_r { float: right; width: calc(100% - 160px); height: 210px; display: flex; gap: 10px; flex-direction: column; } 
+.list_conts .conts_box .list_box_r > div { font-size: 14px; } 
+.list_conts .conts_box .list_box_r > p { margin-top: auto; line-height: 35px; text-align: center; border: 1px solid #bbb; border-radius: 5px; background: #ddd; font-size: 15px; } 
+.list_conts .conts_box .list_box_r > button { font-size: 15px; margin-top: -3px; width: 100%; height: 35px; border: 1px solid #bbb; background: #fff; border-radius: 5px; } 
 
+.modal_btn_group{
+    gap: 0 10px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.modal_btn_group > button,
+.modal_btn_group > input[type="button"]{
+    flex: 1;
+    border: 1px solid #555;
+    border-radius: 5px;
+    line-height: 25px;
+}
+
+.setupCancel{}
+.setupDone{
+    border: 1px solid #fd0000 !important;
+    background: #fd0000;
+    color: #fff;
+}
+
+.modal_live { } 
+.modal_live.active_modal { opacity:1; z-index:999; } 
 
 @media (max-width:380px){
  .on_air_in .on_header .logo { width: auto; } 
