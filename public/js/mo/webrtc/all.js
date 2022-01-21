@@ -251,6 +251,11 @@ async function createPeerC() {
     console.log("fuck")
   }else {console.log("배고프다")}
 
+  // 가이드가 방을 종료했을 경우 알림
+  socket.on('room closed notification to viewer', ()=>{
+    console.log('요건 오나?')
+  })
+
   peer.ontrack = handlerTrack; // rtp peer connection에 track이 추가 되었을 경우 실행할 것 정함. 즉, track에 추가 되면 hanlderTrack을 실행시킬 것
   // peer.ontrack = (e) => console.log(e)
 

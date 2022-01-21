@@ -211,13 +211,13 @@ io.on("connection", (socketChat) => {
 
   // 방 종료 DB 업데이트
   socketChat.on("room exit", async (data) => {
-    console.log('roooo')
     const {roomId} = data
     await Models.Stream.update(
       {active_status: '0'},
       {where: { room_id: roomId }},  
     ).then(() => {
       console.log("방 종료 상태 DB 업데이트 완료");
+      io.emit('room closed notification to viewer')
     });
   });
 });
