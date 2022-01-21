@@ -204,7 +204,7 @@ io.on("connection", (socketChat) => {
       host_name: hostName,
     }).then(async () => {
       console.log("방 생성 완료");
-      await socketChat.emit('content refresh')
+      await io.emit('content refresh')
       await socketChat.emit("room setup request", { room_id: socketChat.id });
     });
   });
@@ -217,6 +217,7 @@ io.on("connection", (socketChat) => {
       {where: { room_id: roomId }},  
     ).then(() => {
       console.log("방 종료 상태 DB 업데이트 완료");
+      io.emit('saved completed')
       io.emit('room closed notification to viewer')
     });
   });

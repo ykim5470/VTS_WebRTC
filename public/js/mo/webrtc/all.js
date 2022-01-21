@@ -83,7 +83,7 @@ const exitStream = async () => {
   const { room_id } = getUrlParams();
   exitBtn.addEventListener("click", (e) => {
     if (mediaRecorder === undefined) {
-      console.log('영상 녹화 파일 없이 방송을 종료합니다.')
+      console.log("영상 녹화 파일 없이 방송을 종료합니다.");
     } else {
       // 자동 녹화 종료 및 다운로드
       stopRecording();
@@ -91,9 +91,14 @@ const exitStream = async () => {
       mediaDownload();
     }
     // 방송 종료 socket event emit 및 사용자 페이지 라이브 콘텐츠 비활성화
-    socket.emit('room exit',{roomId: room_id} )
+    socket.emit("room exit", { roomId: room_id })
+    socket.on('saved completed', ()=>{
+      window.location.replace("/call/l");
+
+    })
+
     // 가이드 관리 페이지 이동
-    window.location.replace('/call/l')
+    // window.location.replace('/call/l')
   });
 };
 
@@ -247,14 +252,16 @@ async function createPeerC() {
   });
   console.log("사용자가 보는 peer는 스트리머가 보는 생성한 peer랑 같은 걸까?"); // 다르다
   console.log(peer);
-  if(document.querySelector('#active_status').value = 0){
-    console.log("fuck")
-  }else {console.log("배고프다")}
+  if ((document.querySelector("#active_status").value = 0)) {
+    console.log("fuck");
+  } else {
+    console.log("배고프다");
+  }
 
   // 가이드가 방을 종료했을 경우 알림
-  socket.on('room closed notification to viewer', ()=>{
-    console.log('요건 오나?')
-  })
+  socket.on("room closed notification to viewer", () => {
+    console.log("요건 오나?");
+  });
 
   peer.ontrack = handlerTrack; // rtp peer connection에 track이 추가 되었을 경우 실행할 것 정함. 즉, track에 추가 되면 hanlderTrack을 실행시킬 것
   // peer.ontrack = (e) => console.log(e)
