@@ -84,7 +84,6 @@ const exitStream = async () => {
   exitBtn.addEventListener("click", (e) => {
     if (mediaRecorder === undefined) {
       console.log('영상 녹화 파일 없이 방송을 종료합니다.')
-      return;
     } else {
       // 자동 녹화 종료 및 다운로드
       stopRecording();
@@ -94,7 +93,7 @@ const exitStream = async () => {
     // 방송 종료 socket event emit 및 사용자 페이지 라이브 콘텐츠 비활성화
     socket.emit('room exit',{roomId: room_id} )
     // 가이드 관리 페이지 이동
-    // window.location.replace('/call/l')
+    window.location.replace('/call/l')
   });
 };
 

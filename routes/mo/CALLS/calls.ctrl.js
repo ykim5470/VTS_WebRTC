@@ -40,6 +40,16 @@ const output = {
 
     const default_name = v4().slice(0, 3);
 
+    const currentRoomActiveStatus = await Models.Stream.findOne({
+      where: {
+        room_id: room_id,
+      },
+      attributes: ['active_status']
+    });
+    // console.log(currentRoomActiveStatus)
+    const {active_status } = currentRoomActiveStatus
+    console.log(active_status)
+
     res.render("common/mo/calls/viewer.html", {
       chats,
       default_name,
@@ -85,7 +95,7 @@ const output = {
     try {
       // 라이브 방송 정보
       const streamMetaData = await Models.Stream.findOne({
-        where: { active_status: 1 },
+        where: { active_status: "1" },
         order: [["createdAt", "DESC"]],
       }).then(async (result) => {
         if (result !== null) {
@@ -176,7 +186,7 @@ const process = {
           .forEach((track) => peer.addTrack(track, senderStream));
       } else {
         console.log(
-          "현재 스트림 방송 peer 연결 불가능. 보통은 view 페이지만 따로 새로고침 한 경우"
+          "현재 스트림 방송 peer 연결 불가능.스트리머 페이지 새로고침 후 view 페이지 새로고침이 필요합니다."
         );
       }
       const answer = await peer.createAnswer();

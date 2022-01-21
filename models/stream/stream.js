@@ -22,7 +22,7 @@ module.exports = class Stream extends Sequelize.Model {
         active_status: {
           type: Sequelize.ENUM('0','1'),
           allowNull: false,
-          defaultValue: 1
+          defaultValue: '1'
         }
       },
       {
