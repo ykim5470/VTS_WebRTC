@@ -51,6 +51,7 @@ const output = {
     console.log(active_status)
 
     res.render("common/mo/calls/viewer.html", {
+      active_status,
       chats,
       default_name,
       likeCount,
