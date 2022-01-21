@@ -34,10 +34,10 @@
     <title>EnjoyStreet</title>
     <script>
       $(document).ready(function () {
-        $(function () {
-          $("img[usemap]").rwdImageMaps();
-          $("#map1").width("100%");
-        });
+        // $(function () {
+        //   $("img[usemap]").rwdImageMaps();
+        //   $("#map1").width("100%");
+        // });
 
         /* owlCarousel */
         $(".owl01").owlCarousel({
@@ -311,29 +311,29 @@
         return "";
       };
       // 24hour setting
-      var setCookie = function (cname, cvalue, exdays) {
-        var todayDate = new Date();
-        todayDate.setTime(todayDate.getTime() + exdays * 24 * 60 * 60 * 1000);
-        var expires = "expires=" + todayDate.toUTCString();
-        document.cookie = cname + "=" + cvalue + "; " + expires;
-      };
-      var couponClose = function () {
-        if ($("input[name='chkbox']").is(":checked") == true) {
-          setCookie("close", "Y", 1);
-        }
-        $(".show_pop").hide();
-      };
-      $(document).ready(function () {
-        var cookiedata = document.cookie;
-        if (cookiedata.indexOf("close=Y") < 0) {
-          $(".show_pop").show();
-        } else {
-          $(".show_pop").hide();
-        }
-        $("#close").click(function () {
-          couponClose();
-        });
-      });
+      // var setCookie = function (cname, cvalue, exdays) {
+      //   var todayDate = new Date();
+      //   todayDate.setTime(todayDate.getTime() + exdays * 24 * 60 * 60 * 1000);
+      //   var expires = "expires=" + todayDate.toUTCString();
+      //   document.cookie = cname + "=" + cvalue + "; " + expires;
+      // };
+      // var couponClose = function () {
+      //   if ($("input[name='chkbox']").is(":checked") == true) {
+      //     setCookie("close", "Y", 1);
+      //   }
+      //   $(".show_pop").hide();
+      // };
+      // $(document).ready(function () {
+      //   var cookiedata = document.cookie;
+      //   if (cookiedata.indexOf("close=Y") < 0) {
+      //     $(".show_pop").show();
+      //   } else {
+      //     $(".show_pop").hide();
+      //   }
+      //   $("#close").click(function () {
+      //     couponClose();
+      //   });
+      // });
     </script>
   </head>
   <body>
@@ -418,7 +418,7 @@
             <span class="hamburger"><i class="fas fa-bars"></i></span>
           </div>
           <div class="back_img"></div>
-          <div class="show_pop">
+          <!-- <div class="show_pop">
             <img src="/img/pc/pop_img/img_notice_sv.png" alt="관광벤처기업 공모 당선 팝업 이미지" usemap="#map1" />
             <map name="map1">
               <area shape="rect" coords="23,375,427,407" href="http://tourbiz.spectory.net/tourbiz/2021contest/2021/1/noticeDetail?postId=5582&page=1" alt="" target="_blank" />
@@ -428,7 +428,7 @@
               <span id="check" class="btnTodayHide"><input type="checkbox" value="checkbox" name="chkbox" id="chkday" /><label for="chkday">오늘 하루 열지 않기</label></span>
               <span id="close" class="btnClose">[ 닫기 ]</span>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <section class="main_cont scrollbar-inner">
@@ -630,7 +630,10 @@
                 <span>주식회사 브이알에듀</span>
                 <span>대표 김재헌</span>
                 <span>사업등록번호 485-88-00534</span>
-                <a target="_blank" href="https://www.ftc.go.kr/www/bizCommView.do?key=3765&apv_perm_no=2021313022530202876&pageUnit=10&searchCnd=wrkr_no&searchKrwd=4858800534&pageIndex=1">사업자정보확인</a>
+                <form name="frm1" class="biz_check">
+                  <input name="wrkr_no" type="text" value="4858800534"/>
+                  <input type="button" value="사업자정보확인" onclick="onopen();"/>
+                </form>
               </div>
               <div class="b_03">
                 <span>개인정보보호 책임자 김재헌</span>

@@ -1,7 +1,6 @@
 @charset "UTF-8";
 @import "fontawesome.css";
 @import "font.css";
-/* test */
 
 *{margin:0;padding:0;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;font-family:'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Spoqa Han Sans Neo'}
 html,body {padding:0; margin:0;height:100%;line-height:1;font-size: 14px;font-family:'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Spoqa Han Sans Neo'}
@@ -313,6 +312,11 @@ span.close{font-family: "NanumSquare";font-weight: bold;color:#fff;line-height: 
 .ax5-ui-toast-container .ax5-ui-toast.warning .ax-toast-close {color: #f5a536}
 .ax5-ui-toast.warning .ax-button-wrap button {background: #fdebc4; color: #f5a536;}
 
+/* 사업자정보확인 */
+.biz_check{display: inline-block;}
+.biz_check > input[name="wrkr_no"]{display: none;}
+.biz_check > input[type="button"]{background: none;border: 0;outline: 0;color: #fff;font-size: 16px;font-weight: 300;line-height: 17px;vertical-align: initial;text-decoration: underline;}
+
 /* media */
 /* pc_2 */
 @media (max-width:1739px) {
@@ -359,7 +363,8 @@ span.close{font-family: "NanumSquare";font-weight: bold;color:#fff;line-height: 
   .pop_up.tour .owl-theme .owl-nav.disabled+.owl-dots{margin-top:5px;}
   .pop_up.tour .p_cont_wrap{height: calc(100% - 160px);}
   .cont_ft .ft_text h3{font-size:23px;}
-  .cont_ft .ft_text span{font-size:15px; margin-right:5px;}
+  .cont_ft .ft_text span,
+  .biz_check > input[type="button"]{font-size:15px; margin-right:5px;}
   .cont_ft .ft_text span::after{margin-left:5px;}
 }
 /* mo */

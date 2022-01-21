@@ -1,141 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>list</title>
+  <title>Enjoystreet - live list</title>
+  <link rel="stylesheet" href="/css/mo/contents.css" />
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script lang="text/javascript" src="/socket.io/socket.io.js"></script>
   <script src='/js/mo/webrtc/adapter.js'></script>
 </head>
 
 <body>
-  Enjoy Street Live
-  <br>
-  <input id='hostName' value={{nickname}} hidden />
-  <span>{{nickname}} 가이드</span>
-  <br />
-  <button id='liveStreamStartBtn'>Live Stream 방송 시작</button>
-
-  <!-- 라이브 방송설정 모달 시작-->
-  <section>
-    <div style='border-color: red; border-style: solid; size: 2px;' class='liveStreamSettingModal'>
-      라이브 방송설정
-      <div>--------------------------</div>
-      <div class='thumbNailInput'>
-        방송 사진(썸네일) <input type='file' id='thumbNailImg' name='thumbNailImg' />
+  <section class="bo_wrap">
+    <article class="top_header">
+      <div class="list_header">
+        <img src="/img/mo/bo_img/vector/main_logo.svg" alt="Enjoy Street Live">
+        <input id='hostName' value={{nickname}} hidden />
+        <span>{{nickname}} 가이드</span>
       </div>
-      <br />
-      <div class='streamTitle'>
-        방송 제목 <input type='text' id='title' name='title' />
+      <div class="live_btn">
+        <button id='liveStreamStartBtn'>Live Stream 방송 시작</button>
       </div>
-      <br />
+    </article>
 
-      <div class='streamHostNickName'>
-        방송 진행자 <input type='text' id='hostNickName' name='hostNickName' />
+    <article class="list_conts">
+      <div class="conts_box de_box">
+        <button id='deleteContentBtn'>삭제</button>
       </div>
-      <br>
+      <div class="conts_box">
+        {% for el in sources%}
+        {% if el.upload_status === '0' %}
+        <!-- 비활성화  콘텐츠 -->
+        <div class='wrapper' style=" border-style: solid; size: 2px;  border-color: blue;">
+          {{el.id}}
+          <input class='recSourceCheckbox' type='checkbox' value='{{el.id}}' />
+          <img width='200' height='200' src='/uploads/GUIDE/streaming/record/thumbnailSource/{{el.thumb_nail_origin}}' />
+          <div class='recSourceTitle'>방송제목: {{el.title}}</div>
+          <div class='recSourceCreatedAt'>등록일자: {{el.createdAt}}</div>
+          <div class='recSourceScheduled'>예정시간: {{el.broad_schedule}}</div>
+          <button>현재 비활성화 상태임</button>
+          <button class='updateContentBtn' value='{{el.id}}'>수정</button>
 
-      <div class='broadcastOptionCheck'>
-        <input type='checkbox' id='scheduleOption' name='scheduleOption'>방송종류 후 즉시 공개하기
+        </div>
+        {% else %}
+        <!-- 활성화  콘텐츠 -->
+        <div class='wrapper' style=" border-style: solid; size: 2px;  border-color: blue;">
+          {{el.id}}
+          <input class='recSourceCheckbox' type='checkbox' />
+          <img width='200' height='200' src='/uploads/GUIDE/streaming/record/thumbnailSource/{{el.thumb_nail_origin}}' />
+          <div class='recSourceTitle'>방송제목: {{el.title}}</div>
+          <div class='recSourceCreatedAt'>등록일자: {{el.createdAt}}</div>
+          <div class='recSourceScheduled'>예정시간: {{el.broad_schedule}}</div>
+          <button class='updateContentBtn' value='{{el.id}}'>수정</button>
+
+        </div>
+        {% endif %}
+        {% endfor %}
       </div>
-      <br>
+    </article>
 
-      <div>------- 방송공개일 설정 -------</div>
-      등록일
-      예정시간
-      <input class='schedule' id='scheduleTime' name='scheduleTime' />
-      <div>
+    <!-- 라이브 방송설정 모달 시작-->
+    <section class="modal_box modal_live">
+      <div style='border-color: red; border-style: solid; size: 2px;' class='liveStreamSettingModal'>
+        <h2>라이브 방송설정</h2>
+        <table class="tg">
+          <colgroup>
+            <col style="width:50px;">
+            <col style="width:50px;">
+            <col style="width:50px;">
+          </colgroup>
+          <thead>
+            <tr>
+              <th class="tg-0pky"></th>
+              <th class="tg-0pky"></th>
+              <th class="tg-0pky"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="tg-0pky"></td>
+              <td class="tg-0pky"></td>
+              <td class="tg-0pky"></td>
+            </tr>
+            <tr>
+              <td class="tg-0pky"></td>
+              <td class="tg-0pky"></td>
+              <td class="tg-0pky"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class='thumbNailInput'>
+          방송 사진(썸네일) <input type='file' id='thumbNailImg' name='thumbNailImg' />
+        </div>
+        <br />
+        <div class='streamTitle'>
+          방송 제목 <input type='text' id='title' name='title' />
+        </div>
+        <br />
+  
+        <div class='streamHostNickName'>
+          방송 진행자 <input type='text' id='hostNickName' name='hostNickName' />
+        </div>
         <br>
-        <button class='setupCancel'>취소</button>
-        <button class='setupDone'>시작</button>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- 라이브 방송설정 모달 끝-->
-
-
-  <!-- 녹화 방송설정 모달 시작-->
-  <section>
-    <div style='border-color: Yellow; border-style: solid; size: 2px;' class='recStreamSettingModal'>
-      녹화 방송설정
-      <div>--------------------------</div>
-      <div class='activeMedia'>
-        <input type='checkbox' /> <span>방송 활성화</span>
-      </div>
-      <br />
-      <div class='recThumbNailInput'>
-        방송 사진(썸네일) <input type='file' id='recThumbNailImg' name='recThumbNailImg' />
-      </div>
-      <br />
-      <div class='recStreamTitle'>
-        방송 제목 <input type='text' id='recTitle' name='recTitle' />
-      </div>
-      <br />
-      <div class='recStreamHostNickName'>
-        방송 진행자 <input type='text' id='recHostNickName' name='recHostNickName' />
-      </div>
-      <br>
-
-      <div class='recBroadcastOptionCheck'>
-        <input type='checkbox' id='recScheduleOption' name='recScheduleOption'>즉시 공개하기
-      </div>
-      <br>
-
-      <div>------- 방송공개일 설정 -------</div>
-      등록일
-      예정시간
-      <input class='schedule' id='scheduleTime' name='scheduleTime' />
-      <div>
+  
+        <div class='broadcastOptionCheck'>
+          <input type='checkbox' id='scheduleOption' name='scheduleOption'>방송종류 후 즉시 공개하기
+        </div>
         <br>
-        <button class='setupCancel'>취소</button>
-        <button class='setupDone'>시작</button>
+  
+        <div>------- 방송공개일 설정 -------</div>
+        등록일
+        예정시간
+        <input class='schedule' id='scheduleTime' name='scheduleTime' />
+        <div>
+          <br>
+          <button class='setupCancel'>취소</button>
+          <button class='setupDone'>시작</button>
+        </div>
       </div>
-    </div>
+      <div class="modal_bg"></div>
+    </section>
+  
+    <!-- <section class="modal_box modal_rec">
+      <div style='border-color: Yellow; border-style: solid; size: 2px;' class='recStreamSettingModal'>
+        녹화 방송설정
+        <div>--------------------------</div>
+        <div class='activeMedia'>
+          <input type='checkbox' /> <span>방송 활성화</span>
+        </div>
+        <br />
+        <div class='recThumbNailInput'>
+          방송 사진(썸네일) <input type='file' id='recThumbNailImg' name='recThumbNailImg' />
+        </div>
+        <br />
+        <div class='recStreamTitle'>
+          방송 제목 <input type='text' id='recTitle' name='recTitle' />
+        </div>
+        <br />
+        <div class='recStreamHostNickName'>
+          방송 진행자 <input type='text' id='recHostNickName' name='recHostNickName' />
+        </div>
+        <br>
+  
+        <div class='recBroadcastOptionCheck'>
+          <input type='checkbox' id='recScheduleOption' name='recScheduleOption'>즉시 공개하기
+        </div>
+        <br>
+  
+        <div>------- 방송공개일 설정 -------</div>
+        등록일
+        예정시간
+        <input class='schedule' id='scheduleTime' name='scheduleTime' />
+        <div>
+          <br>
+          <button class='setupCancel'>취소</button>
+          <button class='setupDone'>시작</button>
+        </div>
+      </div>
+    </section> -->
   </section>
-
-  <!-- 녹화 방송설정 모달 끝-->
-
-
-
-
-
-
-  <button id='deleteContentBtn'>삭제</button>
-  <div>
-    {% for el in sources%}
-    {% if el.upload_status === '0' %}
-    <!-- 비활성화  콘텐츠 -->
-    <div class='wrapper' style=" border-style: solid; size: 2px;  border-color: blue;">
-      {{el.id}}
-      <input class='recSourceCheckbox' type='checkbox' value='{{el.id}}' />
-      <img width='200' height='200' src='/uploads/GUIDE/streaming/record/thumbnailSource/{{el.thumb_nail_origin}}' />
-      <div class='recSourceTitle'>방송제목: {{el.title}}</div>
-      <div class='recSourceCreatedAt'>등록일자: {{el.createdAt}}</div>
-      <div class='recSourceScheduled'>예정시간: {{el.broad_schedule}}</div>
-      <button>현재 비활성화 상태임</button>
-      <button class='updateContentBtn' value='{{el.id}}'>수정</button>
-
-    </div>
-    {% else %}
-    <!-- 활성화  콘텐츠 -->
-    <div class='wrapper' style=" border-style: solid; size: 2px;  border-color: blue;">
-      {{el.id}}
-      <input class='recSourceCheckbox' type='checkbox' />
-      <img width='200' height='200' src='/uploads/GUIDE/streaming/record/thumbnailSource/{{el.thumb_nail_origin}}' />
-      <div class='recSourceTitle'>방송제목: {{el.title}}</div>
-      <div class='recSourceCreatedAt'>등록일자: {{el.createdAt}}</div>
-      <div class='recSourceScheduled'>예정시간: {{el.broad_schedule}}</div>
-      <button class='updateContentBtn' value='{{el.id}}'>수정</button>
-
-    </div>
-    {% endif %}
-    {% endfor %}
-  </div>
   <script src="/js/mo/webrtc/list.js"></script>
 </body>
 
